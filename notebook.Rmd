@@ -1,0 +1,86 @@
+---
+title: "notebook"
+author: "andrés castro araújo"
+date: "3/2/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+
+library(tidyverse)
+```
+
+
+
+```{r}
+library(httr)
+library(rvest)
+
+ccc <- function(year = 2020, query = "y", pag = 0) {
+  url <- paste0(
+    "https://www.corteconstitucional.gov.co/relatoria/query.aspx?",
+    "pg=", pag,
+    "&buscar=", query, 
+    "&anio=relatoria%2F", year
+  )
+  httr::GET(url)
+}
+
+
+a <- ccc(year = 2019)
+
+status_code(a)
+
+website <- content(a) 
+
+## Names
+
+website %>% 
+  html_nodes(".grow a") %>% 
+  html_text() %>% 
+  str_squish()
+
+## Links
+
+website %>% 
+  html_nodes(".grow a") %>% 
+  html_attr("href")
+
+## Length of loop
+
+website %>% 
+  html_nodes("td") %>% 
+  html_text() %>% 
+  str_extract("Total de Registros --> \\d+")
+
+## Individual Website
+
+b <- paste0(
+  "https://www.corteconstitucional.gov.co",
+  "/Relatoria/2020/T-079-20.htm"
+) %>% 
+  read_html()
+
+## Re do this part
+
+fdsa <- b %>% 
+  html_nodes(".MsoNormal") %>% 
+  html_text() 
+
+fdsa[fdsa != fdsa[[2]]][[4]] %>% 
+  str_squish()
+
+## Do first squish, then subset
+```
+
+
+
+
+
+
+
+
+
+
+
