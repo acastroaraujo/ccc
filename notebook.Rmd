@@ -9,72 +9,186 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 
 library(tidyverse)
-```
-
-
-
-```{r}
 library(httr)
 library(rvest)
-
-ccc <- function(year = 2020, query = "y", pag = 0) {
-  url <- paste0(
-    "https://www.corteconstitucional.gov.co/relatoria/query.aspx?",
-    "pg=", pag,
-    "&buscar=", query, 
-    "&anio=relatoria%2F", year
-  )
-  httr::GET(url)
-}
-
-
-a <- ccc(year = 2019)
-
-status_code(a)
-
-website <- content(a) 
-
-## Names
-
-website %>% 
-  html_nodes(".grow a") %>% 
-  html_text() %>% 
-  str_squish()
-
-## Links
-
-website %>% 
-  html_nodes(".grow a") %>% 
-  html_attr("href")
-
-## Length of loop
-
-website %>% 
-  html_nodes("td") %>% 
-  html_text() %>% 
-  str_extract("Total de Registros --> \\d+")
-
-## Individual Website
-
-b <- paste0(
-  "https://www.corteconstitucional.gov.co",
-  "/Relatoria/2020/T-079-20.htm"
-) %>% 
-  read_html()
-
-## Re do this part
-
-fdsa <- b %>% 
-  html_nodes(".MsoNormal") %>% 
-  html_text() 
-
-fdsa[fdsa != fdsa[[2]]][[4]] %>% 
-  str_squish()
-
-## Do first squish, then subset
 ```
 
-aa
+## Descargar nombres y links
+
+```{r}
+palabra_clave <- function(q = "y", p = 0) {
+  url <- paste0(
+    "https://www.corteconstitucional.gov.co/relatoria/query.aspx?anio=/relatoria/",
+    "&pg=", p,
+    "&buscar=", q
+  )
+  obj <- httr::GET(url)
+  stopifnot(status_code(obj) == 200)
+  website <- content(obj)
+  
+  sentencia <- website %>% 
+    html_nodes(".grow a") %>% 
+    html_text() %>% 
+    str_squish()
+  
+  link <- website %>% 
+    html_nodes(".grow a") %>% 
+    html_attr("href")
+
+  tibble(sentencia, link)
+
+}
+```
+
+## Proof of concept
+
+```{r}
+df <- map(0:4, palabra_clave, q = "aborto") %>% 
+  bind_rows() %>% 
+  distinct()
+
+df2 <- df %>% 
+  distinct(sentencia) %>% 
+  mutate(type = str_extract(sentencia, "^(C|SU|T|A)"),
+         year = str_extract(sentencia, "\\d{2}$")) %>% 
+  mutate(year = as.Date(year, "%y") %>% lubridate::year() %>% as.integer()) 
+
+g <- df2 %>% 
+  count(type, year) %>% 
+  ggplot(aes(year, n, fill = type)) + 
+  geom_col()
+
+g
+
+year_seq <- seq(min(df$year), max(df$year), 2)
+
+g + scale_fill_brewer(palette = "RdYlBu") +
+    acathemes::theme_custom() + 
+    labs(x = NULL, fill = "tipo", title = "Fallos de la Corte Constitucional",
+         subtitle = "palabra clave: aborto") +
+    scale_x_continuous(breaks = year_seq, labels = year_seq)
+
+ggsave("fallos_sobre_aborto.png", device = "png", dpi = "print", height = 4, width = 10)
+```
+
+
+## Extraer citas
+
+Nota. Hay dos sentencias repetidas con links distintos...
+
+```{r}
+## Individual Website
+extraer_texto <- function(link) { 
+  website <- paste0("https://www.corteconstitucional.gov.co", link) %>% 
+    read_html() 
+  
+  output <- website %>% 
+    html_nodes(".WordSection1") %>% 
+    html_text() %>% 
+    str_squish() 
+  
+  if (is_empty(output)) {
+    output <- website %>% 
+      html_nodes(".MsoNormal") %>% 
+      html_text() %>% 
+      str_squish()
+  }
+  
+  return(output)
+}
+
+## sólo miramos las sentencias "C"
+df <- df %>% 
+  filter(str_detect(sentencia, "^C"))
+```
+
+
+```{r, eval=FALSE}
+output <- vector("list", length(df$link))
+for (i in seq_along(output)) {
+  output[[i]] <- extraer_texto(df$link[[i]])
+  Sys.sleep(runif(1, max = 2))
+  cat(".")
+}
+
+citaciones <- output %>% 
+  map(paste, collapse = " ") %>% 
+  str_extract_all("(S|s)entencia (C|SU|T|A)-\\d+ de \\d{4}") %>% 
+  map(str_replace_all, pattern = "(s|S)entencia ([TCSU]{1,2}-\\d+) de \\d{2}(\\d{2})",
+      replacement = "\\2-\\3")
+
+write_rds(citaciones, "citaciones.rds", compress = "gz")
+```
+
+```{r, fig.height=6, fig.width=10}
+citaciones <- read_rds("citaciones.rds")
+df$citaciones <- citaciones
+
+edge_list <- df %>% 
+  unnest(citaciones) %>% 
+  count(sentencia, citaciones) %>% 
+  rename(from = sentencia, to = citaciones) %>% 
+  select(from, to)
+
+library(igraph)
+library(ggraph)
+
+g <- edge_list %>% 
+  filter(to %in% from) %>% 
+  igraph::graph_from_data_frame(directed = TRUE) 
+
+g <- decompose(g)[[1]]
+
+igraph::V(g)$out_degree <- igraph::degree(g, mode = "out")
+igraph::V(g)$in_degree <- igraph::degree(g, mode = "in")
+igraph::V(g)$betweenness <- igraph::betweenness(g, directed = TRUE)
+igraph::V(g)$authority_score <- igraph::authority_score(g)$vector
+igraph::V(g)$page_rank <- igraph::page_rank(g)$vector
+igraph::V(g)$eigen_centrality <- igraph::eigen_centrality(g, directed = TRUE)$vector
+
+g %>% 
+  tidygraph::as_tbl_graph() %>% 
+  ggraph("kk") + 
+  geom_edge_link(arrow = arrow(length = unit(1, "mm")),
+                 end_cap = circle(3, "mm"), alpha = 0.5) + 
+  geom_node_point(aes(color = betweenness, size = in_degree), show.legend = FALSE) + 
+  geom_node_label(aes(filter = rank(-betweenness) <= 5, label = name),
+                  repel = TRUE, size = 3) +
+  theme_graph() + 
+  scale_color_gradient(low = "grey90", high = "tomato")
+  
+ggsave("red_sentencias_aborto2.png", device = "png", dpi = "print", height = 6, width = 10)
+```
+
+
+## Texto
+
+Poner algún análisis acá.
+
+
+## Pies de página 
+
+```{r}
+df$link[[1]]
+
+extraer_pp <- function(link) {
+  website <- paste0("https://www.corteconstitucional.gov.co", link) %>% 
+    read_html()
+  
+  website %>% 
+    html_nodes(".amplia div div p") %>% 
+    html_text() %>% 
+    str_squish()
+}
+
+extraer_pp(df$link[[100]])
+```
+
+
+
+
+
+
 
 
 
