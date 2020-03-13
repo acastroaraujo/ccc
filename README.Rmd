@@ -1,0 +1,72 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, message = FALSE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# ccc
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+El paquete `ccc` sirve para extraer información de la Corte Constitucional de Colombia. Por el momento está muy viche.
+
+
+Se puede installar la versión en desarrollo desde [GitHub](https://github.com/) con:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("acastroaraujo/ccc")
+```
+
+## Buscar por palabra clave
+
+```{r}
+library(ccc)
+df <- palabra_clave("jep", p = 0)
+df
+```
+
+## Extraer texto
+
+```{r}
+texto <- extraer_texto("/Relatoria/2017/C-160-17.htm")
+
+## primeros mil caracteres
+stringr::str_trunc(texto, 1e3)
+
+## Se pueden extraer muchos documentos usando tidyverse, aunque esto se puede
+## demorar un rato...
+library(tidyverse)
+
+df <- df %>% 
+  mutate(texto = map_chr(url, extraer_texto))
+
+head(df)
+```
+
+## Extraer sentencias citas
+
+```{r}
+sentencias_citadas <- extraer_sentencias_citadas(texto)
+sentencias_citadas
+table(sentencias_citadas) %>% sort(decreasing = TRUE)
+```
+
+
+## Extraer pies de página
+
+```{r}
+pp <- extraer_pp("/Relatoria/2017/C-160-17.htm")
+pp
+```
+

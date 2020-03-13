@@ -11,6 +11,9 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 library(tidyverse)
 library(httr)
 library(rvest)
+
+outfolder <- "notebook_output/"
+if (!dir.exists(outfolder)) dir.create(outfolder)  ## crear una carpeta, si no existe
 ```
 
 ## Descargar nombres y links
@@ -36,7 +39,6 @@ palabra_clave <- function(q = "y", p = 0) {
     html_attr("href")
 
   tibble(sentencia, link)
-
 }
 ```
 
@@ -58,8 +60,10 @@ g <- sentencias %>%
   ggplot(aes(year, n, fill = type)) + 
   geom_col()
 
+## Default plot
 g
 
+## Get my personal theme from https://github.com/acastroaraujo/acathemes
 year_seq <- seq(min(sentencias$year), max(sentencias$year), 2)
 
 g + scale_fill_brewer(palette = "RdYlBu") +
@@ -68,7 +72,8 @@ g + scale_fill_brewer(palette = "RdYlBu") +
          subtitle = "palabra clave: aborto") +
     scale_x_continuous(breaks = year_seq, labels = year_seq)
 
-ggsave("fallos_sobre_aborto.png", device = "png", dpi = "print", height = 4, width = 10)
+ggsave(paste0(outfolder, "fallos_sobre_aborto.png"), 
+       device = "png", dpi = "print", height = 4, width = 10)
 ```
 
 
@@ -93,11 +98,14 @@ extraer_texto <- function(link) {
       html_text() %>% 
       str_squish()
   }
-  
+  ## nota, buscar una forma de mejorar esto. 
+  ## el problema está en que el formato cambia, dependiendo del año
   return(output)
 }
+```
 
-## sólo miramos las sentencias "C"
+```{r}
+## sólo miramos las sentencias de constitucionalidad: "C"
 df <- df %>% 
   filter(str_detect(sentencia, "^C"))
 ```
@@ -117,15 +125,15 @@ citaciones <- output %>%
   map(str_replace_all, pattern = "(s|S)entencia ([TCSU]{1,2}-\\d+) de \\d{2}(\\d{2})",
       replacement = "\\2-\\3")
 
-texto <- output %>% 
+texto <- output %>% ## nota, buscar una forma de mejorar esto
   map_chr(paste, collapse = " ")
 
-write_rds(texto, "texto.rds", compress = "gz")
-write_rds(citaciones, "citaciones.rds", compress = "gz")
+write_rds(texto, paste0(outfolder, "texto.rds"), compress = "gz")
+write_rds(citaciones, paste0(outfolder, "citaciones.rds"), compress = "gz")
 ```
 
 ```{r, fig.height=6, fig.width=10}
-citaciones <- read_rds("citaciones.rds")
+citaciones <- read_rds(paste0(outfolder, "citaciones.rds"))
 df$citaciones <- citaciones
 
 edge_list <- df %>% 
@@ -138,7 +146,7 @@ library(igraph)
 library(ggraph)
 
 g <- edge_list %>% 
-  filter(to %in% from) %>% 
+  filter(to %in% from) %>%  ## reduce el número de nodos
   igraph::graph_from_data_frame(directed = TRUE) 
 
 g <- decompose(g)[[1]]
@@ -161,14 +169,15 @@ g %>%
   theme_graph() + 
   scale_color_gradient(low = "grey90", high = "tomato")
   
-ggsave("red_sentencias_aborto2.png", device = "png", dpi = "print", height = 6, width = 10)
+ggsave(paste0(outfolder, "red_sentencias_aborto2.png"), 
+       device = "png", dpi = "print", height = 6, width = 10)
 ```
 
 ## Texto
 
 ```{r, fig.height=5, fig.width=8}
 library(tidytext)
-df$texto <- read_rds("texto.rds")
+df$texto <- read_rds(paste0(outfolder, "texto.rds"))
 token_df <- df %>% 
   unnest_tokens(word, texto)
 
@@ -197,8 +206,8 @@ word_probs %>%
   acathemes::theme_custom()
   
 
-ggsave("lda_palabras.png", device = "png", dpi = "print", height = 5, width = 10)
-
+ggsave(paste0(outfolder, "lda_palabras.png"), 
+       device = "png", dpi = "print", height = 5, width = 10)
 ```
 
 ```{r}
@@ -229,7 +238,8 @@ document_probs %>%
   scale_alpha_continuous(range = c(0, 1)) +
   labs(x = NULL, alpha = "posterior\nprobability")
 
-ggsave("lda_sentencias.png", device = "png", dpi = "print", height = 5, width = 10)
+ggsave(paste0(outfolder, "lda_sentencias.png"), 
+       device = "png", dpi = "print", height = 5, width = 10)
 
 
 ```
