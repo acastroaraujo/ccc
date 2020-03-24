@@ -2,15 +2,14 @@
 ## el problema está en que el formato cambia, dependiendo del año
 ## entonces todo es inconsistente
 
-#' Title
+#' Extractor de sentencia
 #'
-#' @param link
+#' @param link la dirección de la sentencia (e.g. "/relatoria/2006/C-355-06.htm")
 #'
-#' @return
+#' @return el texto de la sentencia
 #' @export
 #'
-#' @examples
-extraer_texto <- function(link) {
+ccc_texto <- function(link) {
   website <- paste0("https://www.corteconstitucional.gov.co", link) %>%
     xml2::read_html()
 
@@ -23,23 +22,22 @@ extraer_texto <- function(link) {
     output <- website %>%
       rvest::html_nodes(".MsoNormal") %>%
       rvest::html_text() %>%
-      rvest::str_squish()
+      stringr::str_squish()
   }
 
-  cat(",")
+  cat(".")
   return(paste(output, collapse = " "))
 }
 
 
-#' Title
+#' Extractor de sentencias citadas
 #'
-#' @param texto
+#' @param texto el texto de una sentencia, tal y como viene de ccc_extraer_texto()
 #'
-#' @return
+#' @return una lista de sentencias citadas en el texto
 #' @export
 #'
-#' @examples
-extraer_sentencias_citadas <- function(texto) {
+ccc_sentencias_citadas <- function(texto) {
   texto %>%
     stringr::str_extract_all("(S|s)entencia (C|SU|T|A)-\\d+ de \\d{4}") %>%
     purrr::flatten_chr() %>%
@@ -48,15 +46,14 @@ extraer_sentencias_citadas <- function(texto) {
 }
 
 
-#' Title
+#' Extractor de pie de páginas
 #'
-#' @param link
+#' @param link (e.g. "/relatoria/2006/C-355-06.htm")
 #'
-#' @return
+#' @return una lista de pies de página
 #' @export
 #'
-#' @examples
-extraer_pp <- function(link) {
+ccc_pp <- function(link) {
   stopifnot(stringr::str_detect(link, pattern = "\\.htm"))
   website <- paste0("https://www.corteconstitucional.gov.co", link) %>%
     xml2::read_html()

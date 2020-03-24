@@ -3,8 +3,9 @@
 # now %>% is available withoud having to type purrr::`%>%`
 
 #' @importFrom purrr %>%
+#' @importFrom rlang .data
 #' @keywords internal
-"_PACKAGE"
+NULL
 
 # The following block is used by usethis to automatically manage
 # roxygen namespace tags. Modify with care!

@@ -1,15 +1,14 @@
 
 
-#' Title
+#' Búscador de sentencias por palabra clave
 #'
-#' @param q
-#' @param p
+#' @param q términos de búsqueda
+#' @param p número de página (default es cero)
 #'
-#' @return
+#' @return un data frame
 #' @export
 #'
-#' @examples
-palabra_clave <- function(q = "y", p = 0) {
+ccc_palabra_clave <- function(q, p = 0) {
   url <- paste0(
     "https://www.corteconstitucional.gov.co/relatoria/query.aspx?anio=/relatoria/",
     "&pg=", p,
@@ -19,6 +18,12 @@ palabra_clave <- function(q = "y", p = 0) {
   obj <- httr::GET(url)
   stopifnot(httr::status_code(obj) == 200)
   website <- httr::content(obj)
+
+  num_resultados <- website %>%
+    rvest::html_text() %>%
+    stringr::str_extract("Total de Registros --> \\d+")
+
+  message(num_resultados)
 
   sentencia <- website %>%
     rvest::html_nodes(".grow a") %>%
@@ -30,9 +35,9 @@ palabra_clave <- function(q = "y", p = 0) {
     rvest::html_attr("href")
 
   output <- tibble::tibble(sentencia, url = link) %>%
-    dplyr::mutate(type = stringr::str_extract(sentencia, "^(C|SU|T|A)"),
-                  year = extract_year(sentencia)) %>%
-    dplyr::select(sentencia, type, year, url)
+    dplyr::mutate(type = stringr::str_extract(.data$sentencia, "^(C|SU|T|A)"),
+                  year = extract_year(.data$sentencia)) %>%
+    dplyr::select(.data$sentencia, .data$type, .data$year, .data$url)
 
   return(output)
 }

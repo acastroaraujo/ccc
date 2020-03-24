@@ -6,8 +6,8 @@ output: github_document
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE, message = FALSE,
-  comment = "#>",
+  collapse = TRUE,
+  comment = ">",
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
@@ -18,8 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-El paquete `ccc` sirve para extraer información de la Corte Constitucional de Colombia. Por el momento está muy viche.
-
+El paquete `ccc` sirve para extraer información de la Corte Constitucional de Colombia. 
 
 Se puede installar la versión en desarrollo desde [GitHub](https://github.com/) con:
 
@@ -28,45 +27,97 @@ Se puede installar la versión en desarrollo desde [GitHub](https://github.com/)
 devtools::install_github("acastroaraujo/ccc")
 ```
 
-## Buscar por palabra clave
+Tiene 5 funciones:
+
+- `ccc_tema()` y `ccc_palabra_clave()` son una interface a los __buscadores__ de la [página web](https://www.corteconstitucional.gov.co/relatoria/) de la Corte Constitucional.
+
+- `ccc_texto()` y `ccc_pp()` extraen el __texto__ y los __pie de página__ de una dirección (ej." "/relatoria/2017/C-160-17.htm").
+
+- `ccc_sentencias_citadas()` extrae las sentencias que han sido citadas por un texto.
+
+
+## Buscar por tema o palabra clave
+
+```{r, message=FALSE}
+library(ccc)
+```
 
 ```{r}
-library(ccc)
-df <- palabra_clave("jep", p = 0)
-df
+palabra_clave <- ccc_palabra_clave("jep", p = 0)
+```
+
+`ccc_palabra_clave()` y `ccc_tema()` extraen 100 resultados por página. Si el total de registros supera los 100, se necesita aumentar el argumento `p` (i.e. `p = 1`).
+
+```{r}
+str(palabra_clave)
+
+tema <- ccc_tema("jep")
+str(tema)
 ```
 
 ## Extraer texto
 
 ```{r}
-texto <- extraer_texto("/Relatoria/2017/C-160-17.htm")
+texto <- ccc_texto("/relatoria/2003/c-776-03.htm")
+```
 
-## primeros mil caracteres
-stringr::str_trunc(texto, 1e3)
 
-## Se pueden extraer muchos documentos usando tidyverse, aunque esto se puede
-## demorar un rato...
+Se pueden extraer muchos documentos usando tidyverse, aunque esto se puede demorar un rato...
+
+```{r, message=FALSE}
 library(tidyverse)
 
+df <- tema %>% 
+  select(-topic) %>% ## estas dos líneas eliminan duplicados que existen
+  distinct()         ## porque una sentencia quepa dentro de varios temas
+
 df <- df %>% 
-  mutate(texto = map_chr(url, extraer_texto))
+  mutate(texto = map_chr(url, ccc_texto))
 
 head(df)
+
+## primeros mil caracteres de la C-776-03
+texto %>% 
+  stringr::str_trunc(1e3) %>% 
+  stringr::str_wrap() %>% 
+  writeLines()
+```
+
+## Extraer pies de página
+
+```{r}
+pp <- ccc_pp("/relatoria/2003/c-776-03.htm")
+pp[1:5] ## primeros cinco pies de página
 ```
 
 ## Extraer sentencias citas
 
 ```{r}
-sentencias_citadas <- extraer_sentencias_citadas(texto)
+sentencias_citadas <- ccc_sentencias_citadas(texto)
 sentencias_citadas
-table(sentencias_citadas) %>% sort(decreasing = TRUE)
+
+tibble(texto = sentencias_citadas) %>%
+  count(texto) %>%
+  mutate(texto = fct_reorder(texto, n)) %>% 
+  ggplot(aes(texto, n)) + 
+  geom_col() +
+  coord_flip() + 
+  theme_minimal() +
+  labs(title = "Sentencias citadas en el texto")
+```
+
+```{r, fig.height=8, fig.width=5}
+sentencias_citadas <- ccc_sentencias_citadas(pp)
+
+tibble(texto = sentencias_citadas) %>%
+  count(texto) %>%
+  mutate(texto = fct_reorder(texto, n)) %>% 
+  ggplot(aes(texto, n)) + 
+  geom_col() +
+  coord_flip() + 
+  theme_minimal() + 
+  labs(title = "Sentencias citadas en los pie de página")
 ```
 
 
-## Extraer pies de página
-
-```{r}
-pp <- extraer_pp("/Relatoria/2017/C-160-17.htm")
-pp
-```
 
