@@ -48,9 +48,15 @@ palabra_clave <- ccc_palabra_clave("jep", p = 0)
 
 `ccc_palabra_clave()` y `ccc_tema()` extraen 100 resultados por página. Si el total de registros supera los 100, se necesita aumentar el argumento `p` (i.e. `p = 1`).
 
+Así se ve el resultado:
+
 ```{r}
 str(palabra_clave)
+```
 
+La función `ccc_tema()` produce (a mi juicio) resultados más robustos:
+
+```{r}
 tema <- ccc_tema("jep")
 str(tema)
 ```
@@ -94,29 +100,12 @@ pp[1:5] ## primeros cinco pies de página
 
 ```{r}
 sentencias_citadas <- ccc_sentencias_citadas(texto)
-sentencias_citadas
-
-tibble(texto = sentencias_citadas) %>%
-  count(texto) %>%
-  mutate(texto = fct_reorder(texto, n)) %>% 
-  ggplot(aes(texto, n)) + 
-  geom_col() +
-  coord_flip() + 
-  theme_minimal() +
-  labs(title = "Sentencias citadas en el texto")
+table(sentencias_citadas) %>% sort(decreasing = TRUE)
 ```
 
-```{r, fig.height=8, fig.width=5}
+```{r}
 sentencias_citadas <- ccc_sentencias_citadas(pp)
-
-tibble(texto = sentencias_citadas) %>%
-  count(texto) %>%
-  mutate(texto = fct_reorder(texto, n)) %>% 
-  ggplot(aes(texto, n)) + 
-  geom_col() +
-  coord_flip() + 
-  theme_minimal() + 
-  labs(title = "Sentencias citadas en los pie de página")
+table(sentencias_citadas) %>% sort(decreasing = TRUE)
 ```
 
 

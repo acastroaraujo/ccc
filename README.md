@@ -46,6 +46,8 @@ palabra_clave <- ccc_palabra_clave("jep", p = 0)
 Si el total de registros supera los 100, se necesita aumentar el
 argumento `p` (i.e. `p = 1`).
 
+Así se ve el resultado:
+
 ``` r
 str(palabra_clave)
 > Classes 'tbl_df', 'tbl' and 'data.frame': 100 obs. of  4 variables:
@@ -53,7 +55,11 @@ str(palabra_clave)
 >  $ type     : chr  "A" "A" "A" "A" ...
 >  $ year     : int  2019 2019 2019 2019 2019 2019 2019 2019 2019 2019 ...
 >  $ url      : chr  "/Relatoria/autos/2019/A613-19.htm" "/Relatoria/autos/2019/A556-19.htm" "/Relatoria/autos/2019/A531-19.htm" "/Relatoria/autos/2019/A508A-19.htm" ...
+```
 
+La función `ccc_tema()` produce (a mi juicio) resultados más robustos:
+
+``` r
 tema <- ccc_tema("jep")
 > Total de Registros --> 6
 str(tema)
@@ -131,36 +137,36 @@ pp[1:5] ## primeros cinco pies de página
 
 ``` r
 sentencias_citadas <- ccc_sentencias_citadas(texto)
-sentencias_citadas
->  [1] "C-084-95"  "C-505-99"  "C-643-02"  "C-1144-00" "C-286-96"  "C-485-03" 
->  [7] "C-1383-00" "C-643-02"  "C-183-98"  "C-261-02"  "C-643-02"  "C-419-95" 
-> [13] "C-643-02"  "C-364-93"  "C-335-94"  "C-597-00"  "C-080-96"  "C-080-96" 
-> [19] "C-094-93"  "C-556-93"  "C-1144-00" "C-925-00"  "C-925-00"  "T-532-92" 
-> [25] "C-711-01"  "C-485-03"  "C-445-95"  "C-421-95"  "C-349-95"
-
-tibble(texto = sentencias_citadas) %>%
-  count(texto) %>%
-  mutate(texto = fct_reorder(texto, n)) %>% 
-  ggplot(aes(texto, n)) + 
-  geom_col() +
-  coord_flip() + 
-  theme_minimal() +
-  labs(title = "Sentencias citadas en el texto")
+table(sentencias_citadas) %>% sort(decreasing = TRUE)
+> sentencias_citadas
+>  C-643-02  C-080-96 C-1144-00  C-485-03  C-925-00  C-084-95  C-094-93 C-1383-00 
+>         4         2         2         2         2         1         1         1 
+>  C-183-98  C-261-02  C-286-96  C-335-94  C-349-95  C-364-93  C-419-95  C-421-95 
+>         1         1         1         1         1         1         1         1 
+>  C-445-95  C-505-99  C-556-93  C-597-00  C-711-01  T-532-92 
+>         1         1         1         1         1         1
 ```
-
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 ``` r
 sentencias_citadas <- ccc_sentencias_citadas(pp)
-
-tibble(texto = sentencias_citadas) %>%
-  count(texto) %>%
-  mutate(texto = fct_reorder(texto, n)) %>% 
-  ggplot(aes(texto, n)) + 
-  geom_col() +
-  coord_flip() + 
-  theme_minimal() + 
-  labs(title = "Sentencias citadas en los pie de página")
+table(sentencias_citadas) %>% sort(decreasing = TRUE)
+> sentencias_citadas
+>  C-094-93  C-597-00  C-333-93  C-341-98  C-183-98  C-511-96  C-556-93  C-080-96 
+>        15        10         6         6         5         4         4         3 
+>  C-286-96  C-349-95  C-702-99  C-007-02  C-009-03 C-1064-01 C-1383-00  C-150-97 
+>         3         3         3         2         2         2         2         2 
+>  C-228-93  C-238-97  C-335-94  C-405-97  C-506-02  C-674-99  C-734-02  C-866-99 
+>         2         2         2         2         2         2         2         2 
+>  C-925-00  T-426-92  C-025-93  C-070-94 C-1052-01 C-1144-00 C-1144-01 C-1215-01 
+>         2         2         1         1         1         1         1         1 
+>  C-153-03  C-157-02  C-158-97  C-194-98  C-233-02  C-251-97  C-275-96  C-308-94 
+>         1         1         1         1         1         1         1         1 
+>  C-352-98  C-364-93  C-419-95  C-421-95  C-430-95  C-442-01  C-445-95  C-478-98 
+>         1         1         1         1         1         1         1         1 
+>  C-508-01  C-564-96  C-566-95  C-583-96  C-690-96  C-700-99  C-711-01  C-733-03 
+>         1         1         1         1         1         1         1         1 
+>  C-737-01  C-804-01  C-809-01  C-897-99 SU-111-97 SU-747-98  T-015-95  T-208-99 
+>         1         1         1         1         1         1         1         1 
+>  T-299-03  T-401-92  T-533-92  T-595-02  T-604-92 
+>         1         1         1         1         1
 ```
-
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
