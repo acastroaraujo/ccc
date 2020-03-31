@@ -1,15 +1,14 @@
 Package: ccc
-Title: What the Package Does (One Line, Title Case)
+Title: Sentencias de la Corte Constitucional de Colombia
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "andrés",
            family = "castro araújo",
            role = c("aut", "cre"),
            email = "acastroaraujo@gmai.com")
-Description: What the package does (one paragraph).
+Description: Este paquete sirve para extraer y trabajar con las sentencias de la Corte Constitucional de Colombia.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 RoxygenNote: 7.0.2
 Imports: 
     httr,

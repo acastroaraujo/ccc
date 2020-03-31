@@ -11,7 +11,7 @@ ccc_tema <- function(q, p = 0) {
   url <- paste0(
     "https://www.corteconstitucional.gov.co/relatoria/tematico.php?",
     "&pg=", p,
-    "&sql=", stringr::str_replace(q, pattern = " +", "+")
+    "&sql=", stringr::str_replace_all(q, pattern = " +", "+")
   )
 
   obj <- httr::GET(url)
@@ -30,6 +30,10 @@ ccc_tema <- function(q, p = 0) {
     stringr::str_remove("\\(.+\\)") %>%
     stringr::str_remove("^\\d+") %>%
     stringr::str_squish()
+
+  if (purrr::is_empty(temas)) {
+    return(NULL)
+  }
 
   num_children <- 1:length(temas)
   input_nodes <- stringr::str_glue(".cuadro:nth-child({num_children}) a")

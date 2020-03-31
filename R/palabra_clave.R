@@ -12,7 +12,7 @@ ccc_palabra_clave <- function(q, p = 0) {
   url <- paste0(
     "https://www.corteconstitucional.gov.co/relatoria/query.aspx?anio=/relatoria/",
     "&pg=", p,
-    "&buscar=", stringr::str_replace(q, pattern = " +", "+")
+    "&buscar=", stringr::str_replace_all(q, pattern = " +", "+")
   )
 
   obj <- httr::GET(url)
@@ -29,6 +29,10 @@ ccc_palabra_clave <- function(q, p = 0) {
     rvest::html_nodes(".grow a") %>%
     rvest::html_text() %>%
     stringr::str_squish()
+
+  if (purrr::is_empty(sentencia)) {
+    return(NULL)
+  }
 
   link <- website %>%
     rvest::html_nodes(".grow a") %>%
