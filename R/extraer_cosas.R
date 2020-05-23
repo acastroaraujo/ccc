@@ -10,7 +10,10 @@
 #' @export
 #'
 ccc_texto <- function(link) {
-  website <- paste0("https://www.corteconstitucional.gov.co", link) %>%
+  stopifnot(stringr::str_detect(link, pattern = "\\.htm"))
+  message("Descargando: ", link)
+  
+  website <- httr::RETRY("GET", paste0("https://www.corteconstitucional.gov.co", link)) %>% 
     xml2::read_html()
 
   output <- website %>%
@@ -25,7 +28,6 @@ ccc_texto <- function(link) {
       stringr::str_squish()
   }
 
-  cat(".")
   return(paste(output, collapse = " "))
 }
 
@@ -55,7 +57,9 @@ ccc_sentencias_citadas <- function(texto) {
 #'
 ccc_pp <- function(link) {
   stopifnot(stringr::str_detect(link, pattern = "\\.htm"))
-  website <- paste0("https://www.corteconstitucional.gov.co", link) %>%
+  message("Descargando: ", link)
+  
+  website <- httr::RETRY("GET", paste0("https://www.corteconstitucional.gov.co", link)) %>% 
     xml2::read_html()
 
   website %>%

@@ -7,8 +7,20 @@
 #' @keywords internal
 NULL
 
-# The following block is used by usethis to automatically manage
-# roxygen namespace tags. Modify with care!
-## usethis namespace: start
-## usethis namespace: end
-NULL
+
+extract_year <- function(x) {
+  stringr::str_extract(x, "\\d{2}$") %>%
+    as.Date("%y") %>%
+    format("%Y") %>%
+    as.integer()
+}
+
+
+make_query <- function(x) {
+  reserved_chrs <- c("!" = "%21", "\\$" = "%24", "&" = "%26", "'" = "%27", "\\(" = "%28", "\\)" = "%29", 
+                     "\\*" = "%2A", "," = "%2C", ";" = "%3B", "=" = "%3D", ":" = "%3A",
+                     "/" = "%2F", "\\?" = "%3F", "@" = "%40", "#" = "%23", "\\[" = "%5B", "\\]" = "%5D")
+  
+  stringr::str_replace_all(x, pattern = c(" +" = "+", reserved_chrs))
+}
+

@@ -11,10 +11,10 @@ ccc_tema <- function(q, p = 0) {
   url <- paste0(
     "https://www.corteconstitucional.gov.co/relatoria/tematico.php?",
     "&pg=", p,
-    "&sql=", stringr::str_replace_all(q, pattern = " +", "+")
+    "&sql=", make_query(q)
   )
 
-  obj <- httr::GET(url)
+  obj <- httr::RETRY("GET", url)
   stopifnot(httr::status_code(obj) == 200)
   website <- httr::content(obj)
 

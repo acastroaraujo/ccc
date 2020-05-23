@@ -12,10 +12,10 @@ ccc_palabra_clave <- function(q, p = 0) {
   url <- paste0(
     "https://www.corteconstitucional.gov.co/relatoria/query.aspx?anio=/relatoria/",
     "&pg=", p,
-    "&buscar=", stringr::str_replace_all(q, pattern = " +", "+")
+    "&buscar=", make_query(q)
   )
 
-  obj <- httr::GET(url)
+  obj <- httr::RETRY("GET", url)
   stopifnot(httr::status_code(obj) == 200)
   website <- httr::content(obj)
 
@@ -47,9 +47,4 @@ ccc_palabra_clave <- function(q, p = 0) {
 }
 
 
-extract_year <- function(x) {
-  stringr::str_extract(x, "\\d{2}$") %>%
-    as.Date("%y") %>%
-    format("%Y") %>%
-    as.integer()
-}
+
