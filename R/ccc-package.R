@@ -8,6 +8,9 @@
 NULL
 
 
+# helper functions --------------------------------------------------------
+
+
 extract_year <- function(x) {
   stringr::str_extract(x, "\\d{2}$") %>%
     as.Date("%y") %>%
@@ -24,3 +27,8 @@ make_query <- function(x) {
   stringr::str_replace_all(x, pattern = c(" +" = "+", reserved_chrs))
 }
 
+extract_href_node <- function(x, input_node) {
+  x %>%
+    rvest::html_nodes(input_node) %>%
+    rvest::html_attr("href")
+}

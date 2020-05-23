@@ -51,8 +51,3 @@ ccc_tema <- function(q, p = 0) {
 }
 
 
-extract_href_node <- function(x, input_node) {
-  x %>%
-    rvest::html_nodes(input_node) %>%
-    rvest::html_attr("href")
-}
