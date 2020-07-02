@@ -10,7 +10,6 @@ NULL
 
 # helper functions --------------------------------------------------------
 
-
 extract_year <- function(x) {
   stringr::str_extract(x, "\\d{2}$") %>%
     as.Date("%y") %>%

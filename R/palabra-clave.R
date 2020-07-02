@@ -21,9 +21,12 @@ ccc_palabra_clave <- function(q, p = 0) {
 
   num_resultados <- website %>%
     rvest::html_text() %>%
-    stringr::str_extract("Total de Registros --> \\d+")
-
-  message(num_resultados)
+    stringr::str_extract("Total de Registros --> \\d+") %>% 
+    stringr::str_extract("\\d+") %>% 
+    as.double()
+  
+  tot <- floor(num_resultados / 100)
+  message("Total de Registros: ", num_resultados, "  [", p,  ", ", tot, "]")
 
   sentencia <- website %>%
     rvest::html_nodes(".grow a") %>%

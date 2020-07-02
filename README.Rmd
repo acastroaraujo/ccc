@@ -27,13 +27,17 @@ Se puede installar la versión en desarrollo desde [GitHub](https://github.com/)
 devtools::install_github("acastroaraujo/ccc")
 ```
 
-Tiene 5 funciones:
+Tiene 7 funciones:
 
 - `ccc_tema()` y `ccc_palabra_clave()` son una interface a los __buscadores__ de la [página web](https://www.corteconstitucional.gov.co/relatoria/) de la Corte Constitucional.
 
 - `ccc_texto()` y `ccc_pp()` extraen el __texto__ y los __pie de página__ de una dirección (ej." "/relatoria/2017/C-160-17.htm").
 
+- `ccc_texto_pp()` extrae ambas cosas al mismo tiempo.
+
 - `ccc_sentencias_citadas()` extrae las sentencias que han sido citadas por un texto.
+
+- `ccc_leyes_citadas()` extrae las leyes que han sido citadas por un texto.
 
 
 ## Buscar por tema o palabra clave
@@ -43,10 +47,10 @@ library(ccc)
 ```
 
 ```{r}
-palabra_clave <- ccc_palabra_clave("jep", p = 0)
+palabra_clave <- ccc_palabra_clave("paz", p = 0)
 ```
 
-`ccc_palabra_clave()` y `ccc_tema()` extraen 100 resultados por página. Si el total de registros supera los 100, se necesita aumentar el argumento `p` (i.e. `p = 1`).
+`ccc_palabra_clave()` extraen 100 resultados por página. Si el total de registros supera los 100, se necesita aumentar el argumento `p` (i.e. `p = 1`, `p = 2`). En la consola aparece un cuadrado que señala cuántos páginas son (en este caso: 54).
 
 Así se ve el resultado:
 
@@ -54,19 +58,36 @@ Así se ve el resultado:
 str(palabra_clave)
 ```
 
-La función `ccc_tema()` produce (a mi juicio) resultados más robustos:
+La función `ccc_tema()` extrae 200 resultados por página. Estos resultados son distintos porque la Secretaría de la Corte (creo) es quien se encarga de seleccionar las sentencias:
 
 ```{r}
-tema <- ccc_tema("jep")
+tema <- ccc_tema("paz")
 str(tema)
 ```
+
+__Búsqueda con operadores__
+
+Las búsquedas también se pueden hacer con operadores de la siguiente manera:
+
+```{r}
+tema <- ccc_tema('"paz" AND NOT "paz del rio"', p = 2)
+str(tema)
+
+tema <- ccc_tema('"paz" AND "jep"')
+str(tema)
+```
+
+__NOTA.__ Para que la búsqueda con operadores funcione se deben usar comillas (`"`) alrededor de cada palabra.
+
+Esto funciona: `'"paz" AND "jep"'`
+
+Esto NO funciona: `"'paz' AND 'jep'"`
 
 ## Extraer texto
 
 ```{r}
 texto <- ccc_texto("/relatoria/2003/c-776-03.htm")
 ```
-
 
 Se pueden extraer muchos documentos usando tidyverse, aunque esto se puede demorar un rato...
 
@@ -80,32 +101,35 @@ df <- tema %>%
 df <- df %>% 
   mutate(texto = map_chr(url, ccc_texto))
 
-head(df)
-
-## primeros mil caracteres de la C-776-03
-texto %>% 
-  stringr::str_trunc(1e3) %>% 
-  stringr::str_wrap() %>% 
-  writeLines()
+df
 ```
 
 ## Extraer pies de página
 
 ```{r}
 pp <- ccc_pp("/relatoria/2003/c-776-03.htm")
-pp[1:5] ## primeros cinco pies de página
+pp[1:8] ## primeros ocho pies de página
+```
+
+## Extraer texto y pies de página
+
+```{r}
+texto_pp <- ccc_texto_pp("/relatoria/2003/c-776-03.htm")
 ```
 
 ## Extraer sentencias citas
 
 ```{r}
-sentencias_citadas <- ccc_sentencias_citadas(texto)
+sentencias_citadas <- ccc_sentencias_citadas(texto_pp)
+
 table(sentencias_citadas) %>% sort(decreasing = TRUE)
 ```
 
+## Extraer leyes citas
+
 ```{r}
-sentencias_citadas <- ccc_sentencias_citadas(pp)
-table(sentencias_citadas) %>% sort(decreasing = TRUE)
+leyes_citadas <- ccc_leyes_citadas(texto_pp)
+table(leyes_citadas) %>% sort(decreasing = TRUE)
 ```
 
 
