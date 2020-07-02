@@ -4,10 +4,10 @@
 \alias{ccc_texto}
 \title{Extractor de sentencia}
 \usage{
-ccc_texto(link)
+ccc_texto(path)
 }
 \arguments{
-\item{link}{la dirección de la sentencia (e.g. "/relatoria/2006/C-355-06.htm")}
+\item{path}{la dirección de la sentencia (e.g. "/relatoria/2006/C-355-06.htm")}
 }
 \value{
 el texto de la sentencia

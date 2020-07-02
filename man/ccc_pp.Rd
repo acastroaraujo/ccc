@@ -4,10 +4,10 @@
 \alias{ccc_pp}
 \title{Extractor de pie de páginas}
 \usage{
-ccc_pp(link)
+ccc_pp(path)
 }
 \arguments{
-\item{link}{la dirección de la sentencia (e.g. "/relatoria/2006/C-355-06.htm")}
+\item{path}{la dirección de la sentencia (e.g. "/relatoria/2006/C-355-06.htm")}
 }
 \value{
 un vector de pies de página

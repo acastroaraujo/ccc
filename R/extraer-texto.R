@@ -1,17 +1,17 @@
 
 #' Extractor de sentencia
 #'
-#' @param link la dirección de la sentencia (e.g. "/relatoria/2006/C-355-06.htm")
+#' @param path la dirección de la sentencia (e.g. "/relatoria/2006/C-355-06.htm")
 #'
 #' @return el texto de la sentencia
 #' @export
 #'
-ccc_texto <- function(link) {
+ccc_texto <- function(path) {
   
-  if (!stringr::str_detect(link, pattern = "\\.htm")) stop(call. = FALSE, "la dir. debe terminar en .htm")
-  message("Descargando: ", link)
+  if (!stringr::str_detect(path, pattern = "\\.htm")) stop(call. = FALSE, "la dir. debe terminar en .htm")
+  message("Descargando: ", path)
   
-  website <- httr::RETRY("GET", paste0("https://www.corteconstitucional.gov.co", link)) %>% 
+  website <- httr::RETRY("GET", paste0("https://www.corteconstitucional.gov.co", path)) %>% 
     xml2::read_html()
   
   ## PROVISIONAL:
@@ -35,17 +35,17 @@ ccc_texto <- function(link) {
 
 #' Extractor de pie de páginas
 #'
-#' @param link la dirección de la sentencia (e.g. "/relatoria/2006/C-355-06.htm")
+#' @param path la dirección de la sentencia (e.g. "/relatoria/2006/C-355-06.htm")
 #'
 #' @return un vector de pies de página
 #' @export
 #'
-ccc_pp <- function(link) {
+ccc_pp <- function(path) {
   
-  if (!stringr::str_detect(link, pattern = "\\.htm")) stop(call. = FALSE, "la dir. debe terminar en .htm")
-  message("Descargando: ", link)
+  if (!stringr::str_detect(path, pattern = "\\.htm")) stop(call. = FALSE, "la dir. debe terminar en .htm")
+  message("Descargando: ", path)
   
-  website <- httr::RETRY("GET", paste0("https://www.corteconstitucional.gov.co", link)) %>% 
+  website <- httr::RETRY("GET", paste0("https://www.corteconstitucional.gov.co", path)) %>% 
     xml2::read_html()
   
   output <- website %>%
@@ -63,17 +63,17 @@ ccc_pp <- function(link) {
 
 #' Extractor de sentencia y pies de página
 #'
-#' @param link la dirección de la sentencia (e.g. "/relatoria/2006/C-355-06.htm")
+#' @param path la dirección de la sentencia (e.g. "/relatoria/2006/C-355-06.htm")
 #'
 #' @return el texto de la sentencia y sus pies de página
 #' @export
 #'
-ccc_texto_pp <- function(link) {
+ccc_texto_pp <- function(path) {
   
-  if (!stringr::str_detect(link, pattern = "\\.htm")) stop(call. = FALSE, "la dir. debe terminar en .htm")
-  message("Descargando: ", link)
+  if (!stringr::str_detect(path, pattern = "\\.htm")) stop(call. = FALSE, "la dir. debe terminar en .htm")
+  message("Descargando: ", path)
   
-  website <- httr::RETRY("GET", paste0("https://www.corteconstitucional.gov.co", link)) %>% 
+  website <- httr::RETRY("GET", paste0("https://www.corteconstitucional.gov.co", path)) %>% 
     xml2::read_html()
   
   ## Cuerpo
@@ -95,8 +95,10 @@ ccc_texto_pp <- function(link) {
   pp <- website %>%
     rvest::html_nodes(".amplia div div p") %>%
     rvest::html_text() %>% 
-    stringr::str_squish() %>% 
-    paste(collapse = " ")
+    stringr::str_squish()
+  
+  body <- paste(body, collapse = " ")
+  pp <- paste(pp, collapse = " ")
   
   return(paste(body, pp, collapse = " "))
   

@@ -4,10 +4,10 @@
 \alias{ccc_texto_pp}
 \title{Extractor de sentencia y pies de página}
 \usage{
-ccc_texto_pp(link)
+ccc_texto_pp(path)
 }
 \arguments{
-\item{link}{la dirección de la sentencia (e.g. "/relatoria/2006/C-355-06.htm")}
+\item{path}{la dirección de la sentencia (e.g. "/relatoria/2006/C-355-06.htm")}
 }
 \value{
 el texto de la sentencia y sus pies de página

@@ -99,7 +99,7 @@ df <- tema %>%
   distinct()         ## porque una sentencia quepa dentro de varios temas
 
 df <- df %>% 
-  mutate(texto = map_chr(url, ccc_texto))
+  mutate(texto = map_chr(path, ccc_texto))
 
 df
 ```

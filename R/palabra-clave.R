@@ -41,10 +41,10 @@ ccc_palabra_clave <- function(q, p = 0) {
     rvest::html_nodes(".grow a") %>%
     rvest::html_attr("href")
 
-  output <- tibble::tibble(sentencia, url = link) %>%
+  output <- tibble::tibble(sentencia, path = link) %>%
     dplyr::mutate(type = stringr::str_extract(.data$sentencia, "^(C|SU|T|A)"),
                   year = extract_year(.data$sentencia)) %>%
-    dplyr::select(.data$sentencia, .data$type, .data$year, .data$url)
+    dplyr::select(.data$sentencia, .data$type, .data$year, .data$path)
 
   return(output)
 }

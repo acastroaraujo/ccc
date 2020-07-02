@@ -43,12 +43,12 @@ ccc_tema <- function(q, p = 0) {
 
   link <- purrr::map(input_nodes, extract_href_node, x = website)
 
-  output <- tibble::tibble(topic = temas, url = link) %>%
-    tidyr::unnest(.data$url) %>%
-    dplyr::mutate(sentencia = stringr::str_replace(.data$url, pattern = ".+\\/\\d{4}\\/([-ACSUT\\d]+)\\.htm", replacement = "\\1"),
+  output <- tibble::tibble(topic = temas, path = link) %>%
+    tidyr::unnest(.data$path) %>%
+    dplyr::mutate(sentencia = stringr::str_replace(.data$path, pattern = ".+\\/\\d{4}\\/([-ACSUT\\d]+)\\.htm", replacement = "\\1"),
                   type = stringr::str_extract(.data$sentencia, "^(C|SU|T|A)"),
                   year = extract_year(.data$sentencia)) %>%
-    dplyr::select(.data$sentencia, .data$type, .data$year, .data$topic, .data$url)
+    dplyr::select(.data$sentencia, .data$type, .data$year, .data$topic, .data$path)
 
   return(output)
 }
