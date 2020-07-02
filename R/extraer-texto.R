@@ -95,7 +95,8 @@ ccc_texto_pp <- function(link) {
   pp <- website %>%
     rvest::html_nodes(".amplia div div p") %>%
     rvest::html_text() %>% 
-    stringr::str_squish()
+    stringr::str_squish() %>% 
+    paste(collapse = " ")
   
   return(paste(body, pp, collapse = " "))
   
