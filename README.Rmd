@@ -67,7 +67,7 @@ str(tema)
 
 __Búsqueda con operadores__
 
-Las búsquedas también se pueden hacer con operadores de la siguiente manera:
+Las búsquedas también se pueden hacer con _operadores_ de la siguiente manera:
 
 ```{r}
 tema <- ccc_tema('"paz" AND NOT "paz del rio"', p = 2)
@@ -131,6 +131,8 @@ table(sentencias_citadas) %>% sort(decreasing = TRUE)
 leyes_citadas <- ccc_leyes_citadas(texto_pp)
 table(leyes_citadas) %>% sort(decreasing = TRUE)
 ```
+
+
 
 
 

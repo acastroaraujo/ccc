@@ -44,11 +44,11 @@ library(ccc)
 
 ``` r
 palabra_clave <- ccc_palabra_clave("paz", p = 0)
-> Total de Registros: 5472  [0, 54]
+> Total de Registros: 5469  [0, 54]
 ```
 
 `ccc_palabra_clave()` extraen 100 resultados por página. Si el total de
-registros supera los 100, se necesita aumentar el argumento `p` (i.e. `p
+registros supera los 100, se necesita aumentar el argumento `p` (i.e. `p
 = 1`, `p = 2`). En la consola aparece un cuadrado que señala cuántos
 páginas son (en este caso: 54).
 
@@ -69,7 +69,7 @@ quien se encarga de seleccionar las sentencias:
 
 ``` r
 tema <- ccc_tema("paz")
-> Total de Registros: 1494  [0, 7]
+> Total de Registros: 1492  [0, 7]
 str(tema)
 > tibble [222 × 5] (S3: tbl_df/tbl/data.frame)
 >  $ sentencia: chr [1:222] "T-496-08" "T-647-03" "T-718-02" "T-796-07" ...
@@ -81,19 +81,19 @@ str(tema)
 
 **Búsqueda con operadores**
 
-Las búsquedas también se pueden hacer con operadores de la siguiente
+Las búsquedas también se pueden hacer con *operadores* de la siguiente
 manera:
 
 ``` r
 tema <- ccc_tema('"paz" AND NOT "paz del rio"', p = 2)
-> Total de Registros: 1486  [2, 7]
+> Total de Registros: 1484  [2, 7]
 str(tema)
-> tibble [500 × 5] (S3: tbl_df/tbl/data.frame)
->  $ sentencia: chr [1:500] "C-575-06" "C-575-06" "C-370-06" "C-694-15" ...
->  $ type     : chr [1:500] "C" "C" "C" "C" ...
->  $ year     : int [1:500] 2006 2006 2006 2015 1995 2015 2015 2015 2004 2002 ...
->  $ topic    : chr [1:500] "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Protección de su intimidad y seguridad cuando resulte amenazadas" "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Protección especial debe brindarse con el consentimiento de la víctima" "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Representación judicial en juicio" "DERECHOS DE LAS VICTIMAS EN MATERIA DE RESTITUCION DE TIERRAS DENTRO DEL PROCESO DE JUSTICIA Y PAZ-No existe vulneración" ...
->  $ path     : chr [1:500] "/relatoria/2006/C-575-06.htm" "/relatoria/2006/C-575-06.htm" "/relatoria/2006/C-370-06.htm" "/relatoria/2015/C-694-15.htm" ...
+> tibble [501 × 5] (S3: tbl_df/tbl/data.frame)
+>  $ sentencia: chr [1:501] "C-575-06" "C-370-06" "C-694-15" "T-217-95" ...
+>  $ type     : chr [1:501] "C" "C" "C" "T" ...
+>  $ year     : int [1:501] 2006 2006 2015 1995 2015 2015 2015 2004 2002 2019 ...
+>  $ topic    : chr [1:501] "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Protección especial debe brindarse con el consentimiento de la víctima" "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Representación judicial en juicio" "DERECHOS DE LAS VICTIMAS EN MATERIA DE RESTITUCION DE TIERRAS DENTRO DEL PROCESO DE JUSTICIA Y PAZ-No existe vulneración" "DERECHOS DE LOS MENORES A LA INTEGRIDAD FAMILIAR Y A LA PAZ" ...
+>  $ path     : chr [1:501] "/relatoria/2006/C-575-06.htm" "/relatoria/2006/C-370-06.htm" "/relatoria/2015/C-694-15.htm" "/relatoria/1995/T-217-95.htm" ...
 
 tema <- ccc_tema('"paz" AND "jep"')
 > Total de Registros: 4  [0, 0]
@@ -134,6 +134,13 @@ df <- df %>%
   mutate(texto = map_chr(path, ccc_texto))
 
 df
+> Warning: `...` is not empty.
+> 
+> We detected these problematic arguments:
+> * `needs_dots`
+> 
+> These dots only exist to allow future extensions and should be empty.
+> Did you misspecify an argument?
 > # A tibble: 3 x 5
 >   sentencia type   year path               texto                                
 >   <chr>     <chr> <int> <chr>              <chr>                                
