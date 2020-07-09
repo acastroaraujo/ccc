@@ -37,7 +37,7 @@ Tiene 7 funciones:
 
 - `ccc_sentencias_citadas()` extrae las sentencias que han sido citadas por un texto.
 
-- `ccc_leyes_citadas()` extrae las leyes que han sido citadas por un texto
+- `ccc_leyes_citadas()` extrae las leyes que han sido citadas por un texto.
 
 
 ## Buscar por tema o palabra clave
