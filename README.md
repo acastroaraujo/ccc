@@ -44,7 +44,7 @@ library(ccc)
 
 ``` r
 palabra_clave <- ccc_palabra_clave("paz", p = 0)
-> Total de Registros: 5469  [0, 54]
+> Total de Registros: 5463  [0, 54]
 ```
 
 `ccc_palabra_clave()` extraen 100 resultados por página. Si el total de
@@ -134,13 +134,6 @@ df <- df %>%
   mutate(texto = map_chr(path, ccc_texto))
 
 df
-> Warning: `...` is not empty.
-> 
-> We detected these problematic arguments:
-> * `needs_dots`
-> 
-> These dots only exist to allow future extensions and should be empty.
-> Did you misspecify an argument?
 > # A tibble: 3 x 5
 >   sentencia type   year path               texto                                
 >   <chr>     <chr> <int> <chr>              <chr>                                
