@@ -12,6 +12,9 @@ ccc_sentencias_citadas <- function(texto) {
     purrr::flatten_chr() %>%
     stringr::str_replace_all(pattern = "(S|s)entencia ([TCSU]{1,2}-\\d+) de \\d{2}(\\d{2})",
                              replacement = "\\2-\\3")
+  
+  ## Ojo, creo que no estoy extrayendo autos, pero pues eso no debe importar mucho
+  ## Crear función aparte??
 }
 
 #' Extractor de leyes citadas

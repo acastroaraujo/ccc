@@ -20,7 +20,7 @@ devtools::install_github("acastroaraujo/ccc")
 
 Tiene 7 funciones:
 
-  - `ccc_tema()` y `ccc_palabra_clave()` son una interface a los
+  - `ccc_tema()`, `ccc_palabra_clave()`, son una interface a los
     **buscadores** de la [página
     web](https://www.corteconstitucional.gov.co/relatoria/) de la Corte
     Constitucional.
@@ -36,6 +36,9 @@ Tiene 7 funciones:
   - `ccc_leyes_citadas()` extrae las leyes que han sido citadas por un
     texto.
 
+  - `ccc_num_url()` extrae el URL de la sentencia a partir del número de
+    providencia.
+
 ## Buscar por tema o palabra clave
 
 ``` r
@@ -44,7 +47,7 @@ library(ccc)
 
 ``` r
 palabra_clave <- ccc_palabra_clave("paz", p = 0)
-> Total de Registros: 5463  [0, 54]
+> Total de Registros: 5457  [0, 54]
 ```
 
 `ccc_palabra_clave()` extraen 100 resultados por página. Si el total de
@@ -69,14 +72,14 @@ quien se encarga de seleccionar las sentencias:
 
 ``` r
 tema <- ccc_tema("paz")
-> Total de Registros: 1492  [0, 7]
+> Total de Registros: 1512  [0, 7]
 str(tema)
-> tibble [222 × 5] (S3: tbl_df/tbl/data.frame)
->  $ sentencia: chr [1:222] "T-496-08" "T-647-03" "T-718-02" "T-796-07" ...
->  $ type     : chr [1:222] "T" "T" "T" "T" ...
->  $ year     : int [1:222] 2008 2003 2002 2007 2010 2019 2019 2006 2015 2005 ...
->  $ topic    : chr [1:222] "ACCION DE CUMPLIMIENTO EN MATERIA DE LEY DE JUSTICIA Y PAZ-Medio inidóneo para la protección de derechos fundam"| __truncated__ "ACCION DE TUTELA CONTRA ACERIAS PAZ DEL RIO-No pago de aportes a Fondos Privados de Pensiones" "ACCION DE TUTELA CONTRA ACERIAS PAZ DEL RIO-No pago de aportes al ISS aunque se está devengando otra pensión" "ACCION DE TUTELA CONTRA DECISIONES DE JUECES DE PAZ-Procede aunque no se aplican reglas generales de tutela con"| __truncated__ ...
->  $ path     : chr [1:222] "/relatoria/2008/T-496-08.htm" "/relatoria/2003/T-647-03.htm" "/relatoria/2002/T-718-02.htm" "/relatoria/2007/T-796-07.htm" ...
+> tibble [229 × 5] (S3: tbl_df/tbl/data.frame)
+>  $ sentencia: chr [1:229] "T-496-08" "T-647-03" "T-718-02" "T-796-07" ...
+>  $ type     : chr [1:229] "T" "T" "T" "T" ...
+>  $ year     : int [1:229] 2008 2003 2002 2007 2010 2019 2019 2006 2015 2005 ...
+>  $ topic    : chr [1:229] "ACCION DE CUMPLIMIENTO EN MATERIA DE LEY DE JUSTICIA Y PAZ-Medio inidóneo para la protección de derechos fundam"| __truncated__ "ACCION DE TUTELA CONTRA ACERIAS PAZ DEL RIO-No pago de aportes a Fondos Privados de Pensiones" "ACCION DE TUTELA CONTRA ACERIAS PAZ DEL RIO-No pago de aportes al ISS aunque se está devengando otra pensión" "ACCION DE TUTELA CONTRA DECISIONES DE JUECES DE PAZ-Procede aunque no se aplican reglas generales de tutela con"| __truncated__ ...
+>  $ path     : chr [1:229] "/relatoria/2008/T-496-08.htm" "/relatoria/2003/T-647-03.htm" "/relatoria/2002/T-718-02.htm" "/relatoria/2007/T-796-07.htm" ...
 ```
 
 **Búsqueda con operadores**
@@ -86,14 +89,14 @@ manera:
 
 ``` r
 tema <- ccc_tema('"paz" AND NOT "paz del rio"', p = 2)
-> Total de Registros: 1484  [2, 7]
+> Total de Registros: 1504  [2, 7]
 str(tema)
-> tibble [501 × 5] (S3: tbl_df/tbl/data.frame)
->  $ sentencia: chr [1:501] "C-575-06" "C-370-06" "C-694-15" "T-217-95" ...
->  $ type     : chr [1:501] "C" "C" "C" "T" ...
->  $ year     : int [1:501] 2006 2006 2015 1995 2015 2015 2015 2004 2002 2019 ...
->  $ topic    : chr [1:501] "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Protección especial debe brindarse con el consentimiento de la víctima" "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Representación judicial en juicio" "DERECHOS DE LAS VICTIMAS EN MATERIA DE RESTITUCION DE TIERRAS DENTRO DEL PROCESO DE JUSTICIA Y PAZ-No existe vulneración" "DERECHOS DE LOS MENORES A LA INTEGRIDAD FAMILIAR Y A LA PAZ" ...
->  $ path     : chr [1:501] "/relatoria/2006/C-575-06.htm" "/relatoria/2006/C-370-06.htm" "/relatoria/2015/C-694-15.htm" "/relatoria/1995/T-217-95.htm" ...
+> tibble [526 × 5] (S3: tbl_df/tbl/data.frame)
+>  $ sentencia: chr [1:526] "C-370-06" "C-575-06" "C-575-06" "C-370-06" ...
+>  $ type     : chr [1:526] "C" "C" "C" "C" ...
+>  $ year     : int [1:526] 2006 2006 2006 2006 2015 1995 2015 2015 2015 2004 ...
+>  $ topic    : chr [1:526] "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Participación en diligencias de versión libre, formulación de"| __truncated__ "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Protección de su intimidad y seguridad cuando resulte amenazadas" "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Protección especial debe brindarse con el consentimiento de la víctima" "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Representación judicial en juicio" ...
+>  $ path     : chr [1:526] "/relatoria/2006/C-370-06.htm" "/relatoria/2006/C-575-06.htm" "/relatoria/2006/C-575-06.htm" "/relatoria/2006/C-370-06.htm" ...
 
 tema <- ccc_tema('"paz" AND "jep"')
 > Total de Registros: 4  [0, 0]
@@ -210,4 +213,38 @@ table(leyes_citadas) %>% sort(decreasing = TRUE)
 >               1               1               1               1               1 
 > Ley 599 de 2000  Ley 69 de 1993 Ley 715 de 2000  Ley 75 de 1986  Ley 89 de 1993 
 >               1               1               1               1               1
+```
+
+## Extraer URL de número de providencia
+
+``` r
+# con guíon o barrita
+ccc_num_url("C-017-18")
+> Total de Registros: 1  [0, 0]
+> [1] "/Relatoria/2018/C-017-18.htm"
+ccc_num_url("C-017/18")
+> Total de Registros: 1  [0, 0]
+> [1] "/Relatoria/2018/C-017-18.htm"
+
+## con o sin guión para A y SU
+ccc_num_url("A232-20")
+> Total de Registros: 1  [0, 0]
+> [1] "/Relatoria/autos/2020/A232-20.htm"
+ccc_num_url("A-232-20")
+> Total de Registros: 1  [0, 0]
+> [1] "/Relatoria/autos/2020/A232-20.htm"
+
+## número al azar
+ccc_num_url("776")
+> Total de Registros: 18  [0, 0]
+> Warning: La búsqueda encontró más de un URL
+>  [1] "/Relatoria/autos/2018/A776-18.htm" "/Relatoria/2015/T-776-15.htm"     
+>  [3] "/Relatoria/2014/T-776-14.htm"      "/Relatoria/2013/T-776-13.htm"     
+>  [5] "/Relatoria/2012/T-776-12.htm"      "/Relatoria/2011/T-776-11.htm"     
+>  [7] "/Relatoria/2010/C-776-10.htm"      "/Relatoria/2009/T-776-09.htm"     
+>  [9] "/Relatoria/2008/T-776-08.htm"      "/Relatoria/2007/T-776-07.htm"     
+> [11] "/Relatoria/2006/C-776-06.htm"      "/Relatoria/2005/T-776-05.htm"     
+> [13] "/Relatoria/2004/T-776-04.htm"      "/Relatoria/2003/C-776-03.htm"     
+> [15] "/Relatoria/2002/T-776-02.htm"      "/Relatoria/2001/C-776-01.htm"     
+> [17] "/Relatoria/2000/T-776-00.htm"      "/Relatoria/1998/T-776-98.htm"
 ```

@@ -29,7 +29,7 @@ devtools::install_github("acastroaraujo/ccc")
 
 Tiene 7 funciones:
 
-- `ccc_tema()` y `ccc_palabra_clave()` son una interface a los __buscadores__ de la [página web](https://www.corteconstitucional.gov.co/relatoria/) de la Corte Constitucional.
+- `ccc_tema()`, `ccc_palabra_clave()`, son una interface a los __buscadores__ de la [página web](https://www.corteconstitucional.gov.co/relatoria/) de la Corte Constitucional.
 
 - `ccc_texto()` y `ccc_pp()` extraen el __texto__ y los __pie de página__ de una dirección (ej." "/relatoria/2017/C-160-17.htm").
 
@@ -38,6 +38,8 @@ Tiene 7 funciones:
 - `ccc_sentencias_citadas()` extrae las sentencias que han sido citadas por un texto.
 
 - `ccc_leyes_citadas()` extrae las leyes que han sido citadas por un texto.
+
+- `ccc_num_url()` extrae el URL de la sentencia a partir del número de providencia.
 
 
 ## Buscar por tema o palabra clave
@@ -133,6 +135,20 @@ table(leyes_citadas) %>% sort(decreasing = TRUE)
 ```
 
 
+## Extraer URL de número de providencia
+
+```{r}
+# con guíon o barrita
+ccc_num_url("C-017-18")
+ccc_num_url("C-017/18")
+
+## con o sin guión para A y SU
+ccc_num_url("A232-20")
+ccc_num_url("A-232-20")
+
+## número al azar
+ccc_num_url("776")
+```
 
 
 
