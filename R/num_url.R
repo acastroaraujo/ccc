@@ -17,7 +17,7 @@ ccc_num_url <- function(q, p = 0) {
   url <- paste0(
     "https://www.corteconstitucional.gov.co/relatoria/providencia.aspx?",
     "&pg=", p,
-    "&buscar=", make_num(q)
+    "&buscar=", make_num_query(q)
   )
   
   obj <- httr::RETRY("GET", url)
@@ -35,7 +35,8 @@ ccc_num_url <- function(q, p = 0) {
   
   output <- website %>% 
     rvest::html_nodes(".grow a") %>% 
-    rvest::html_attr("href")
+    rvest::html_attr("href") %>% 
+    stringr::str_replace_all(c(" " = "%20"))
   
   if (purrr::is_empty(output)) return(NULL)
   if (length(output) > 1) warning(call. = FALSE, "La b", intToUtf8(250), "squeda encontr", intToUtf8(243), " m", intToUtf8(225), "s de un URL") 
@@ -44,12 +45,5 @@ ccc_num_url <- function(q, p = 0) {
   
 }
 
-make_num <- function(x) {
-  
-  formato_num <- c("(SU)-(\\d*)" = "\\1\\2", "(A)-(\\d*)" = "\\1\\2",
-                   "/(\\d+)$" = "-\\1")
-  stringr::str_replace_all(x, formato_num)
-  
-}
 
 

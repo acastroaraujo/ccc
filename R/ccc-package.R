@@ -1,14 +1,9 @@
 
-# This script was created with usethis::use_package_doc()
-# now %>% is available withoud having to type purrr::`%>%`
+# internals ---------------------------------------------------------------
 
-#' @importFrom purrr %>%
 #' @importFrom rlang .data
 #' @keywords internal
 NULL
-
-
-# helper functions --------------------------------------------------------
 
 extract_year <- function(x) {
   stringr::str_extract(x, "\\d{2}$") %>%
@@ -24,6 +19,14 @@ make_query <- function(x) {
                      "/" = "%2F", "\\?" = "%3F", "@" = "%40", "#" = "%23", "\\[" = "%5B", "\\]" = "%5D")
   
   stringr::str_replace_all(x, pattern = c(" +" = "+", reserved_chrs))
+}
+
+make_num_query <- function(x) {
+  
+  formato_num <- c("(^SU)-(\\d*)" = "\\1\\2", "(^A)-(\\d*)" = "\\1\\2",
+                   "/(\\d+$)" = "-\\1")
+  stringr::str_replace_all(x, formato_num)
+  
 }
 
 extract_href_node <- function(x, input_node) {
