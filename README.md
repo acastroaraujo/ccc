@@ -7,6 +7,8 @@
 
 <!-- badges: end -->
 
+<img src="man/figures/logo.png" width="40%" />
+
 El paquete `ccc` sirve para extraer información de la Corte
 Constitucional de Colombia.
 
@@ -47,7 +49,7 @@ library(ccc)
 
 ``` r
 palabra_clave <- ccc_palabra_clave("paz", p = 0)
-> Total de Registros: 5457  [0, 54]
+> Total de Registros: 5450  [0, 54]
 ```
 
 `ccc_palabra_clave()` extraen 100 resultados por página. Si el total de

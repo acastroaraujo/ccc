@@ -18,6 +18,10 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
+```{r, out.width="40%", echo=FALSE, align="left"}
+knitr::include_graphics("man/figures/logo.png")
+```
+
 El paquete `ccc` sirve para extraer información de la Corte Constitucional de Colombia. 
 
 Se puede installar la versión en desarrollo desde [GitHub](https://github.com/) con:
