@@ -110,6 +110,14 @@ df <- df %>%
 df
 ```
 
+_Esta es una función experimental para extraer la fecha completa:_
+
+```{r}
+df %>% 
+  mutate(date = ccc_fecha(sentencia, texto)) %>% 
+  select(sentencia, date)
+```
+
 ## Extraer pies de página
 
 ```{r}
@@ -153,6 +161,5 @@ ccc_num_url("A-232-20")
 ## número al azar
 ccc_num_url("776")
 ```
-
 
 

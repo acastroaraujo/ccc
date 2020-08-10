@@ -104,6 +104,5 @@ ccc_texto_pp <- function(path) {
   
 }
 
-  
-  
+
   

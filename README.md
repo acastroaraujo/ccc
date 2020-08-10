@@ -147,6 +147,20 @@ df
 > 3 C-674-17  C      2017 /relatoria/2017/C… "Sentencia C-674/17 REFORMA A LA EST…
 ```
 
+*Esta es una función experimental para extraer la fecha completa:*
+
+``` r
+df %>% 
+  mutate(date = ccc_fecha(sentencia, texto)) %>% 
+  select(sentencia, date)
+> # A tibble: 3 x 2
+>   sentencia date      
+>   <chr>     <date>    
+> 1 SU139-19  2019-03-28
+> 2 A512-17   2017-10-03
+> 3 C-674-17  2017-11-14
+```
+
 ## Extraer pies de página
 
 ``` r
