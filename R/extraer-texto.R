@@ -12,7 +12,7 @@ ccc_texto <- function(path) {
   message("Descargando: ", path)
   
   website <- httr::RETRY("GET", paste0("https://www.corteconstitucional.gov.co", path)) %>% 
-    xml2::read_html()
+    xml2::read_html(encoding = "latin1")
   
   ## PROVISIONAL:
   ## el problema está en que el formato cambia, dependiendo del año
@@ -46,7 +46,7 @@ ccc_pp <- function(path) {
   message("Descargando: ", path)
   
   website <- httr::RETRY("GET", paste0("https://www.corteconstitucional.gov.co", path)) %>% 
-    xml2::read_html()
+    xml2::read_html(encoding = "latin1")
   
   output <- website %>%
     rvest::html_nodes(".amplia div div p") %>%
@@ -74,7 +74,7 @@ ccc_texto_pp <- function(path) {
   message("Descargando: ", path)
   
   website <- httr::RETRY("GET", paste0("https://www.corteconstitucional.gov.co", path)) %>% 
-    xml2::read_html()
+    xml2::read_html(encoding = "latin1")
   
   ## Cuerpo
   
