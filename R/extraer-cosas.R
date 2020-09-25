@@ -60,31 +60,61 @@ ccc_fecha <- function(sentencia, texto) {
 }
 
 
+#' Información sobre magistrados
+#'
+#' @param texto el texto de la sentencia
+#'
+#' @return a tibble with names and information for each Justice
+#' @export
+#'
+ccc_magistrados <- function(texto) {
+
+    tipo <- c(
+      "Cópiese, notifíquese, comuníquese y cúmplase\\.?",
+      "Notifíquese, comuníquese y cúmplase\\.?",
+      "Cópiese, comuníquese al Gobierno, insértese en la Gaceta de la Corte Constitucional, cúmplase y archívese el expediente\\.?",
+      "Notifíquese, comuníquese, insértese en la Gaceta de la Corte Constitucional y cúmplase\\.?",
+      "Notifíquese, comuníquese, publíquese, insértese en la Gaceta de la Corte Constitucional y archívese el expediente\\.?",
+      "Comuníquese, notifíquese, cúmplase e insértese en la Gaceta de la Corte Constitucional\\.?",
+      "Notifíquese, comuníquese, cúmplase, publíquese, insértese en la Gaceta de la Corte Constitucional y archívese el expediente\\.?",
+      "Notifíquese, comuníquese, publíquese en la Gaceta de la Corte Constitucional y cúmplase,",
+      "Comuníquese, notifíquese y cúmplase\\.",
+      "Notifíquese, comuníquese, insértese en la Gaceta de la Corte Constitucional, cúmplase y archívese el expediente\\.",
+      "Cópiese, notifíquese, comuníquese e insértese en la Gaceta de la Corte Constitucional, cúmplase y archívese el expediente\\.",
+      "Cópiese, notifíquese, comuníquese, insértese en la Gaceta de la Corte Constitucional, cúmplase y archívese el expediente\\.",
+      "Cópiese, notifíquese, comuníquese, publíquese en la Gaceta de la Corte Constitucional y cúmplase\\."
+    )
+
+    index <- stringr::str_detect(texto, tipo)
+    
+    if (!any(index)) stop(call. = FALSE, "uknown pattern")
+
+    magistrado_string <- texto %>%
+      stringr::str_extract(stringr::regex(paste0(tipo[index], ".+$"), dotall = TRUE)) %>% 
+      stringr::str_remove("\\[1\\].+") %>% 
+      stringr::str_extract("(.+ Secretari(a|o) General)") %>% 
+      stringr::str_remove(tipo[index]) %>% 
+      stringr::str_squish()
+      
+      nombres <- magistrado_string %>% 
+        stringr::str_extract_all("[[:upper:] ]{2,}(?=[:upper:][:lower:]+)") %>% 
+        unlist() %>% 
+        stringr::str_squish()
+        
+      info <- magistrado_string %>% 
+        stringr::str_split(paste0(nombres, collapse = "|")) %>% 
+        unlist() %>% 
+        stringr::str_squish() 
+      
+      tibble::tibble(
+        nombre = stringr::str_to_title(nombres), 
+        info = info[info != ""]
+        ) 
+      
+}
+
+
 # Temporal, el output deberia ser algo asi:
 # https://www.datos.gov.co/Justicia-y-Derecho/Sentencias-Corte-Constitucional-2019/5wc9-ajax
-
-# ccc_magistrados <- function(texto) {
-#   
-#   tipo <- c("Cópiese, comuníquese al Gobierno, insértese en la Gaceta de la Corte Constitucional, cúmplase y archívese el expediente.", 
-#             "Notifíquese, comuníquese y cúmplase.")
-#   
-#   if (str_detect(texto, tipo[[1]])) {
-#     
-#     magistrado_string <- texto %>% 
-#       stringr::str_extract(pattern = regex(paste0(tipo[[1]], ".+$"), dotall = TRUE)) %>% 
-#       stringr::str_replace(tipo[[1]], "") 
-#       
-#     
-#     magistrado_string %>% 
-#       str_split("[:upper:][:lower:]+")
-#     
-#     We need to go back before the squish happens in the finding text function and use the white space to separate these people!!
-#     
-#   }
-#   
-#   
-# }
-
-
 
 

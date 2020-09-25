@@ -3,6 +3,7 @@
 export("%>%")
 export(ccc_fecha)
 export(ccc_leyes_citadas)
+export(ccc_magistrados)
 export(ccc_num_url)
 export(ccc_palabra_clave)
 export(ccc_pp)

@@ -14,6 +14,14 @@
 #' @export
 #'
 ccc_num_url <- function(q, p = 0) {
+  
+  if (stringr::str_detect(q, "-\\d{2}$")) {
+    y <- stringr::str_extract(q, "-\\d{2}$") %>% stringr::str_remove("-") %>% as.integer()
+    if (y >= 19) message("Atenci", intToUtf8(243), "n: El buscador no muestra resultados a partir del 2019")
+  } else {
+    message("Atenci", intToUtf8(243), "n: El buscador no muestra resultados a partir del 2019")
+  }
+  
   url <- paste0(
     "https://www.corteconstitucional.gov.co/relatoria/providencia.aspx?",
     "&pg=", p,
