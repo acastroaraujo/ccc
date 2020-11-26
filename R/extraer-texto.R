@@ -25,7 +25,7 @@ ccc_texto <- function(path) {
   
   if (purrr::is_empty(output)) {
     output <- website %>%
-      rvest::html_nodes(".Section1 span") %>%
+      rvest::html_nodes(".Section1") %>%
       rvest::html_text() %>%
       stringr::str_squish()
   }
@@ -92,7 +92,7 @@ ccc_texto_pp <- function(path) {
   
   if (purrr::is_empty(body)) {
     body <- website %>%
-      rvest::html_nodes(".Section1 span") %>%
+      rvest::html_nodes(".Section1") %>%
       rvest::html_text() %>%
       stringr::str_squish()
   }
