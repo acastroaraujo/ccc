@@ -7,11 +7,15 @@
 #' @export
 #'
 ccc_sentencias_citadas <- function(texto) {
+  
+  mes <- "(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)"
+  regex_ep <- paste0("(S|s)entencia (C|SU|T|A)-(\\d+) de(l \\d{1,2} de ", mes, " de)? \\d{2}(\\d{2})")
+  
   texto %>%
-    stringr::str_extract_all("(S|s)entencia (C|SU|T|A)-\\d+ de \\d{4}") %>%
+    stringr::str_extract_all(regex_ep) %>%
     purrr::flatten_chr() %>%
-    stringr::str_replace_all(pattern = "(S|s)entencia ([TCSU]{1,2}-\\d+) de \\d{2}(\\d{2})",
-                             replacement = "\\2-\\3")
+    stringr::str_replace_all(pattern = regex_ep,
+                             replacement = "\\2-\\3-\\6")
   
   ## Ojo, creo que no estoy extrayendo autos, pero pues eso no debe importar mucho
   ## Crear función aparte??
@@ -116,5 +120,7 @@ ccc_magistrados <- function(texto) {
 
 # Temporal, el output deberia ser algo asi:
 # https://www.datos.gov.co/Justicia-y-Derecho/Sentencias-Corte-Constitucional-2019/5wc9-ajax
+
+
 
 
