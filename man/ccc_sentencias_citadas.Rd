@@ -10,7 +10,7 @@ ccc_sentencias_citadas(texto)
 \item{texto}{el texto de una sentencia, tal y como viene de ccc_extraer_texto()}
 }
 \value{
-una lista de sentencias citadas en el texto
+una lista de sentencias citadas (C, SU, o T) en el texto.
 }
 \description{
 Extractor de sentencias citadas

@@ -8,7 +8,7 @@
 <!-- badges: end -->
 
 Nota. La función `ccc_sentencias_citadas()` fue modificada bastante en
-esta fecha: 2020-12-08
+esta fecha: 2020-12-09
 
 <img src="man/figures/logo.png" width="40%" />
 
@@ -151,28 +151,19 @@ df
 > 4 C-674-17  C      2017 /relatoria/2017/C… "Sentencia C-674/17 REFORMA A LA EST…
 ```
 
-*Esta es una función experimental para extraer la fecha completa:*
+## Fecha
+
+Esta es una función experimental para extraer la fecha completa
+(i.e. mes y día).
 
 ``` r
+ccc_fecha("C-776-03", texto)
+> [1] "2003-09-09"
+
 df %>% 
-  mutate(date = ccc_fecha(sentencia, texto)) %>% 
-  select(sentencia, date)
-> Warning: Problem with `mutate()` input `date`.
-> ℹ the condition has length > 1 and only the first element will be used
-> ℹ Input `date` is `ccc_fecha(sentencia, texto)`.
-> Warning in if (is.na(input)) {: the condition has length > 1 and only the first
-> element will be used
-> Warning: Problem with `mutate()` input `date`.
-> ℹ the condition has length > 1 and only the first element will be used
-> ℹ Input `date` is `ccc_fecha(sentencia, texto)`.
-> Warning in if (is.na(input)) stop("La fecha de este texto tiene un formato
-> atípico.", : the condition has length > 1 and only the first element will be
-> used
-> Warning: Problem with `mutate()` input `date`.
-> ℹ the condition has length > 1 and only the first element will be used
-> ℹ Input `date` is `ccc_fecha(sentencia, texto)`.
-> Warning in if (stringr::str_detect(input, "acta")) {: the condition has length >
-> 1 and only the first element will be used
+  mutate(date = map2(sentencia, texto, ccc_fecha)) %>% 
+  select(sentencia, date) %>% 
+  unnest(date)
 > # A tibble: 4 x 2
 >   sentencia date      
 >   <chr>     <date>    
@@ -181,6 +172,8 @@ df %>%
 > 3 T-365-18  2018-09-04
 > 4 C-674-17  2017-11-14
 ```
+
+Nota. Esta función no funciona para el 100% de las sentencias.
 
 ## Extraer pies de página
 

@@ -112,13 +112,20 @@ df <- df %>%
 df
 ```
 
-_Esta es una función experimental para extraer la fecha completa:_
+## Fecha
+
+Esta es una función experimental para extraer la fecha completa (i.e. mes y día).
 
 ```{r}
+ccc_fecha("C-776-03", texto)
+
 df %>% 
-  mutate(date = ccc_fecha(sentencia, texto)) %>% 
-  select(sentencia, date)
+  mutate(date = map2(sentencia, texto, ccc_fecha)) %>% 
+  select(sentencia, date) %>% 
+  unnest(date)
 ```
+
+Nota. Esta función no funciona para el 100% de las sentencias.
 
 ## Extraer pies de página
 
