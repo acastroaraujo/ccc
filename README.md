@@ -7,6 +7,9 @@
 
 <!-- badges: end -->
 
+Nota. La función `ccc_sentencias_citadas()` fue modificada
+sutancialmente en esta fecha: 2020-12-08
+
 <img src="man/figures/logo.png" width="40%" />
 
 El paquete `ccc` sirve para extraer información de la Corte
@@ -49,7 +52,7 @@ library(ccc)
 
 ``` r
 palabra_clave <- ccc_palabra_clave("paz", p = 0)
-> Total de Registros: 5450  [0, 54]
+> Total de Registros: 5656  [0, 56]
 ```
 
 `ccc_palabra_clave()` extraen 100 resultados por página. Si el total de
@@ -62,10 +65,10 @@ Así se ve el resultado:
 ``` r
 str(palabra_clave)
 > tibble [100 × 4] (S3: tbl_df/tbl/data.frame)
->  $ sentencia: chr [1:100] "A180-20" "A173-20" "A166-20" "A165-20" ...
+>  $ sentencia: chr [1:100] "A410-20" "A398-20" "A397-20" "A396-20" ...
 >  $ type     : chr [1:100] "A" "A" "A" "A" ...
 >  $ year     : int [1:100] 2020 2020 2020 2020 2020 2020 2020 2020 2020 2020 ...
->  $ path     : chr [1:100] "/Relatoria/autos/2020/A180-20.htm" "/Relatoria/autos/2020/A173-20.htm" "/Relatoria/autos/2020/A166-20.htm" "/Relatoria/autos/2020/A165-20.htm" ...
+>  $ path     : chr [1:100] "/Relatoria/autos/2020/A410-20.htm" "/Relatoria/autos/2020/A398-20.htm" "/Relatoria/autos/2020/A397-20.htm" "/Relatoria/autos/2020/A396-20.htm" ...
 ```
 
 La función `ccc_tema()` extrae 200 resultados por página. Estos
@@ -74,7 +77,7 @@ quien se encarga de seleccionar las sentencias:
 
 ``` r
 tema <- ccc_tema("paz")
-> Total de Registros: 1512  [0, 7]
+> Total de Registros: 1515  [0, 7]
 str(tema)
 > tibble [229 × 5] (S3: tbl_df/tbl/data.frame)
 >  $ sentencia: chr [1:229] "T-496-08" "T-647-03" "T-718-02" "T-796-07" ...
@@ -91,24 +94,24 @@ manera:
 
 ``` r
 tema <- ccc_tema('"paz" AND NOT "paz del rio"', p = 2)
-> Total de Registros: 1504  [2, 7]
+> Total de Registros: 1507  [2, 7]
 str(tema)
-> tibble [526 × 5] (S3: tbl_df/tbl/data.frame)
->  $ sentencia: chr [1:526] "C-370-06" "C-575-06" "C-575-06" "C-370-06" ...
->  $ type     : chr [1:526] "C" "C" "C" "C" ...
->  $ year     : int [1:526] 2006 2006 2006 2006 2015 1995 2015 2015 2015 2004 ...
->  $ topic    : chr [1:526] "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Participación en diligencias de versión libre, formulación de"| __truncated__ "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Protección de su intimidad y seguridad cuando resulte amenazadas" "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Protección especial debe brindarse con el consentimiento de la víctima" "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Representación judicial en juicio" ...
->  $ path     : chr [1:526] "/relatoria/2006/C-370-06.htm" "/relatoria/2006/C-575-06.htm" "/relatoria/2006/C-575-06.htm" "/relatoria/2006/C-370-06.htm" ...
+> tibble [529 × 5] (S3: tbl_df/tbl/data.frame)
+>  $ sentencia: chr [1:529] "A009-15" "C-370-06" "C-370-06" "C-370-06" ...
+>  $ type     : chr [1:529] "A" "C" "C" "C" ...
+>  $ year     : int [1:529] 2015 2006 2006 2006 2006 2006 2006 2015 1995 2015 ...
+>  $ topic    : chr [1:529] "DERECHOS DE LAS VICTIMAS A LA VERDAD, JUSTICIA, REPARACION Y GARANTIAS DE NO REPETICION-Flexibilidad penal en p"| __truncated__ "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Acceso al expediente desde su inicio" "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Derecho a recibir información" "DERECHOS DE LAS VICTIMAS EN LEY DE JUSTICIA Y PAZ-Participación en diligencias de versión libre, formulación de"| __truncated__ ...
+>  $ path     : chr [1:529] "/relatoria/autos/2015/A009-15.htm" "/relatoria/2006/C-370-06.htm" "/relatoria/2006/C-370-06.htm" "/relatoria/2006/C-370-06.htm" ...
 
 tema <- ccc_tema('"paz" AND "jep"')
-> Total de Registros: 4  [0, 0]
+> Total de Registros: 6  [0, 0]
 str(tema)
-> tibble [4 × 5] (S3: tbl_df/tbl/data.frame)
->  $ sentencia: chr [1:4] "SU139-19" "SU139-19" "A512-17" "C-674-17"
->  $ type     : chr [1:4] "SU" "SU" "A" "C"
->  $ year     : int [1:4] 2019 2019 2017 2017
->  $ topic    : chr [1:4] "ACCION DE TUTELA CONTRA LA JURISDICCION ESPECIAL PARA LA PAZ JEP-Improcedencia para acceder a la JEP en calidad"| __truncated__ "ACCION DE TUTELA CONTRA LA JURISDICCION ESPECIAL PARA LA PAZ JEP-Improcedencia para activar competencia prevale"| __truncated__ "CONFLICTO NEGATIVO DE COMPETENCIA SUSCITADO ENTRE JUZGADO DEL CIRCUITO Y LA JURISDICCION ESPECIAL PARA LA PAZ J"| __truncated__ "INTERVENCION DE JURISTAS EXTRANJEROS EN LA JURISDICCION ESPECIAL PARA LA PAZ-Altera de manera sustantiva las di"| __truncated__
->  $ path     : chr [1:4] "/relatoria/2019/SU139-19.htm" "/relatoria/2019/SU139-19.htm" "/relatoria/autos/2017/A512-17.htm" "/relatoria/2017/C-674-17.htm"
+> tibble [6 × 5] (S3: tbl_df/tbl/data.frame)
+>  $ sentencia: chr [1:6] "SU139-19" "SU139-19" "A512-17" "T-365-18" ...
+>  $ type     : chr [1:6] "SU" "SU" "A" "T" ...
+>  $ year     : int [1:6] 2019 2019 2017 2018 2018 2017
+>  $ topic    : chr [1:6] "ACCION DE TUTELA CONTRA LA JURISDICCION ESPECIAL PARA LA PAZ JEP-Improcedencia para acceder a la JEP en calidad"| __truncated__ "ACCION DE TUTELA CONTRA LA JURISDICCION ESPECIAL PARA LA PAZ JEP-Improcedencia para activar competencia prevale"| __truncated__ "CONFLICTO NEGATIVO DE COMPETENCIA SUSCITADO ENTRE JUZGADO DEL CIRCUITO Y LA JURISDICCION ESPECIAL PARA LA PAZ J"| __truncated__ "CONFLICTOS DE COMPETENCIA EN LOS QUE ESTE INVOLUCRADA LA JURISDICCION ESPECIAL PARA LA PAZ-Es constitucionalmen"| __truncated__ ...
+>  $ path     : chr [1:6] "/relatoria/2019/SU139-19.htm" "/relatoria/2019/SU139-19.htm" "/relatoria/autos/2017/A512-17.htm" "/relatoria/2018/T-365-18.htm" ...
 ```
 
 **NOTA.** Para que la búsqueda con operadores funcione se deben usar
@@ -139,12 +142,13 @@ df <- df %>%
   mutate(texto = map_chr(path, ccc_texto))
 
 df
-> # A tibble: 3 x 5
+> # A tibble: 4 x 5
 >   sentencia type   year path               texto                                
 >   <chr>     <chr> <int> <chr>              <chr>                                
 > 1 SU139-19  SU     2019 /relatoria/2019/S… "Sentencia SU139/19 ACCION DE TUTELA…
 > 2 A512-17   A      2017 /relatoria/autos/… "Auto 512/17 CONFLICTO NEGATIVO DE C…
-> 3 C-674-17  C      2017 /relatoria/2017/C… "Sentencia C-674/17 REFORMA A LA EST…
+> 3 T-365-18  T      2018 /relatoria/2018/T… "Sentencia T-365/18 ACCION DE TUTELA…
+> 4 C-674-17  C      2017 /relatoria/2017/C… "Sentencia C-674/17 REFORMA A LA EST…
 ```
 
 *Esta es una función experimental para extraer la fecha completa:*
@@ -153,12 +157,29 @@ df
 df %>% 
   mutate(date = ccc_fecha(sentencia, texto)) %>% 
   select(sentencia, date)
-> # A tibble: 3 x 2
+> Warning: Problem with `mutate()` input `date`.
+> ℹ the condition has length > 1 and only the first element will be used
+> ℹ Input `date` is `ccc_fecha(sentencia, texto)`.
+> Warning in if (is.na(input)) {: the condition has length > 1 and only the first
+> element will be used
+> Warning: Problem with `mutate()` input `date`.
+> ℹ the condition has length > 1 and only the first element will be used
+> ℹ Input `date` is `ccc_fecha(sentencia, texto)`.
+> Warning in if (is.na(input)) stop("La fecha de este texto tiene un formato
+> atípico.", : the condition has length > 1 and only the first element will be
+> used
+> Warning: Problem with `mutate()` input `date`.
+> ℹ the condition has length > 1 and only the first element will be used
+> ℹ Input `date` is `ccc_fecha(sentencia, texto)`.
+> Warning in if (stringr::str_detect(input, "acta")) {: the condition has length >
+> 1 and only the first element will be used
+> # A tibble: 4 x 2
 >   sentencia date      
 >   <chr>     <date>    
 > 1 SU139-19  2019-03-28
 > 2 A512-17   2017-10-03
-> 3 C-674-17  2017-11-14
+> 3 T-365-18  2018-09-04
+> 4 C-674-17  2017-11-14
 ```
 
 ## Extraer pies de página
@@ -191,26 +212,46 @@ sentencias_citadas <- ccc_sentencias_citadas(texto_pp)
 
 table(sentencias_citadas) %>% sort(decreasing = TRUE)
 > sentencias_citadas
->  C-094-93  C-597-00  C-183-98  C-333-93  C-341-98  C-080-96  C-556-93  C-286-96 
->        16        11         6         6         6         5         5         4 
->  C-349-95  C-511-96  C-643-02  C-925-00 C-1144-00 C-1383-00  C-335-94  C-702-99 
->         4         4         4         4         3         3         3         3 
->  C-007-02  C-009-03 C-1064-01  C-150-97  C-228-93  C-238-97  C-364-93  C-405-97 
->         2         2         2         2         2         2         2         2 
->  C-419-95  C-421-95  C-445-95  C-485-03  C-506-02  C-674-99  C-711-01  C-734-02 
->         2         2         2         2         2         2         2         2 
->  C-866-99  T-426-92  C-025-93  C-070-94  C-084-95 C-1052-01 C-1144-01 C-1215-01 
->         2         2         1         1         1         1         1         1 
->  C-153-03  C-157-02  C-158-97  C-194-98  C-233-02  C-251-97  C-261-02  C-275-96 
->         1         1         1         1         1         1         1         1 
->  C-308-94  C-352-98  C-430-95  C-442-01  C-478-98  C-505-99  C-508-01  C-564-96 
->         1         1         1         1         1         1         1         1 
->  C-566-95  C-583-96  C-690-96  C-700-99  C-733-03  C-737-01  C-804-01  C-809-01 
->         1         1         1         1         1         1         1         1 
->  C-897-99 SU-111-97 SU-747-98  T-015-95  T-208-99  T-299-03  T-401-92  T-532-92 
->         1         1         1         1         1         1         1         1 
->  T-533-92  T-595-02  T-604-92 
->         1         1         1
+>   C-094-93   C-597-00   C-183-98   C-333-93   C-341-98   C-511-96  C-1144-00 
+>         17         13          8          8          7          7          6 
+>   C-009-03   C-080-96   C-286-96   C-335-94   C-556-93   C-674-99   C-702-99 
+>          5          5          5          5          5          5          5 
+>   C-349-95   C-364-93   C-643-02   C-925-00   C-025-93  C-1383-00   C-150-97 
+>          4          4          4          4          3          3          3 
+>   C-809-01   C-866-99   C-007-02  C-1064-01  C-1115-01  C-1144-01  C-1717-00 
+>          3          3          2          2          2          2          2 
+>   C-194-98   C-228-93   C-238-97   C-405-97   C-419-95   C-434-96   C-485-03 
+>          2          2          2          2          2          2          2 
+>   C-505-99   C-506-02   C-690-96   C-711-01   C-734-02   C-992-01   T-015-95 
+>          2          2          2          2          2          2          2 
+>   T-284-98   T-426-92   C-023-93   C-044-02   C-052-01   C-070-94   C-084-95 
+>          2          2          1          1          1          1          1 
+>  C-1052-01  C-1185-00  C-1190-01  C-1215-01   C-133-93   C-140-98   C-150-03 
+>          1          1          1          1          1          1          1 
+>   C-153-03   C-157-02   C-158-97   C-170-01 C-17117-00   C-222-95   C-233-02 
+>          1          1          1          1          1          1          1 
+>   C-237-97   C-250-03   C-251-97   C-261-02   C-275-96   C-308-94   C-352-98 
+>          1          1          1          1          1          1          1 
+>   C-369-00   C-421-95   C-430-95   C-442-01   C-445-95   C-478-98   C-508-01 
+>          1          1          1          1          1          1          1 
+>   C-511-92   C-540-01   C-540-96   C-540-97   C-549-93   C-564-96   C-566-95 
+>          1          1          1          1          1          1          1 
+>   C-579-01   C-583-96   C-637-00   C-700-99   C-733-03   C-737-01   C-776-03 
+>          1          1          1          1          1          1          1 
+>   C-804-01   C-897-99   C-984-02  SU-062-99  SU-111-97  SU-430-98  SU-747-98 
+>          1          1          1          1          1          1          1 
+>   T-005-95  T-1031-00  T-1033-00  T-1176-00   T-119-97   T-144-95   T-146-96 
+>          1          1          1          1          1          1          1 
+>   T-198-95   T-208-99   T-259-03   T-268-98   T-283-98   T-298-98   T-299-03 
+>          1          1          1          1          1          1          1 
+>   T-328-98   T-401-92   T-434-99   T-489-98   T-495-99   T-500-96   T-502-99 
+>          1          1          1          1          1          1          1 
+>   T-506-96   T-527-97   T-529-97   T-532-92   T-533-92   T-545-99   T-595-02 
+>          1          1          1          1          1          1          1 
+>   T-604-92   T-622-97   T-644-03   T-645-96   T-680-03   T-774-00   T-850-02 
+>          1          1          1          1          1          1          1 
+>   T-936-99 
+>          1
 ```
 
 ## Extraer leyes citas
@@ -219,15 +260,15 @@ table(sentencias_citadas) %>% sort(decreasing = TRUE)
 leyes_citadas <- ccc_leyes_citadas(texto_pp)
 table(leyes_citadas) %>% sort(decreasing = TRUE)
 > leyes_citadas
-> Ley 788 de 2002 Ley 488 de 1998 Ley 223 de 1995  Ley 49 de 1990 Ley 489 de 1998 
->             123              14              10               6               5 
-> Ley 633 de 2000  Ley 50 de 1984 Ley 383 de 1997 Ley 100 de 1993 ley 788 de 2002 
->               5               4               3               2               2 
->  Ley 80 de 1993 ley 080 de 2002 Ley 080 de 2002 Ley 101 de 1993 Ley 160 de 1994 
->               2               1               1               1               1 
-> Ley 300 de 1996  Ley 34 de 1993  Ley 38 de 1969 Ley 401 de 1997 ley 599 de 2000 
+> Ley 788 de 2002 Ley 488 de 1998 Ley 223 de 1995 Ley 489 de 1998 Ley 599 de 2000 
+>             131              14              12               7               7 
+>  Ley 49 de 1990 Ley 633 de 2000 Ley 383 de 1997  Ley 50 de 1984 Ley 100 de 1993 
+>               6               5               3               3               2 
+>  Ley 75 de 1986 ley 788 de 2002  Ley 80 de 1993 ley 080 de 2002 Ley 080 de 2002 
+>               2               2               2               1               1 
+> Ley 101 de 1993 Ley 160 de 1994 Ley 300 de 1996  Ley 34 de 1993  Ley 38 de 1969 
 >               1               1               1               1               1 
-> Ley 599 de 2000  Ley 69 de 1993 Ley 715 de 2000  Ley 75 de 1986  Ley 89 de 1993 
+> Ley 401 de 1997 ley 599 de 2000  Ley 69 de 1993 Ley 715 de 2000  Ley 89 de 1993 
 >               1               1               1               1               1
 ```
 
@@ -239,19 +280,23 @@ ccc_num_url("C-017-18")
 > Total de Registros: 1  [0, 0]
 > [1] "/Relatoria/2018/C-017-18.htm"
 ccc_num_url("C-017/18")
+> Atención: El buscador no muestra resultados a partir del 2019
 > Total de Registros: 1  [0, 0]
 > [1] "/Relatoria/2018/C-017-18.htm"
 
 ## con o sin guión para A y SU
 ccc_num_url("A232-20")
+> Atención: El buscador no muestra resultados a partir del 2019
 > Total de Registros: 1  [0, 0]
 > [1] "/Relatoria/autos/2020/A232-20.htm"
 ccc_num_url("A-232-20")
+> Atención: El buscador no muestra resultados a partir del 2019
 > Total de Registros: 1  [0, 0]
 > [1] "/Relatoria/autos/2020/A232-20.htm"
 
 ## número al azar
 ccc_num_url("776")
+> Atención: El buscador no muestra resultados a partir del 2019
 > Total de Registros: 18  [0, 0]
 > Warning: La búsqueda encontró más de un URL
 >  [1] "/Relatoria/autos/2018/A776-18.htm" "/Relatoria/2015/T-776-15.htm"     

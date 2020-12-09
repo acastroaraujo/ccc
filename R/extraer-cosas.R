@@ -3,22 +3,30 @@
 #'
 #' @param texto el texto de una sentencia, tal y como viene de ccc_extraer_texto()
 #'
-#' @return una lista de sentencias citadas en el texto
+#' @return una lista de sentencias citadas (C, SU, o T) en el texto.
 #' @export
 #'
 ccc_sentencias_citadas <- function(texto) {
   
   mes <- "(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)"
-  regex_ep <- paste0("(S|s)entencia (C|SU|T|A)-(\\d+) de(l \\d{1,2} de ", mes, " de)? \\d{2}(\\d{2})")
+  regex1 <- paste0("(C|SU|T)(-| )(\\d+) ?de(l? \\d{1,2} de ", mes, " de)?(l? ", mes, " \\d{1,2} de)? \\d\\.?\\d(\\d{2})")
   
-  texto %>%
-    stringr::str_extract_all(regex_ep) %>%
+  regex2 <- "(C|SU|T)(-| )(\\d+)\\/(\\d{2})"
+  
+  out1 <- texto %>%
+    stringr::str_extract_all(regex1) %>%
     purrr::flatten_chr() %>%
-    stringr::str_replace_all(pattern = regex_ep,
-                             replacement = "\\2-\\3-\\6")
+    stringr::str_replace_all(pattern = regex1,
+                             replacement = "\\1-\\3-\\8")
   
-  ## Ojo, creo que no estoy extrayendo autos, pero pues eso no debe importar mucho
-  ## Crear función aparte??
+  out2 <- texto %>%
+    stringr::str_extract_all(regex2) %>%
+    purrr::flatten_chr() %>%
+    stringr::str_replace_all(pattern = regex2,
+                             replacement = "\\1-\\3-\\4")
+  
+  append(out1, out2[-1])
+  
 }
 
 #' Extractor de leyes citadas
@@ -45,24 +53,50 @@ ccc_leyes_citadas <- function(texto) {
 #'
 ccc_fecha <- function(sentencia, texto) {
   
+  y <- ccc:::extract_year(sentencia)
+  
+  regex_ep <- paste0(
+    "Bogot(a|á) ?,? ?(D\\.? ?C\\.?\\.?,?)?[^\\.]+\\(? ?",
+    str_replace(y, "(\\d)(\\d{3})", "\\1\\.?\\2"), 
+    " ?\\)?\\.?")
+  
   input <- texto %>% 
-    stringr::str_extract(paste0("Bogot(a|", intToUtf8(225), "),? D\\.? ?C\\.?,? [^\\.]+\\(", extract_year(sentencia), "\\)\\.?"))
+    stringr::str_extract(regex_ep)
   
-  d <- input %>% 
-    stringr::str_extract("\\d{1,2}")
+  if (is.na(input)) {
+    
+    input <- str_sub(texto, 1, 200) %>% 
+      str_extract("\\(.+\\)")
+    
+  }
   
-  y <- input %>% 
-    stringr::str_extract("\\d{4}")
+  if (is.na(input)) stop("La fecha de este texto tiene un formato atípico.", call. = FALSE)
+  
+  if (stringr::str_detect(input, "acta")) {
+    
+    d <- input %>% 
+      stringr::str_extract_all("\\d{1,2}") %>% 
+      unlist() %>% 
+      pluck(2)
+    
+  } else {
+    
+    d <- input %>% 
+      stringr::str_extract("\\d{1,2}")
+    
+  }
   
   m <- input %>% 
+    stringr::str_to_lower() %>% 
     stringr::str_extract("enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre") %>% 
     stringr::str_replace_all(c("enero" = "01", "febrero" = "02", "marzo" = "03", "abril" = "04", "mayo" = "05", "junio" = "06", "julio" = "07",
-                      "agosto" = "08", "septiembre" = "09", "octubre" = "10", "noviembre" = "11", "diciembre" = "12"))
+                               "agosto" = "08", "septiembre" = "09", "octubre" = "10", "noviembre" = "11", "diciembre" = "12"))
+  
+  if (any(is.na(c(y, m, d)))) return(NA)
   
   as.Date(paste(y, m, d, sep = "-"))
   
 }
-
 
 #' Información sobre magistrados
 #'

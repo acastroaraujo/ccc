@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
+Nota. La función `ccc_sentencias_citadas()` fue modificada sutancialmente en esta fecha: `r Sys.Date()`
+
 ```{r, out.width="40%", echo=FALSE, align="left"}
 knitr::include_graphics("man/figures/logo.png")
 ```
