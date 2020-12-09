@@ -7,8 +7,8 @@
 
 <!-- badges: end -->
 
-Nota. La función `ccc_sentencias_citadas()` fue modificada
-sutancialmente en esta fecha: 2020-12-08
+Nota. La función `ccc_sentencias_citadas()` fue modificada bastante en
+esta fecha: 2020-12-08
 
 <img src="man/figures/logo.png" width="40%" />
 
