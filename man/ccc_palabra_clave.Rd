@@ -2,7 +2,7 @@
 % Please edit documentation in R/palabra-clave.R
 \name{ccc_palabra_clave}
 \alias{ccc_palabra_clave}
-\title{Búscador de sentencias por palabra clave}
+\title{Buscador de sentencias por palabra clave}
 \usage{
 ccc_palabra_clave(q, p = 0)
 }
@@ -15,5 +15,5 @@ ccc_palabra_clave(q, p = 0)
 un data frame
 }
 \description{
-Búscador de sentencias por palabra clave
+Buscador de sentencias por palabra clave
 }
