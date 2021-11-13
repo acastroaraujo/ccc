@@ -13,15 +13,15 @@ ccc_sentencias_citadas <- function(texto) {
   
   regex2 <- "(C|SU|T)(-| )(\\d+)\\/(\\d{2})"
   
-  out1 <- texto %>%
-    stringr::str_extract_all(regex1) %>%
-    purrr::flatten_chr() %>%
+  out1 <- texto |>
+    stringr::str_extract_all(regex1) |>
+    purrr::flatten_chr() |>
     stringr::str_replace_all(pattern = regex1,
                              replacement = "\\1-\\3-\\8")
   
-  out2 <- texto %>%
-    stringr::str_extract_all(regex2) %>%
-    purrr::flatten_chr() %>%
+  out2 <- texto |>
+    stringr::str_extract_all(regex2) |>
+    purrr::flatten_chr() |>
     stringr::str_replace_all(pattern = regex2,
                              replacement = "\\1-\\3-\\4")
   
@@ -37,10 +37,32 @@ ccc_sentencias_citadas <- function(texto) {
 #' @export
 #'
 ccc_leyes_citadas <- function(texto) {
-  texto %>% 
-    stringr::str_extract_all("(L|l)ey \\d+ de \\d{4}") %>% 
+  texto |> 
+    stringr::str_extract_all("(L|l)ey \\d+ de \\d{4}") |> 
     purrr::flatten_chr()
 }
+
+
+
+
+#' Extractor de expresiones en mayúscula en el preámbulo a cada sentencia
+#'
+#' @param texto 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+ccc_elementos <- function(texto) {
+  
+  texto |> 
+    stringr::str_extract(".+?(?=Bogotá)") |> 
+    stringr::str_extract_all("[A-Z]{2,}[A-Z ]+-") |> 
+    unlist() |> 
+    stringr::str_remove("\\-")
+  
+}
+
 
 
 #' Extraer fecha
@@ -61,12 +83,12 @@ ccc_fecha <- function(sentencia, texto) {
     stringr::str_replace(y, "(\\d)(\\d{3})", "\\1\\.?\\2"), 
     " ?\\)?\\.?")
   
-  input <- texto %>% 
+  input <- texto |> 
     stringr::str_extract(regex_ep)
   
   if (is.na(input)) {
     
-    input <- stringr::str_sub(texto, 1, 200) %>% 
+    input <- stringr::str_sub(texto, 1, 200) |> 
       stringr::str_extract("\\(.+\\)")
     
   }
@@ -75,21 +97,21 @@ ccc_fecha <- function(sentencia, texto) {
   
   if (stringr::str_detect(input, "acta")) {
     
-    d <- input %>% 
-      stringr::str_extract_all("\\d{1,2}") %>% 
-      unlist() %>% 
+    d <- input |> 
+      stringr::str_extract_all("\\d{1,2}") |> 
+      unlist() |> 
       purrr::pluck(2)
     
   } else {
     
-    d <- input %>% 
+    d <- input |> 
       stringr::str_extract("\\d{1,2}")
     
   }
   
-  m <- input %>% 
-    stringr::str_to_lower() %>% 
-    stringr::str_extract("enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre") %>% 
+  m <- input |> 
+    stringr::str_to_lower() |> 
+    stringr::str_extract("enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre") |> 
     stringr::str_replace_all(c("enero" = "01", "febrero" = "02", "marzo" = "03", "abril" = "04", "mayo" = "05", "junio" = "06", "julio" = "07",
                                "agosto" = "08", "septiembre" = "09", "octubre" = "10", "noviembre" = "11", "diciembre" = "12"))
   
@@ -129,21 +151,21 @@ ccc_fecha <- function(sentencia, texto) {
 # 
 #    if (!any(index)) stop(call. = FALSE, "uknown pattern")
 # 
-#    magistrado_string <- texto %>%
-#      stringr::str_extract(stringr::regex(paste0(tipo[index], ".+$"), dotall = TRUE)) %>%
-#      stringr::str_remove("\\[1\\].+") %>%
-#      stringr::str_extract("(.+ Secretari(a|o) General)") %>%
-#      stringr::str_remove(tipo[index]) %>%
+#    magistrado_string <- texto |>
+#      stringr::str_extract(stringr::regex(paste0(tipo[index], ".+$"), dotall = TRUE)) |>
+#      stringr::str_remove("\\[1\\].+") |>
+#      stringr::str_extract("(.+ Secretari(a|o) General)") |>
+#      stringr::str_remove(tipo[index]) |>
 #      stringr::str_squish()
 # 
-#      nombres <- magistrado_string %>%
-#        stringr::str_extract_all("[[:upper:] ]{2,}(?=[:upper:][:lower:]+)") %>%
-#        unlist() %>%
+#      nombres <- magistrado_string |>
+#        stringr::str_extract_all("[[:upper:] ]{2,}(?=[:upper:][:lower:]+)") |>
+#        unlist() |>
 #        stringr::str_squish()
 # 
-#      info <- magistrado_string %>%
-#        stringr::str_split(paste0(nombres, collapse = "|")) %>%
-#        unlist() %>%
+#      info <- magistrado_string |>
+#        stringr::str_split(paste0(nombres, collapse = "|")) |>
+#        unlist() |>
 #        stringr::str_squish()
 # 
 #      tibble::tibble(
@@ -156,6 +178,9 @@ ccc_fecha <- function(sentencia, texto) {
 
 # Temporal, el output deberia ser algo asi:
 # https://www.datos.gov.co/Justicia-y-Derecho/Sentencias-Corte-Constitucional-2019/5wc9-ajax
+
+
+
 
 
 
