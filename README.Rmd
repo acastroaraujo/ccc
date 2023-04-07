@@ -7,168 +7,70 @@ output: github_document
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = ">",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  tidy.opts = list(width.cutoff = 60), 
+  tidy = TRUE
 )
+```
+
+
+```{r, out.width="40%", echo=FALSE, align="center"}
+knitr::include_graphics("man/figures/logo.png")
 ```
 
 # ccc
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-Nota. La función `ccc_sentencias_citadas()` fue modificada bastante en esta fecha: `r Sys.Date()`
+The `ccc` package helps get information from the Colombian Constitutional Court.
 
-```{r, out.width="40%", echo=FALSE, align="left"}
-knitr::include_graphics("man/figures/logo.png")
-```
-
-El paquete `ccc` sirve para extraer información de la Corte Constitucional de Colombia. 
-
-Se puede installar la versión en desarrollo desde [GitHub](https://github.com/) con:
+You can install the current version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("acastroaraujo/ccc")
 ```
 
-Tiene 7 funciones:
+It has the following functions:
 
-- `ccc_tema()`, `ccc_palabra_clave()`, son una interface a los __buscadores__ de la [página web](https://www.corteconstitucional.gov.co/relatoria/) de la Corte Constitucional.
+- `ccc_search`
+- `ccc_rtf`
+- `ccc_text`
+- `extract_citations`
 
-- `ccc_texto()` y `ccc_pp()` extraen el __texto__ y los __pie de página__ de una dirección (ej." "/relatoria/2017/C-160-17.htm").
+For example
 
-- `ccc_texto_pp()` extrae ambas cosas al mismo tiempo.
-
-- `ccc_sentencias_citadas()` extrae las sentencias que han sido citadas por un texto.
-
-- `ccc_leyes_citadas()` extrae las leyes que han sido citadas por un texto.
-
-- `ccc_num_url()` extrae el URL de la sentencia a partir del número de providencia.
-
-
-## Buscar por tema o palabra clave
-
-```{r, message=FALSE}
+```{r}
 library(ccc)
+
+results <- ccc_search(
+  text = "proceso de paz", 
+  date_start = "1998-01-01", 
+  date_end = "2022-01-01"
+)
+
+df <- ccc_clean_dataset(results)
+
+dplyr::glimpse(df)
+
+url <- sample(df$url, 1)
+
+txt <- ccc_text(url)
+
+txt |> 
+  stringr::str_trunc(1e3) |> 
+  cat()
+
+table(extract_citations(txt)) |> sort()
 ```
+
+
+## Datasets
 
 ```{r}
-palabra_clave <- ccc_palabra_clave("paz", p = 0)
+dplyr::glimpse(citations)
+dplyr::glimpse(metadata)
 ```
-
-`ccc_palabra_clave()` extraen 100 resultados por página. Si el total de registros supera los 100, se necesita aumentar el argumento `p` (i.e. `p = 1`, `p = 2`). En la consola aparece un cuadrado que señala cuántos páginas son (en este caso: 54).
-
-Así se ve el resultado:
-
-```{r}
-str(palabra_clave)
-```
-
-La función `ccc_tema()` extrae 200 resultados por página. Estos resultados son distintos porque la Secretaría de la Corte (creo) es quien se encarga de seleccionar las sentencias:
-
-```{r}
-tema <- ccc_tema("paz")
-str(tema)
-```
-
-__Búsqueda con operadores__
-
-Las búsquedas también se pueden hacer con _operadores_ de la siguiente manera:
-
-```{r}
-tema <- ccc_tema('"paz" AND NOT "paz del rio"', p = 2)
-str(tema)
-
-tema <- ccc_tema('"paz" AND "jep"')
-str(tema)
-```
-
-__NOTA.__ Para que la búsqueda con operadores funcione se deben usar comillas (`"`) alrededor de cada palabra.
-
-Esto funciona: `'"paz" AND "jep"'`
-
-Esto NO funciona: `"'paz' AND 'jep'"`
-
-## Extraer texto
-
-```{r}
-texto <- ccc_texto("/relatoria/2003/c-776-03.htm")
-```
-
-Se pueden extraer muchos documentos usando tidyverse, aunque esto se puede demorar un rato...
-
-```{r, message=FALSE}
-library(tidyverse)
-
-df <- tema %>% 
-  select(-topic) %>% ## estas dos líneas eliminan duplicados que existen
-  distinct()         ## porque una sentencia quepa dentro de varios temas
-
-df <- df %>% 
-  mutate(texto = map_chr(path, ccc_texto))
-
-df
-```
-
-## Fecha
-
-Esta es una función experimental para extraer la fecha completa (i.e. mes y día).
-
-```{r}
-ccc_fecha("C-776-03", texto)
-
-df %>% 
-  mutate(date = map2(sentencia, texto, ccc_fecha)) %>% 
-  select(sentencia, date) %>% 
-  unnest(date)
-```
-
-Nota. Esta función no funciona para el 100% de las sentencias.
-
-## Extraer pies de página
-
-```{r}
-pp <- ccc_pp("/relatoria/2003/c-776-03.htm")
-pp[1:8] ## primeros ocho pies de página
-```
-
-## Extraer texto y pies de página
-
-```{r}
-texto_pp <- ccc_texto_pp("/relatoria/2003/c-776-03.htm")
-```
-
-## Extraer sentencias citas
-
-```{r}
-sentencias_citadas <- ccc_sentencias_citadas(texto_pp)
-
-table(sentencias_citadas) %>% sort(decreasing = TRUE)
-```
-
-## Extraer leyes citas
-
-```{r}
-leyes_citadas <- ccc_leyes_citadas(texto_pp)
-table(leyes_citadas) %>% sort(decreasing = TRUE)
-```
-
-
-## Extraer URL de número de providencia
-
-```{r}
-# con guíon o barrita
-ccc_num_url("C-017-18")
-ccc_num_url("C-017/18")
-
-## con o sin guión para A y SU
-ccc_num_url("A232-20")
-ccc_num_url("A-232-20")
-
-## número al azar
-ccc_num_url("776")
-```
-
 

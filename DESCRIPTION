@@ -9,14 +9,16 @@ Authors@R:
 Description: Este paquete sirve para extraer y trabajar con las sentencias de la Corte Constitucional de Colombia.
 License: MIT + file LICENSE
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Imports: 
     httr,
     purrr,
     rvest,
     stringr,
-    tibble,
     dplyr,
-    xml2,
-    tidyr,
-    rlang
+    rlang,
+    janitor,
+    striprtf
+Depends: 
+    R (>= 2.10)
+LazyData: true
