@@ -109,16 +109,27 @@ make_text_query <- function(text, AND = NULL, OR = NULL, NOT = NULL) {
 ccc_clean_dataset <- function(df) {
   
   df |> 
-    ## removes white spaces
-    dplyr::mutate(providencia = stringr::str_replace_all(.data$providencia, "[:space:]", "")) |> 
-    ## removes any character at the end that's NOT a number
-    dplyr::mutate(providencia = stringr::str_remove(.data$providencia, "[^\\d]+$")) |> 
-    ## replaces, e.g., C-776/03 with C-776-03
-    dplyr::mutate(providencia = stringr::str_replace_all(.data$providencia, "\\.|\\/", "-")) |> 
     dplyr::mutate(f_sentencia = as.Date(.data$f_sentencia), f_public = as.Date(.data$f_public)) |> 
     dplyr::mutate(year = as.integer(format(.data$f_sentencia, "%Y"))) |> 
-    dplyr::mutate(type = stringr::str_extract(.data$providencia, "^(C|SU|T|A)")) |> 
-    dplyr::relocate("id" = "providencia", "type", "year", "date" = "f_sentencia", "expediente", "ponentes" = "magistrados", "descriptors" = "descriptores", "date_public" = "f_public", "url")
+    dplyr::mutate(type = stringr::str_extract(.data$id, "^(C|SU|T|A)")) |> 
+    dplyr::relocate("id", "type", "year", "date" = "f_sentencia", "expediente", "ponentes" = "magistrados", "descriptors" = "descriptores", "date_public" = "f_public", "url")
   
 }
 
+
+
+## ccc_clean_dataset <- function(df) {
+##   
+##   df |> 
+##     ## removes white spaces
+##     dplyr::mutate(providencia = stringr::str_replace_all(.data$providencia, "[:space:]", "")) |> 
+##     ## removes any character at the end that's NOT a number
+##     dplyr::mutate(providencia = stringr::str_remove(.data$providencia, "[^\\d]+$")) |> 
+##     ## replaces, e.g., C-776/03 with C-776-03
+##     dplyr::mutate(providencia = stringr::str_replace_all(.data$providencia, "\\.|\\/", "-")) |> 
+##     dplyr::mutate(f_sentencia = as.Date(.data$f_sentencia), f_public = as.Date(.data$f_public)) |> 
+##     dplyr::mutate(year = as.integer(format(.data$f_sentencia, "%Y"))) |> 
+##     dplyr::mutate(type = stringr::str_extract(.data$providencia, "^(C|SU|T|A)")) |> 
+##     dplyr::relocate("id" = "providencia", "type", "year", "date" = "f_sentencia", "expediente", "ponentes" = "magistrados", "descriptors" = "descriptores", "date_public" = "f_public", "url")
+##   
+## }

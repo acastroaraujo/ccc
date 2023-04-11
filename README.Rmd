@@ -37,10 +37,17 @@ It has the following functions:
 
 - `ccc_search`
 - `ccc_rtf`
-- `ccc_text`
+- `ccc_txt`
+- `ccc_clean_data`
 - `extract_citations`
 
-For example
+And the following datasets:
+
+- `metadata`
+- `citations`
+- `dtmatrix`
+
+## Download
 
 ```{r}
 library(ccc)
@@ -57,7 +64,7 @@ dplyr::glimpse(df)
 
 url <- sample(df$url, 1)
 
-txt <- ccc_text(url)
+txt <- ccc_txt(url)
 
 txt |> 
   stringr::str_trunc(1e3) |> 

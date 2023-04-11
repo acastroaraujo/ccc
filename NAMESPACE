@@ -3,6 +3,6 @@
 export(ccc_clean_dataset)
 export(ccc_rtf)
 export(ccc_search)
-export(ccc_text)
+export(ccc_txt)
 export(extract_citations)
 importFrom(rlang,.data)
