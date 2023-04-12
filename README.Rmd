@@ -8,8 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   fig.path = "man/figures/README-",
-  tidy.opts = list(width.cutoff = 60), 
-  tidy = TRUE
+  comment = ">"
 )
 ```
 
@@ -47,6 +46,8 @@ And the following datasets:
 - `citations`
 - `docterms`
 
+These datasets were created using these [scripts](https://github.com/acastroaraujo/ccc/tree/master/data-raw).
+
 ## Download
 
 Use the `ccc_search()` function to lookup some cases.
@@ -83,10 +84,8 @@ url
 
 txt <- ccc_txt(url)
 
-txt |> 
-  ## truncated output
-  stringr::str_trunc(1e3) |> 
-  cat()
+## truncated output
+stringr::str_trunc(txt, 1e3) |> cat()
 ```
 
 Finally, you can `extract_citations()` easily as follows:
@@ -94,7 +93,6 @@ Finally, you can `extract_citations()` easily as follows:
 ```{r}
 extract_citations(txt)
 ```
-
 
 ## Data
 
@@ -111,8 +109,6 @@ glimpse(metadata)
 ```{r}
 glimpse(docterms)
 ```
-
-To see the process whereby these datasets were created, you can follow the scripts [here](https://github.com/acastroaraujo/ccc_datos/tree/master/data-raw).
 
 You can get a document-term matrix instead of `docterms` easily with the `create_dtm()` function. The result will be a very sparse matrix.
 
