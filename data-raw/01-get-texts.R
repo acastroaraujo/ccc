@@ -9,7 +9,6 @@ outfolder <- here::here("data-raw", "texts")
 if (!dir.exists(outfolder)) dir.create(outfolder)
 
 df <- metadata |> 
-  dplyr::mutate(type = stringr::str_extract(.data$id, "^(C|SU|T|A)")) |> 
   dplyr::select("id", "type", "url") 
 
 dict <- df |> select(id, url) |> deframe()

@@ -8,7 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   fig.path = "man/figures/README-",
-  comment = ">"
+  comment = "#"
 )
 ```
 
@@ -48,53 +48,13 @@ And the following datasets:
 
 These datasets were created using these [scripts](https://github.com/acastroaraujo/ccc/tree/master/data-raw).
 
-## Download
-
-Use the `ccc_search()` function to lookup some cases.
+## Data
 
 ```{r, warning=FALSE, message=FALSE}
 library(ccc)
 library(dplyr)
-
-results <- ccc_search(
-  text = "familia", 
-  date_start = "1999-01-01", 
-  date_end = "2001-12-31"
-)
-
-glimpse(results)
 ```
 
-This data is a little messy. The `ccc_clean_dataset()` provides some useful tidying, but you might want to consider doing things differently.
-
-```{r}
-df <- ccc_clean_dataset(results)
-glimpse(df)
-```
-
-Next you'll want to download some texts. You can use either `ccc_txt()` or `ccc_rtf()` (_Rich Text Format_) to do this.
-
-I prefer `ccc_txt()` because most rtf files don't include footnotes.
-
-```{r}
-url <- sample(df$url, 1)
-
-## download from the following url
-url
-
-txt <- ccc_txt(url)
-
-## truncated output
-stringr::str_trunc(txt, 1e3) |> cat()
-```
-
-Finally, you can `extract_citations()` easily as follows:
-
-```{r}
-extract_citations(txt)
-```
-
-## Data
 
 There are 3 built-in datasets in this package, which cover 30 years after the first ruling was published.
 
@@ -122,5 +82,51 @@ dim(M)
 
 mean(M == 0) ## sparsity
 M[sample(nrow(M), 20), sample(ncol(M), 5)] ## random subset
+```
+
+
+## Download
+
+Use the `ccc_search()` function to look up some cases.
+
+```{r}
+results <- ccc_search(
+  text = "familia", 
+  date_start = "1999-01-01", 
+  date_end = "2001-12-31"
+)
+
+glimpse(results)
+```
+
+This data is a little messy. The `ccc_clean_dataset()` provides some useful tidying, but you might want to consider doing things differently.
+
+```{r}
+df <- ccc_clean_dataset(results)
+glimpse(df)
+```
+
+Next you'll want to download some texts. You can use either `ccc_txt()` or `ccc_rtf()`. I prefer `ccc_txt()` because most rtf files don't include footnotes.
+
+Here I'll show you how to download 5 random rulings.
+
+```{r}
+df_subset <- slice_sample(df, n = 5)
+
+txts <- vector("list", nrow(df_subset))
+
+for (i in seq_along(txts)) {
+  txts[[i]] <- ccc_txt(df_subset$url[[i]])
+}
+
+names(txts) <- df_subset$id
+
+glimpse(txts)
+```
+
+Finally, you can `extract_citations()` easily as follows:
+
+```{r}
+lapply(txts, extract_citations)
 ```
 
