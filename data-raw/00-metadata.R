@@ -3,24 +3,26 @@ library(tidyverse)
 library(ccc)
 library(tidylog)
 
-# date_seq <- 1992:2022 ## get first 30 years
-# out <- vector("list", length(date_seq))
-# 
-# for (i in seq_along(date_seq)) {
-#   out[[i]] <- try(
-#     ccc_search(
-#       text = "", 
-#       date_start = paste0(date_seq[[i]], "-01-01"),
-#       date_end = paste0(date_seq[[i]], "-12-31")
-#     )
-#   )
-#   cat("Downloading:", date_seq[[i]], "\r")
-#   Sys.sleep(runif(1, 2, 5))
-# }
 
-# write_rds(out, "data-raw/out.rds", compress = "gz")
+# download ----------------------------------------------------------------
 
-out <- read_rds("data-raw/out.rds")
+date_seq <- 1992:2022 ## get first 30 years
+out <- vector("list", length(date_seq))
+
+for (i in seq_along(date_seq)) {
+  out[[i]] <- try(
+    ccc_search(
+      text = "", 
+      date_start = paste0(date_seq[[i]], "-01-01"),
+      date_end = paste0(date_seq[[i]], "-12-31")
+    )
+  )
+  cat("Downloading:", date_seq[[i]], "\r")
+  Sys.sleep(runif(1, 2, 5))
+}
+
+
+# clean up ----------------------------------------------------------------
 
 metadata <- bind_rows(out) |> 
   select(-relevancia)
