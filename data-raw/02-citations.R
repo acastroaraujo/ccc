@@ -33,9 +33,6 @@ cat("unweighted network:", scales::comma(nrow(distinct(edge_list))), "\n")
 # add relevant metadata ---------------------------------------------------
 
 metadata <- metadata |> 
-  dplyr::mutate(type = stringr::str_extract(.data$id, "^(C|SU|T|A)")) |> 
-  dplyr::mutate(date = as.Date(f_sentencia)) |> 
-  filter(type != "A") |> 
   select(id, date) |> 
   drop_na()
 

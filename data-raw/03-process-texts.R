@@ -48,20 +48,17 @@ while (length(cases_left) > 0) {
   
 }
 
-
-
 # assemble ----------------------------------------------------------------
-
-## check for html code, delete files, and re-do.
-
-
-## check the ccc_paper repository, topic-models.Rmd
 
 library(furrr)
 
 plan(multisession, workers = parallel::detectCores() - 1L)
 
 pos_list <- c("PROPN", "VERB", "NOUN", "ADJ")
+
+## create regex for roman numerals
+romans <- c(as.character(utils::as.roman(1:100)), tolower(utils::as.roman(1:100)))
+roman_regex <- paste(paste0("^", romans, "$"), collapse = "|")
 
 output <- furrr::future_map(
   .x = dir(outfolder, full.names = TRUE), 
@@ -76,11 +73,17 @@ output <- furrr::future_map(
       ## remove any lemma that represents a person
       filter(str_detect(entity, "PER_.", negate = TRUE)) |> 
       ## remove lemmas that are two characters or less
-      filter(nchar(lemma) > 2)
+      filter(nchar(lemma) > 2) |> 
+      ## remove roman numerals
+      filter(str_detect(lemma, roman_regex, negate = TRUE)) |> 
+      ## remove any lemma that contains punctuation
+      filter(str_detect(lemma, "[:punct:]", negate = TRUE)) |> 
+      ## remove Spanish accents (mostly for standardization and typo correction)
+      mutate(lemma = textclean::replace_non_ascii(lemma))
   }
 ) 
 
 df <- list_rbind(output) |> 
-  select(doc_id, sentence_id, token, lemma)
+  count(doc_id, lemma) 
 
 write_rds(df, "data-raw/spacy_subset.rds", compress = "gz")

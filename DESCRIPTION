@@ -18,7 +18,9 @@ Imports:
     dplyr,
     rlang,
     janitor,
-    striprtf
+    striprtf,
+    Matrix,
+    stringi
 Depends: 
     R (>= 2.10)
 LazyData: true

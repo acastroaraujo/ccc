@@ -36,48 +36,95 @@ devtools::install_github("acastroaraujo/ccc")
 It has the following functions:
 
 - `ccc_search`
-- `ccc_rtf`
-- `ccc_txt`
 - `ccc_clean_data`
+- `ccc_txt`
+- `ccc_rtf`
 - `extract_citations`
 
 And the following datasets:
 
 - `metadata`
 - `citations`
-- `dtmatrix`
+- `docterms`
 
 ## Download
 
-```{r}
+Use the `ccc_search()` function to lookup some cases.
+
+```{r, warning=FALSE, message=FALSE}
 library(ccc)
+library(dplyr)
 
 results <- ccc_search(
-  text = "proceso de paz", 
-  date_start = "1998-01-01", 
-  date_end = "2022-01-01"
+  text = "familia", 
+  date_start = "1999-01-01", 
+  date_end = "2001-12-31"
 )
 
+glimpse(results)
+```
+
+This data is a little messy. The `ccc_clean_dataset()` provides some useful tidying, but you might want to consider doing things differently.
+
+```{r}
 df <- ccc_clean_dataset(results)
+glimpse(df)
+```
 
-dplyr::glimpse(df)
+Next you'll want to download some texts. You can use either `ccc_txt()` or `ccc_rtf()` (_Rich Text Format_) to do this.
 
+I prefer `ccc_txt()` because most rtf files don't include footnotes.
+
+```{r}
 url <- sample(df$url, 1)
+
+## download from the following url
+url
 
 txt <- ccc_txt(url)
 
 txt |> 
+  ## truncated output
   stringr::str_trunc(1e3) |> 
   cat()
+```
 
-table(extract_citations(txt)) |> sort()
+Finally, you can `extract_citations()` easily as follows:
+
+```{r}
+extract_citations(txt)
 ```
 
 
-## Datasets
+## Data
+
+There are 3 built-in datasets in this package, which cover 30 years after the first ruling was published.
 
 ```{r}
-dplyr::glimpse(citations)
-dplyr::glimpse(metadata)
+glimpse(citations)
+```
+
+```{r}
+glimpse(metadata)
+```
+
+```{r}
+glimpse(docterms)
+```
+
+To see the process whereby these datasets were created, you can follow the scripts [here](https://github.com/acastroaraujo/ccc_datos/tree/master/data-raw).
+
+You can get a document-term matrix instead of `docterms` easily with the `create_dtm()` function. The result will be a very sparse matrix.
+
+I recommend that you load the `Matrix` package if you're going to work with this object.
+
+```{r}
+library(Matrix)
+
+M <- create_dtm()
+dim(M)
+
+mean(M == 0) ## sparsity
+M[sample(nrow(M), 20), sample(ncol(M), 5)] ## random subset
 ```
 

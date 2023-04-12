@@ -2,7 +2,7 @@
 % Please edit documentation in R/buscador.R
 \name{ccc_clean_dataset}
 \alias{ccc_clean_dataset}
-\title{Clean Dataset}
+\title{Clean Search Data}
 \usage{
 ccc_clean_dataset(df)
 }
@@ -13,5 +13,5 @@ ccc_clean_dataset(df)
 a data frame
 }
 \description{
-Clean Dataset
+Clean Search Data
 }

@@ -1,18 +1,32 @@
 
-edgelist_projection <- function(d) {
-  require(Matrix)
-  row_names <- unique(d$from)
-  col_names <- unique(d$to)
-  i <- match(d$from, row_names)
-  j <- match(d$to, col_names)
-  
-  M <- Matrix::sparseMatrix(
-    i = i, j = j, x = 1L,
-    dimnames = list(row_names, col_names)
+library(tidyverse)
+source("data-raw/extra_stopwords.R")
+
+df <- read_rds("data-raw/spacy_subset.rds")
+
+docs <- unique(df$doc_id)
+n_docs <- length(docs)
+
+lemma_counts <- df |>
+  count(lemma) |> 
+  mutate(prop = n / n_docs)
+
+ok_lemmas <- lemma_counts |> 
+  filter(prop >= 0.004) |> 
+  anti_join(tibble(lemma = stopwords)) |> 
+  pull(lemma)
+
+df <- df |> 
+  filter(lemma %in% ok_lemmas)
+
+n_words <- length(ok_lemmas)
+
+## for memory:
+
+docterms <- df |> 
+  mutate(
+    doc_id = factor(doc_id, levels = docs),
+    lemma = factor(lemma, levels = ok_lemmas)
   )
-  
-  message("original matrix: ", paste(dim(M), collapse = " x "))
-  out <- M %*% t(M)
-  message("projection matrix: ", paste(dim(out), collapse = " x "))
-  return(out)
-}
+
+usethis::use_data(docterms, overwrite = TRUE)
