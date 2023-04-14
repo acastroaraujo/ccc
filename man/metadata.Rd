@@ -5,7 +5,7 @@
 \alias{metadata}
 \alias{citations}
 \alias{docterms}
-\title{Datasets}
+\title{30 Year Data}
 \format{
 Each dataset is a data frame. `citations` takes the form of an
 "edge list," `metadata` contains additional information on each case; and

@@ -1,5 +1,5 @@
 
-#' Datasets
+#' 30 Year Data
 #'
 #' These datasets go over the first 30 years of the Colombian Constitutional 
 #' Court's history. They were created using this package. See the following 
@@ -25,3 +25,14 @@
 #' @rdname metadata
 #' @format NULL
 "docterms"
+
+
+
+#' Gender Equality Cases
+#' 
+#' 
+#' 
+#' @source https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php
+#' 
+#' @format NULL
+"gender"
