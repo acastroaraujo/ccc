@@ -32,6 +32,9 @@ And the following datasets:
 - `metadata`
 - `citations`
 - `docterms`
+- `gender_cases`
+- `jctt_cases`
+- `jctt_edge_list`
 
 These datasets were created using these
 [scripts](https://github.com/acastroaraujo/ccc/tree/master/data-raw).
@@ -43,8 +46,10 @@ library(ccc)
 library(dplyr)
 ```
 
-There are 3 built-in datasets in this package, which cover 30 years
-after the first ruling was published.
+**Thirty Years**
+
+There are 3 built-in datasets in this package that cover 30 years after
+the first ruling was published.
 
 ``` r
 glimpse(citations)
@@ -98,27 +103,81 @@ mean(M == 0) ## sparsity
 # [1] 0.9242341
 M[sample(nrow(M), 20), sample(ncol(M), 5)] ## random subset
 # 20 x 5 sparse Matrix of class "dgCMatrix"
-#           urbanizacion llano plantearse incumplida clasificada
-# T-682-13             .     .          .          .           .
-# T-066-12             .     .          .          .           .
-# T-383-94             1     .          .          .           .
-# T-1531-00            .     .          .          .           .
-# T-951-06             .     .          .          .           .
-# C-795-14             .     .          .          .           .
-# T-016-05             .     .          .          .           .
-# T-213-14             .     .          .          .           .
-# T-753-14             .     .          .          .           .
-# C-350-09             .     .          .          .           .
-# T-260-02             .     .          .          .           .
-# T-174-95             .     .          .          .           .
-# T-988-07             .     .          .          .           .
-# T-354-08             .     .          .          .           .
-# T-840-12             .     .          .          .           .
-# T-297-05             .     .          .          .           .
-# C-248-99             .     .          .          .           .
-# T-625-97             .     .          .          .           .
-# T-501-17             .     .          .          .           .
-# T-1141-04            .     .          .          .           .
+#           extraprocesales existencial ocupado fisiatria crecimiento
+# T-190-16                .           .       .         .           .
+# T-796-99                .           .       .         .           .
+# C-151-20                .           .       .         .           1
+# C-168-12                .           .       .         .           .
+# T-949-13                .           .       .         .           .
+# T-236-13                .           .       .         .           .
+# T-851-01                .           .       .         .           .
+# T-892-05                .           .       .         .           .
+# T-324-94                .           .       .         .           .
+# T-1011-05               .           .       .         .           .
+# T-565-14                .           .       .         .           1
+# C-570-16                .           .       .         .           .
+# T-528-01                .           .       .         .           .
+# T-707-14                .           .       .         .           .
+# C-247-95                .           .       .         .           .
+# T-194-12                .           .       .         .           .
+# C-394-06                .           .       .         .           .
+# C-1174-01               .           .       .         .           .
+# T-273-05                .           .       .         .           .
+# T-905-11                .           .       .         .           .
+```
+
+**Gender**
+
+`gender_cases` contains cases related to gender equality across a
+variety of topics, collected by experts
+[here](https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php)
+
+``` r
+glimpse(gender_cases)
+# Rows: 471
+# Columns: 4
+# $ id   <chr> "T-064-23", "T-028-23", "T-452-22", "T-425-22", "T-400-22", "T-37…
+# $ type <fct> T, T, T, T, T, T, T, SU, T, T, T, T, C, T, T, C, T, C, T, C, C, S…
+# $ tema <fct> "A LA IGUALDAD Y LA NO DISCRIMINACIÓN", "A LA IGUALDAD Y LA NO DI…
+# $ href <chr> "/relatoria/2023/T-064-23.htm", "/relatoria/2023/T-028-23.htm", "…
+```
+
+**Transitional Justice**
+
+`jctt_*` datasets contain cases from the “Justicia Constitucional en
+Tiempos de Transición” projected. More information about this project
+[here](http://justiciatransicional.uniandes.edu.co/web/).
+
+``` r
+glimpse(jctt_cases)
+# Rows: 123
+# Columns: 11
+# $ id        <chr> "C-019-18", "C-020-18", "C-527-17", "C-006-17", "C-026-18", …
+# $ type      <chr> "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", …
+# $ date      <date> 2018-04-04, 2018-04-04, 2017-08-14, 2017-01-18, 2018-04-11,…
+# $ precedent <chr> "Mantiene", "Mantiene", "Crea", "Mantiene", "Mantiene", "Cre…
+# $ president <chr> "Juan Manuel Santos (2014-2018)", "Juan Manuel Santos (2014-…
+# $ href      <chr> "/Relatoria/2018/C-019-18.htm", "/Relatoria/2018/C-020-18.ht…
+# $ keywords  <list> [<tbl_df[3 x 3]>], [<tbl_df[3 x 3]>], [<tbl_df[3 x 3]>], [<…
+# $ crimes    <list> [<tbl_df[1 x 1]>], [<tbl_df[1 x 1]>], [<tbl_df[1 x 1]>], [<…
+# $ mp        <list> [<tbl_df[1 x 1]>], [<tbl_df[1 x 1]>], [<tbl_df[1 x 1]>], [<…
+# $ msv       <list> [<tbl_df[4 x 1]>], [<tbl_df[1 x 1]>], [<tbl_df[4 x 1]>], [<…
+# $ mav       <list> [<tbl_df[4 x 1]>], [<tbl_df[1 x 1]>], [<tbl_df[4 x 1]>], [<…
+```
+
+`jctt_edge_list` contains citation data to sources “outside” the CCC.
+
+``` r
+glimpse(jctt_edge_list)
+# Rows: 1,660
+# Columns: 7
+# $ from      <chr> "C-019-18", "C-019-18", "C-019-18", "C-019-18", "C-019-18", …
+# $ to        <chr> "ONU, Asamblea General, Resolucion 2198, Protocolo sobre el …
+# $ type      <chr> "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", …
+# $ to_source <chr> "Normas internacionales", "Normas internacionales", "Normas …
+# $ to_system <chr> "Sistema Universal", "Sistema Universal", "Sistema Universal…
+# $ date      <date> 2018-04-04, 2018-04-04, 2018-04-04, 2018-04-04, 2018-04-04,…
+# $ president <chr> "Juan Manuel Santos (2014-2018)", "Juan Manuel Santos (2014-…
 ```
 
 ## Download
@@ -135,7 +194,7 @@ results <- ccc_search(
 glimpse(results)
 # Rows: 2,257
 # Columns: 15
-# $ relevancia       <dbl> 17.653, 15.540, 14.595, 12.729, 12.425, 12.051, 10.50…
+# $ relevancia       <dbl> 17.654, 15.541, 14.596, 12.738, 12.425, 12.056, 10.51…
 # $ providencia      <chr> "T-1045/01", "T-244/00", "T-597/01", "T-1135/00", "C-…
 # $ tipo             <chr> "Tutela", "Tutela", "Tutela", "Tutela", "Constitucion…
 # $ f_sentencia      <chr> "2001-10-03", "2000-03-03", "2001-06-07", "2000-08-30…
@@ -185,44 +244,49 @@ txts <- vector("list", nrow(df_subset))
 for (i in seq_along(txts)) {
   txts[[i]] <- ccc_txt(df_subset$url[[i]])
 }
-# https://www.corteconstitucional.gov.co/relatoria/2000/T-1642-00.htm
-# https://www.corteconstitucional.gov.co/relatoria/2000/T-1122-00.htm
-# https://www.corteconstitucional.gov.co/relatoria/1999/T-863A-99.htm
-# https://www.corteconstitucional.gov.co/relatoria/2001/T-1082-01.htm
-# https://www.corteconstitucional.gov.co/relatoria/2000/C-533-00.htm
+# https://www.corteconstitucional.gov.co/relatoria/2000/T-016-00.htm
+# https://www.corteconstitucional.gov.co/relatoria/1999/C-247-99.htm
+# https://www.corteconstitucional.gov.co/relatoria/2001/T-541-01.htm
+# https://www.corteconstitucional.gov.co/relatoria/2001/T-1221-01.htm
+# https://www.corteconstitucional.gov.co/relatoria/2000/T-1503-00.htm
 
 names(txts) <- df_subset$id
 
 glimpse(txts)
 # List of 5
-#  $ T-1642-00: chr "\r\n Sentencia T-1642/00\r\n\r\n \r\n DERECHO DE LA VIUDA A RECIBIR PENSION DE SOBREVIVIENTE-Nuevo matrimonio/I"| __truncated__
-#  $ T-1122-00: chr "\r\n Sentencia T-1122/00\r\n\r\n \r\n PENSION DE VEJEZ-Régimen de transición\r\n\r\n \r\n DERECHO DE PETICION-P"| __truncated__
-#  $ T-863A-99: chr "\r\n Sentencia T-863A/99\r\n\r\n \r\n\r\n \r\n DERECHO DE PETICION-Pronta resolución y decisión de fondo\r\n\r\"| __truncated__
-#  $ T-1082-01: chr "\r\n Sentencia T-1082/01\r\n\r\n \r\n ACCION DE TUTELA CONTRA PARTICULARES-Subordinación\r\n\r\n \r\n ACCION DE"| __truncated__
-#  $ C-533-00 : chr "\r\n Sentencia C-533/00\r\n\r\n \r\n FAMILIA-Origen/FAMILIA-Formas\r\n\r\n \r\n FAMILIA-Diferencias entre forma"| __truncated__
+#  $ T-016-00 : chr "\r\n Sentencia T-016/00\r\n\r\n \r\n\r\n \r\n IGUALDAD DE LOS HIJOS\r\n\r\n \r\n Para la Constitución lo que in"| __truncated__
+#  $ C-247-99 : chr "\r\n Sentencia C-247/99\r\n\r\n \r\n\r\n \r\n COSA JUZGADA CONSTITUCIONAL-Conciliación laboral\r\n\r\n \r\n En "| __truncated__
+#  $ T-541-01 : chr "\r\n Sentencia T-541/01\r\n\r\n \r\n ACCION DE TUTELA-Procedencia excepcional pago de salarios/DERECHO AL MINIM"| __truncated__
+#  $ T-1221-01: chr "\r\n Sentencia T-1221/01\r\n\r\n \r\n ACCION DE TUTELA-Improcedencia para revivir términos precluidos o actuaci"| __truncated__
+#  $ T-1503-00: chr "\r\n Sentencia T-1503/00\r\n\r\n \r\n\r\n \r\n MEDIO DE DEFENSA JUDICIAL INEFICAZ-Reconocimiento oportuno de pe"| __truncated__
 ```
 
 Finally, you can `extract_citations()` easily as follows:
 
 ``` r
 lapply(txts, extract_citations)
-# $`T-1642-00`
-#  [1] "T-1642-00" "C-870-99"  "C-870-99"  "T-393-97"  "C-309-96"  "T-190-93" 
-#  [7] "T-553-94"  "C-389-96"  "C-002-99"  "C-080-99" 
+# $`T-016-00`
+# [1] "T-016-00"
 # 
-# $`T-1122-00`
-# [1] "T-1122-00" "C-410-94"  "C-596-97"  "C-146-98" 
+# $`C-247-99`
+#  [1] "C-160-99"  "C-160-99"  "C-160-99"  "C-160-99"  "C-160-99"  "C-037-96" 
+#  [7] "C-165-93"  "C-160-99"  "C-160-99"  "C-600A-95" "C-226-94"  "C-190-96" 
+# [13] "C-190-96"  "C-619-96"  "C-606-92"  "C-606-92"  "C-071-95"  "C-588-97" 
+# [19] "C-606-92"  "C-226-94"  "C-619-96"  "C-034-97"  "C-190-96"  "C-190-96" 
+# [25] "C-547-94"  "C-220-97"  "T-492-92"  "C-299-94"  "C-025-93"  "C-025-93" 
+# [31] "C-160-99"  "C-160-99"  "C-247-99"  "C-247-99" 
 # 
-# $`T-863A-99`
-#  [1] "T-622-95"  "T-180-98"  "T-372-95"  "T-424-95"  "T-524-97"  "T-369-97" 
-#  [7] "C-005-98"  "T-180-98"  "T-437-92"  "T-376-93"  "T-126-94"  "T-257-96" 
-# [13] "SU-257-97" "T-539-92"  "T-219-94"  "T-863A-99" "T-214-98"  "T-254-93" 
-# [19] "T-320-93"  "T-366-93" 
+# $`T-541-01`
+#  [1] "T-063-95"  "T-437-96"  "T-426-92"  "T-147-95"  "T-244-95"  "T-212-96" 
+#  [7] "T-608-96"  "T-246-96"  "T-418-96"  "SU-342-95" "T-418-96"  "C-448-96" 
+# [13] "T-225-93"  "T-125-94"  "SU-478-97" "C-665-98"  "T-052-98"  "T-243-98" 
+# [19] "C-401-98"  "SU-400-97" "T-661-97"  "T-541-01" 
 # 
-# $`T-1082-01`
-#  [1] "T-1082-01" "T-290-93"  "T-412-92"  "T-233-94"  "T-070-97"  "T-630-97" 
-#  [7] "T-333-95"  "SU-509-01" "C-022-96"  "T-789-00"  "SU-509-01" "T-216-98" 
+# $`T-1221-01`
+#  [1] "T-575-97"  "T-1655-00" "T-356-00"  "T-499-92"  "T-501-94"  "T-1655-00"
+#  [7] "T-818-01"  "T-578-98"  "T-427-01"  "C-543-92"  "T-971-01"  "T-818-01" 
+# [13] "T-1221-01"
 # 
-# $`C-533-00`
-# [1] "C-239-94" "C-533-00"
+# $`T-1503-00`
+# [1] "T-1503-00" "T-206-97"  "T-131-00"  "T-178-00"  "T-170-00"
 ```

@@ -3,14 +3,18 @@
 #'
 #' These datasets go over the first 30 years of the Colombian Constitutional 
 #' Court's history. They were created using this package. See the following 
-#' link to get access to the code that produce them:
+#' link to get access to the scripts that produced them (00-05):
 #' 
 #' https://github.com/acastroaraujo/ccc/tree/master/data-raw
+#' 
+#' \describe{
+#'   \item{metadata}{A data frame with additional information on each case.}
+#'   \item{citations}{An edge list.}
+#'   \item{docterms}{A data frame with word counts for a subset of the vocabulary used across 
+#' all cases.}
+#' }
 #'
-#' @format Each dataset is a data frame. `citations` takes the form of an
-#' "edge list," `metadata` contains additional information on each case; and
-#' `docterms` contains word counts for a subset of the vocabulary used across 
-#' all cases.
+#' @format NULL
 #' @source https://www.corteconstitucional.gov.co/relatoria/
 #' @examples
 #' metadata
@@ -30,9 +34,37 @@
 
 #' Gender Equality Cases
 #' 
+#' Covers cases from 1992-08-12 to 2022-02-23
 #' 
+#' https://github.com/acastroaraujo/ccc/tree/master/data-raw/gender.R
 #' 
 #' @source https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php
 #' 
 #' @format NULL
-"gender"
+"gender_cases"
+
+
+#' Justicia Constitucional en Tiempos de Transicion
+#' 
+#' Covers cases from 1992-10-28 to 2019-04-03
+#' 
+#' \describe{
+#'   \item{jctt_cases}{A data frame of cases, along with some nested variables.}
+#'   \item{jctt_edge_list}{An edge list of cases to citations to "outside" sources}
+#' }
+#' 
+#' https://github.com/acastroaraujo/ccc/tree/master/data-raw/transitional_justice_uniandes.R
+#' 
+#' @name jctt
+#' 
+#' @source http://justiciatransicional.uniandes.edu.co/web/
+#' 
+#' @format NULL
+
+#' @rdname jctt
+#' @format NULL
+"jctt_cases"
+
+#' @rdname jctt
+#' @format NULL
+"jctt_edge_list"

@@ -44,7 +44,7 @@ d2 <- enframe(url_out, name = "tema", value = "href")
 gender <- full_join(d1, d2) |> 
   unnest(c(id, href))
 
-gender <- gender |> 
+gender_cases <- gender |> 
   mutate(tema = factor(tema)) |> 
   mutate(id = str_replace_all(id, "[:space:]", "")) |> 
   mutate(id = str_remove(id, "[^\\d]+$")) |> 
@@ -52,6 +52,7 @@ gender <- gender |>
   mutate(type = str_extract(id, "^(C|SU|T|A)")) |> 
   filter(type != "A") |> 
   mutate(type = factor(type)) |> 
-  relocate(id, type, tema, href)
+  relocate(id, type, tema, href) |> 
+  distinct()
 
-usethis::use_data(gender, overwrite = TRUE)
+usethis::use_data(gender_cases, overwrite = TRUE)

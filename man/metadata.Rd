@@ -6,12 +6,6 @@
 \alias{citations}
 \alias{docterms}
 \title{30 Year Data}
-\format{
-Each dataset is a data frame. `citations` takes the form of an
-"edge list," `metadata` contains additional information on each case; and
-`docterms` contains word counts for a subset of the vocabulary used across 
-all cases.
-}
 \source{
 https://www.corteconstitucional.gov.co/relatoria/
 }
@@ -25,10 +19,17 @@ docterms
 \description{
 These datasets go over the first 30 years of the Colombian Constitutional 
 Court's history. They were created using this package. See the following 
-link to get access to the code that produce them:
+link to get access to the scripts that produced them (00-05):
 }
 \details{
 https://github.com/acastroaraujo/ccc/tree/master/data-raw
+
+\describe{
+  \item{metadata}{A data frame with additional information on each case.}
+  \item{citations}{An edge list.}
+  \item{docterms}{A data frame with word counts for a subset of the vocabulary used across 
+all cases.}
+}
 }
 \examples{
 metadata
