@@ -32,7 +32,7 @@ cat("unweighted network:", scales::comma(nrow(distinct(edge_list))), "\n")
 
 # add relevant metadata ---------------------------------------------------
 
-metadata <- metadata |> 
+metadata <- read_rds("data-raw/metadata.rds") |> 
   select(id, date) |> 
   drop_na()
 
@@ -46,7 +46,6 @@ edge_list <- edge_list |>
 
 # export ------------------------------------------------------------------
 
-
 ## the following lines are for memory efficiency
 
 case_levels <- metadata$id
@@ -58,3 +57,32 @@ citations <- edge_list |>
   )
 
 usethis::use_data(citations, overwrite = TRUE)
+
+# modify metadata ---------------------------------------------------------
+
+metadata <- read_rds("data-raw/metadata.rds")
+
+dag <- igraph::graph_from_data_frame(
+  d = citations, 
+  directed = TRUE,
+  vertices = metadata
+)
+
+## make sure it is degree and not strength!!)
+
+metadata <- metadata |> 
+  left_join(
+    igraph::degree(dag, mode = "in") |> 
+      enframe("id", "indegree") |> 
+      mutate(indegree = as.integer(indegree))
+  ) |> 
+  left_join(
+    igraph::degree(dag, mode = "out") |> 
+      enframe("id", "outdegree") |> 
+      mutate(outdegree = as.integer(outdegree))
+  ) 
+
+metadata <- metadata |> 
+  select(id, type, year, date, indegree, outdegree, everything())
+
+usethis::use_data(metadata, overwrite = TRUE, compress = "xz")

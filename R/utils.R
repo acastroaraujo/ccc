@@ -23,6 +23,7 @@ NULL
 #' create_dtm()
 #' 
 create_dtm <- function() {
+  require(Matrix)
   
   row_names <- levels(ccc::docterms$doc_id)
   col_names <- levels(ccc::docterms$lemma)

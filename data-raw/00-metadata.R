@@ -21,15 +21,14 @@ for (i in seq_along(date_seq)) {
   Sys.sleep(runif(1, 2, 5))
 }
 
-
 # clean up ----------------------------------------------------------------
 
 metadata <- bind_rows(out) |> 
   select(-relevancia)
 
-end_date <- min(as.Date(metadata$f_sentencia)) + lubridate::years(30)
+end_date <- min(as.Date(metadata$f_sentencia)) + lubridate::years(30) + lubridate::days(15)
 
-metadata <- metadata |> 
+metadata <- metadata |>
   ## keep subset of variables
   select("id" = "providencia", "date" = "f_sentencia", "file" = "expediente", "mp" = "magistrados", "descriptors" = "descriptores", "date_public" = "f_public", "url") |> 
   mutate(
@@ -68,8 +67,9 @@ metadata <- metadata |>
   ## get descriptors into list-column
   mutate(descriptors = str_split(descriptors, "\r\n")) |> 
   mutate(descriptors = map(descriptors, str_squish)) |> 
-  relocate("id", "type", "year", "date", "file", "mp", "descriptors", "date_public", "url") 
+  relocate("id", "type", "year", "date", "descriptors", "mp", "date_public", "file", "url") 
 
-usethis::use_data(metadata, overwrite = TRUE, compress = "xz")
+write_rds(metadata, "data-raw/metadata.rds", compress = "gz")
+
 
 

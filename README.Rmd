@@ -98,7 +98,7 @@ glimpse(gender_cases)
 
 **Transitional Justice**
 
-`jctt_*` datasets contain cases from the "Justicia Constitucional en Tiempos de Transición" projected. More information about this project [here](http://justiciatransicional.uniandes.edu.co/web/).
+`jctt_*` datasets contain cases from the "[Justicia Constitucional en Tiempos de Transición](http://justiciatransicional.uniandes.edu.co/web/)" by Universidad de Los Andes. 
 
 ```{r}
 glimpse(jctt_cases)

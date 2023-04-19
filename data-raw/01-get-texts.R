@@ -8,7 +8,7 @@ library(progress)
 outfolder <- here::here("data-raw", "texts")
 if (!dir.exists(outfolder)) dir.create(outfolder)
 
-df <- metadata |> 
+df <- read_rds("data-raw/metadata.rds") |> 
   dplyr::select("id", "type", "url") 
 
 dict <- df |> select(id, url) |> deframe()
