@@ -1,8 +1,4 @@
 
-#' @importFrom rlang .data
-#' @keywords internal
-NULL
-
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage(
     "Para m\u00e1s informaci\u00f3n:\n",
@@ -10,8 +6,11 @@ NULL
   )
 }
 
+#' @importFrom rlang .data
+#' @keywords internal
+NULL
 
-#' Document-Term Matrix
+#' Sparse Document-Term Matrix
 #'
 #' Creates a document-term matrix from the built-in docterms dataset
 #' 
@@ -23,6 +22,9 @@ NULL
 #' create_dtm()
 #' 
 create_dtm <- function() {
+  
+  rlang::check_installed("Matrix")
+  if (!rlang::is_attached("package:Matrix")) require("Matrix")
   
   row_names <- levels(ccc::docterms$doc_id)
   col_names <- levels(ccc::docterms$lemma)

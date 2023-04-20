@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{create_dtm}
 \alias{create_dtm}
-\title{Document-Term Matrix}
+\title{Sparse Document-Term Matrix}
 \usage{
 create_dtm()
 }
