@@ -83,6 +83,10 @@ metadata <- metadata |>
   ) 
 
 metadata <- metadata |> 
-  select(id, type, year, date, indegree, outdegree, everything())
+  select(id, type, year, date, indegree, outdegree, everything()) |> 
+  ## add id order after date.
+  mutate(temp = readr::parse_integer(str_extract(id, "\\d+(?=-\\d{2})"))) |> 
+  arrange(date, temp) |> 
+  select(-temp)
 
 usethis::use_data(metadata, overwrite = TRUE, compress = "xz")
