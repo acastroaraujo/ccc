@@ -26,11 +26,11 @@ for (i in seq_along(date_seq)) {
 metadata <- bind_rows(out) |> 
   select(-relevancia)
 
-end_date <- min(as.Date(metadata$f_sentencia)) + lubridate::years(30) + lubridate::days(15)
+end_date <- min(as.Date(metadata$fecha_sentencia)) + lubridate::years(30) + lubridate::days(15)
 
 metadata <- metadata |>
   ## keep subset of variables
-  select("id" = "providencia", "date" = "f_sentencia", "file" = "expediente", "mp" = "magistrados", "descriptors" = "descriptores", "date_public" = "f_public", "url") |> 
+  select("id" = "providencia", "date" = "fecha_sentencia", "file" = "expediente", "mp" = "magistrado_s_ponentes", "descriptors" = "tema_subtema", "date_public" = "f_public", "url") |> 
   mutate(
     date = as.Date(date), 
     date_public = as.Date(date_public)

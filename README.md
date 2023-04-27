@@ -53,7 +53,7 @@ the first ruling was published.
 
 ``` r
 glimpse(citations)
-# Rows: 629,848
+# Rows: 631,274
 # Columns: 5
 # $ from      <fct> C-001-18, C-001-18, C-001-18, C-001-18, C-001-18, C-001-18, …
 # $ to        <fct> C-004-93, C-007-01, C-008-17, C-030-03, C-037-96, C-041-93, …
@@ -64,22 +64,24 @@ glimpse(citations)
 
 ``` r
 glimpse(metadata)
-# Rows: 27,157
-# Columns: 9
-# $ id          <chr> "T-001-92", "C-004-92", "T-002-92", "C-005-92", "T-003-92"…
-# $ type        <fct> T, C, T, C, T, T, T, T, T, T, T, T, T, T, T, C, T, T, T, T…
+# Rows: 27,179
+# Columns: 11
+# $ id          <chr> "T-001-92", "C-004-92", "T-002-92", "T-003-92", "C-005-92"…
+# $ type        <fct> T, C, T, T, C, T, T, T, T, T, T, T, T, T, T, C, T, T, T, T…
 # $ year        <int> 1992, 1992, 1992, 1992, 1992, 1992, 1992, 1992, 1992, 1992…
 # $ date        <date> 1992-04-03, 1992-05-07, 1992-05-08, 1992-05-11, 1992-05-1…
-# $ file        <chr> "117 Y OTROS", "R.E. 001", "644", "R.E. 003", "309", "T-22…
-# $ mp          <list> "jose gregorio hernandez galindo", "eduardo cifuentes mun…
+# $ indegree    <int> 186, 118, 271, 142, 7, 225, 116, 34, 27, 27, 7, 71, 8, 38,…
+# $ outdegree   <int> 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
 # $ descriptors <list> <"ACCION DE TUTELA TRANSITORIA-Improcedencia", "ACCION DE…
+# $ mp          <list> "jose gregorio hernandez galindo", "eduardo cifuentes mun…
 # $ date_public <date> NA, NA, 1992-02-08, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+# $ file        <chr> "117 Y OTROS", "R.E. 001", "644", "309", "R.E. 003", "T-22…
 # $ url         <chr> "https://www.corteconstitucional.gov.co/relatoria/1992/T-0…
 ```
 
 ``` r
 glimpse(docterms)
-# Rows: 26,015,969
+# Rows: 26,053,177
 # Columns: 3
 # $ doc_id <fct> C-001-18, C-001-18, C-001-18, C-001-18, C-001-18, C-001-18, C-0…
 # $ lemma  <fct> abierta, abierto, abordar, absoluta, abstracto, academia, acade…
@@ -89,41 +91,52 @@ glimpse(docterms)
 You can get a document-term matrix instead of `docterms` easily with the
 `create_dtm()` function. The result will be a very sparse matrix.
 
-I recommend that you load the `Matrix` package if you’re going to work
-with this object.
+*Note. Using this function will automatically load the `Matrix`
+package.*
 
 ``` r
-library(Matrix)
-
 M <- create_dtm()
-dim(M)
-# [1] 27157 12644
+# Loading required package: Matrix
+dim(M) ## number of rows (documents) and columns (word counts)
+# [1] 27179 12658
 
-mean(M == 0) ## sparsity
-# [1] 0.9242341
-M[sample(nrow(M), 20), sample(ncol(M), 5)] ## random subset
+## sparsity
+mean(M == 0) 
+# [1] 0.924271
+```
+
+92% of the cells in this matrix are empty, which is why we call it a
+“sparse matrix.”
+
+Here’s a random subset of this matrix
+
+``` r
+set.seed(1)
+i <- sample(nrow(M), 20)
+j <- sample(ncol(M), 5)
+M[i, j] 
 # 20 x 5 sparse Matrix of class "dgCMatrix"
-#           extraprocesales existencial ocupado fisiatria crecimiento
-# T-190-16                .           .       .         .           .
-# T-796-99                .           .       .         .           .
-# C-151-20                .           .       .         .           1
-# C-168-12                .           .       .         .           .
-# T-949-13                .           .       .         .           .
-# T-236-13                .           .       .         .           .
-# T-851-01                .           .       .         .           .
-# T-892-05                .           .       .         .           .
-# T-324-94                .           .       .         .           .
-# T-1011-05               .           .       .         .           .
-# T-565-14                .           .       .         .           1
-# C-570-16                .           .       .         .           .
-# T-528-01                .           .       .         .           .
-# T-707-14                .           .       .         .           .
-# C-247-95                .           .       .         .           .
-# T-194-12                .           .       .         .           .
-# C-394-06                .           .       .         .           .
-# C-1174-01               .           .       .         .           .
-# T-273-05                .           .       .         .           .
-# T-905-11                .           .       .         .           .
+#           asignado pension aplicable paciente medicion
+# T-389-19         1       .         1        .        .
+# T-764-01         .      18         1        .        .
+# C-513-13         1      10         .        .        .
+# T-958-04         .      22         1        .        .
+# T-185-13         .       .         1        .        .
+# T-904-07         .       7         1        .        .
+# T-1099-05        .      11         2        .        .
+# T-047-11         6       .         2        1        .
+# C-409-09         .       .         1        .        .
+# T-199-21         .       1         1        1        .
+# T-126-02         1       .         .       11        .
+# T-147-04         .       .         1        .        .
+# T-826-14         .      47         4        .        .
+# T-404-14         .       .         1        .        .
+# T-236-09         .       .         1        .        .
+# T-803-07         .       .         .       11        .
+# T-426-95         .       .         1        .        .
+# T-218-01         .       4         .        .        .
+# T-1036-07        .       .         .        1        .
+# T-034-94         1       .         1        .        .
 ```
 
 **Gender**
@@ -144,9 +157,10 @@ glimpse(gender_cases)
 
 **Transitional Justice**
 
-`jctt_*` datasets contain cases from the “Justicia Constitucional en
-Tiempos de Transición” projected. More information about this project
-[here](http://justiciatransicional.uniandes.edu.co/web/).
+`jctt_*` datasets contain cases from the “[Justicia Constitucional en
+Tiempos de
+Transición](http://justiciatransicional.uniandes.edu.co/web/)” by
+Universidad de Los Andes.
 
 ``` r
 glimpse(jctt_cases)
@@ -187,28 +201,28 @@ Use the `ccc_search()` function to look up some cases.
 ``` r
 results <- ccc_search(
   text = "familia", 
-  date_start = "1999-01-01", 
+  date_start = "2000-01-01", 
   date_end = "2001-12-31"
 )
 
 glimpse(results)
-# Rows: 2,257
+# Rows: 1,803
 # Columns: 15
-# $ relevancia       <dbl> 17.654, 15.541, 14.596, 12.738, 12.425, 12.056, 10.51…
-# $ providencia      <chr> "T-1045/01", "T-244/00", "T-597/01", "T-1135/00", "C-…
-# $ tipo             <chr> "Tutela", "Tutela", "Tutela", "Tutela", "Constitucion…
-# $ f_sentencia      <chr> "2001-10-03", "2000-03-03", "2001-06-07", "2000-08-30…
-# $ autoridades      <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-# $ demandado        <chr> "Sin Información", "", "", "", "", "", "", "", "", ""…
-# $ demandante       <chr> "MARIA SANDRA CRUZ PERDOMO VS. INVERSIONES RESCOL S.A…
-# $ descriptores     <chr> "ACCION DE TUTELA-No es la vía para definición de exi…
-# $ expediente       <chr> "469070", "T-247550", "T-427617", "T-327235 Y OTROS",…
-# $ f_public         <chr> "", "", "", "", "", "", "", "", "", "", "", "", "", "…
-# $ magistrado_otros <lgl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-# $ magistrados      <chr> "Alvaro Tafur Galvis", "Fabio Morón Díaz", "Rodrigo E…
-# $ normas           <chr> "", "", "", "", "LEY 466 DE 1998. “POR MEDIO DE LA CU…
-# $ sintesis         <chr> "Sin Información", "Sin Información", "Sin Informació…
-# $ url              <chr> "https://www.corteconstitucional.gov.co/relatoria/200…
+# $ relevancia                           <dbl> 16.147, 13.397, 10.703, 8.714, 7.…
+# $ providencia                          <chr> "T-244/00", "T-1135/00", "T-920/0…
+# $ tipo                                 <chr> "Tutela", "Tutela", "Tutela", "Tu…
+# $ fecha_sentencia                      <chr> "2000-03-03", "2000-08-30", "2000…
+# $ magistrado_s_ponentes                <chr> "", "Alfredo Beltrán Sierra", "Ed…
+# $ magistrado_s_s_alvamento_a_claracion <lgl> NA, NA, NA, NA, NA, NA, NA, NA, N…
+# $ tema_subtema                         <chr> "", "ACCION DE TUTELA TRANSITORIA…
+# $ autoridades                          <lgl> NA, NA, NA, NA, NA, NA, NA, NA, N…
+# $ demandado                            <chr> "", "", "", "", "", "", "", "Sin …
+# $ demandante                           <chr> "FLOR ELVIRA RUSSI RODRIGUEZ", "C…
+# $ expediente                           <chr> "T-247550", "T-327235 Y OTROS", "…
+# $ f_public                             <chr> "", "", "", "", "", "", "", "", "…
+# $ normas                               <chr> "", "", "", "", "", "", "", "", "…
+# $ sintesis                             <chr> "Sin Información", "Sin Informaci…
+# $ url                                  <chr> "https://www.corteconstitucional.…
 ```
 
 This data is a little messy. The `ccc_clean_dataset()` provides some
@@ -217,17 +231,17 @@ useful tidying, but you might want to consider doing things differently.
 ``` r
 df <- ccc_clean_dataset(results)
 glimpse(df)
-# Rows: 2,257
+# Rows: 1,803
 # Columns: 9
-# $ id          <chr> "C-002-99", "T-015-99", "T-014-99", "T-008-99", "T-009-99"…
-# $ type        <fct> C, T, T, T, T, T, T, T, T, T, T, T, T, C, T, T, T, T, T, S…
-# $ year        <int> 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999…
-# $ date        <date> 1999-01-20, 1999-01-21, 1999-01-21, 1999-01-21, 1999-01-2…
-# $ file        <chr> "D-2104", "177540", "166086 Y OTROS", "191438 Y OTROS", "1…
-# $ mp          <list> "antonio barrera carbonell", "alejandro martinez caballer…
-# $ descriptors <list> <"SENTENCIA DE CONSTITUCIONALIDAD-Efectos retroactivos", …
-# $ date_public <date> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-# $ url         <chr> "https://www.corteconstitucional.gov.co/relatoria/1999/C-0…
+# $ id          <chr> "T-001-00", "A-001-00", "T-002-00", "T-005-00", "T-007-00"…
+# $ type        <fct> T, A, T, T, T, T, T, T, C, C, A, T, T, T, T, T, T, T, T, T…
+# $ year        <int> 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000…
+# $ date        <date> 2000-01-12, 2000-01-12, 2000-01-13, 2000-01-13, 2000-01-1…
+# $ file        <chr> "T-245392", "T-246504", "T-235171", "T-239345", "T-246991"…
+# $ mp          <list> "jose gregorio hernandez galindo", "jose gregorio hernand…
+# $ descriptors <list> <"DERECHO A LA ATENCION MEDICA INTEGRAL DE ANCIANO-Examen…
+# $ date_public <date> NA, 2000-01-28, NA, NA, NA, NA, NA, NA, NA, NA, 2000-02-0…
+# $ url         <chr> "https://www.corteconstitucional.gov.co/relatoria/2000/T-0…
 ```
 
 Next you’ll want to download some texts. You can use either `ccc_txt()`
@@ -244,49 +258,48 @@ txts <- vector("list", nrow(df_subset))
 for (i in seq_along(txts)) {
   txts[[i]] <- ccc_txt(df_subset$url[[i]])
 }
-# https://www.corteconstitucional.gov.co/relatoria/2000/T-016-00.htm
-# https://www.corteconstitucional.gov.co/relatoria/1999/C-247-99.htm
-# https://www.corteconstitucional.gov.co/relatoria/2001/T-541-01.htm
-# https://www.corteconstitucional.gov.co/relatoria/2001/T-1221-01.htm
-# https://www.corteconstitucional.gov.co/relatoria/2000/T-1503-00.htm
+# https://www.corteconstitucional.gov.co/relatoria/autos/2000/A114-00.htm
+# https://www.corteconstitucional.gov.co/relatoria/2000/T-618-00.htm
+# https://www.corteconstitucional.gov.co/relatoria/2001/T-1040-01.htm
+# https://www.corteconstitucional.gov.co/relatoria/2000/T-1666-00.htm
+# https://www.corteconstitucional.gov.co/relatoria/2000/T-1391-00.htm
 
 names(txts) <- df_subset$id
 
 glimpse(txts)
 # List of 5
-#  $ T-016-00 : chr "\r\n Sentencia T-016/00\r\n\r\n \r\n\r\n \r\n IGUALDAD DE LOS HIJOS\r\n\r\n \r\n Para la Constitución lo que in"| __truncated__
-#  $ C-247-99 : chr "\r\n Sentencia C-247/99\r\n\r\n \r\n\r\n \r\n COSA JUZGADA CONSTITUCIONAL-Conciliación laboral\r\n\r\n \r\n En "| __truncated__
-#  $ T-541-01 : chr "\r\n Sentencia T-541/01\r\n\r\n \r\n ACCION DE TUTELA-Procedencia excepcional pago de salarios/DERECHO AL MINIM"| __truncated__
-#  $ T-1221-01: chr "\r\n Sentencia T-1221/01\r\n\r\n \r\n ACCION DE TUTELA-Improcedencia para revivir términos precluidos o actuaci"| __truncated__
-#  $ T-1503-00: chr "\r\n Sentencia T-1503/00\r\n\r\n \r\n\r\n \r\n MEDIO DE DEFENSA JUDICIAL INEFICAZ-Reconocimiento oportuno de pe"| __truncated__
+#  $ A-114-00 : chr "\r\n Auto 114/00\r\n\r\n \r\n CONFLICTO DE COMPETENCIA EN TUTELA\r\n\r\n \r\n PRESIDENTE DE LA REPUBLICA-Incomp"| __truncated__
+#  $ T-618-00 : chr "\r\n Sentencia T-618/00\r\n\r\n \r\n PRINCIPIO DE UNIVERSALIDAD DEL SISTEMA DE SEGURIDAD SOCIAL EN SALUD-Protec"| __truncated__
+#  $ T-1040-01: chr "\r\n Sentencia T-1040/01\r\n\r\n \r\n DECRETO REGLAMENTARIO DE COMPETENCIA EN TUTELA-Inaplicación\r\n\r\n \r\n "| __truncated__
+#  $ T-1666-00: chr "\r\n Sentencia T-1666/00\r\n\r\n \r\n ACCION DE TUTELA CONTRA PARTICULARES-Indefensión\r\n\r\n \r\n CONTAMINACI"| __truncated__
+#  $ T-1391-00: chr "\r\n Sentencia T-1391/00\r\n\r\n \r\n ACCION DE TUTELA-Hecho superado por pago de acreencias laborales\r\n\r\n "| __truncated__
 ```
 
 Finally, you can `extract_citations()` easily as follows:
 
 ``` r
 lapply(txts, extract_citations)
-# $`T-016-00`
-# [1] "T-016-00"
+# $`A-114-00`
+# [1] "C-037-96" "C-037-96"
 # 
-# $`C-247-99`
-#  [1] "C-160-99"  "C-160-99"  "C-160-99"  "C-160-99"  "C-160-99"  "C-037-96" 
-#  [7] "C-165-93"  "C-160-99"  "C-160-99"  "C-600A-95" "C-226-94"  "C-190-96" 
-# [13] "C-190-96"  "C-619-96"  "C-606-92"  "C-606-92"  "C-071-95"  "C-588-97" 
-# [19] "C-606-92"  "C-226-94"  "C-619-96"  "C-034-97"  "C-190-96"  "C-190-96" 
-# [25] "C-547-94"  "C-220-97"  "T-492-92"  "C-299-94"  "C-025-93"  "C-025-93" 
-# [31] "C-160-99"  "C-160-99"  "C-247-99"  "C-247-99" 
+# $`T-618-00`
+#  [1] "SU-111-97" "T-618-00"  "T-730-99"  "SU-562-99" "T-827-99"  "T-295-99" 
+#  [7] "T-475-92"  "SU-062-99" "SU-562-99" "SU-480-97" "T-489-98"  "T-669-97" 
+# [13] "T-287-95"  "T-385-98"  "T-018-99"  "C-098-96"  "C-507-99"  "C-098-96" 
+# [19] "T-123-94"  "T-037-95"  "C-507-99"  "T-542-92"  "C-098-96"  "C-507-99" 
+# [25] "SU-562-99" "T-114-97"  "T-542-93"  "T-401-92"  "T-123-94"  "T-542-92" 
+# [31] "T-261-95"  "C-481-98"  "T-097-94" 
 # 
-# $`T-541-01`
-#  [1] "T-063-95"  "T-437-96"  "T-426-92"  "T-147-95"  "T-244-95"  "T-212-96" 
-#  [7] "T-608-96"  "T-246-96"  "T-418-96"  "SU-342-95" "T-418-96"  "C-448-96" 
-# [13] "T-225-93"  "T-125-94"  "SU-478-97" "C-665-98"  "T-052-98"  "T-243-98" 
-# [19] "C-401-98"  "SU-400-97" "T-661-97"  "T-541-01" 
+# $`T-1040-01`
+# [1] "C-1507-00" "T-1040-01" "T-407-92"  "T-483-93"  "T-427-92"  "C-531-00" 
+# [7] "C-351-00"  "SU-789-00" "T-1757-00"
 # 
-# $`T-1221-01`
-#  [1] "T-575-97"  "T-1655-00" "T-356-00"  "T-499-92"  "T-501-94"  "T-1655-00"
-#  [7] "T-818-01"  "T-578-98"  "T-427-01"  "C-543-92"  "T-971-01"  "T-818-01" 
-# [13] "T-1221-01"
+# $`T-1666-00`
+#  [1] "T-357-95"  "T-394-97"  "T-630-98"  "T-403-92"  "T-210-94"  "T-394-97" 
+#  [7] "T-614-97"  "T-214-98"  "T-1666-00" "T-025-94"  "T-630-98"  "T-210-94" 
+# [13] "T-028-94" 
 # 
-# $`T-1503-00`
-# [1] "T-1503-00" "T-206-97"  "T-131-00"  "T-178-00"  "T-170-00"
+# $`T-1391-00`
+# [1] "T-675-96"  "T-1391-00" "T-167-97"  "T-463-97"  "T-281-98"  "T-288-98" 
+# [7] "T-278-99"
 ```

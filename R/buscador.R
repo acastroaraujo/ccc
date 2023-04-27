@@ -83,7 +83,7 @@ ccc_clean_dataset <- function(df) {
   
   df |> 
     ## keep subset of variables
-    dplyr::select("id" = "providencia", "date" = "f_sentencia", "file" = "expediente", "mp" = "magistrados", "descriptors" = "descriptores", "date_public" = "f_public", "url") |> 
+    dplyr::select("id" = "providencia", "date" = "fecha_sentencia", "file" = "expediente", "mp" = "magistrado_s_ponentes", "descriptors" = "tema_subtema", "date_public" = "f_public", "url") |> 
     ## turn characters into dates
     dplyr::mutate(
       date = as.Date(.data$date), 

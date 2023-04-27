@@ -76,16 +76,25 @@ glimpse(docterms)
 
 You can get a document-term matrix instead of `docterms` easily with the `create_dtm()` function. The result will be a very sparse matrix.
 
-I recommend that you load the `Matrix` package if you're going to work with this object.
+_Note. Using this function will automatically load the `Matrix` package._
 
 ```{r}
-library(Matrix)
-
 M <- create_dtm()
-dim(M)
+dim(M) ## number of rows (documents) and columns (word counts)
 
-mean(M == 0) ## sparsity
-M[sample(nrow(M), 20), sample(ncol(M), 5)] ## random subset
+## sparsity
+mean(M == 0) 
+```
+
+92% of the cells in this matrix are empty, which is why we call it a "sparse matrix."
+
+Here's a random subset of this matrix
+
+```{r}
+set.seed(1)
+i <- sample(nrow(M), 20)
+j <- sample(ncol(M), 5)
+M[i, j] 
 ```
 
 **Gender**
@@ -117,7 +126,7 @@ Use the `ccc_search()` function to look up some cases.
 ```{r}
 results <- ccc_search(
   text = "familia", 
-  date_start = "1999-01-01", 
+  date_start = "2000-01-01", 
   date_end = "2001-12-31"
 )
 
