@@ -100,7 +100,7 @@ ccc_clean_dataset <- function(df) {
     ## Extract prefix
     dplyr::mutate(type = stringr::str_extract(.data$id, "^(C|SU|T|A)")) |> 
     ## Filter out "Autos"
-    dplyr::mutate(type = factor(.data$type)) |> 
+    dplyr::mutate(type = factor(.data$type, levels = c("C", "SU", "T"))) |> 
     ## remove all spanish accents
     dplyr::mutate(dplyr::across(dplyr::where(is.character), \(x) stringi::stri_trans_general(x, "Latin-ASCII"))) |> 
     ## Clarify NAs
@@ -118,7 +118,7 @@ ccc_clean_dataset <- function(df) {
     ## get descriptors into list-column
     dplyr::mutate(descriptors = stringr::str_split(.data$descriptors, "\r\n")) |> 
     dplyr::mutate(descriptors = purrr::map(.data$descriptors, stringr::str_squish)) |> 
-    dplyr::relocate("id", "type", "year", "date", "file", "mp", "descriptors", "date_public", "url") 
+    dplyr::relocate("id", "type", "year", "date", "descriptors", "mp", "date_public", "file", "url") 
   
 }
 
