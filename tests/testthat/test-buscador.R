@@ -1,3 +1,8 @@
+
+
+
+# api-tests-NOT-for-rcmdcheck ---------------------------------------------
+
 test_that("underlying database has not changed", {
   results <- ccc_search(text = "", date_start = "1992-04-01", date_end = "1992-04-30")
   
