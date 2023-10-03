@@ -6,6 +6,8 @@
 # ccc
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/acastroaraujo/ccc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/acastroaraujo/ccc/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The `ccc` package helps get information from the Colombian
@@ -206,22 +208,22 @@ results <- ccc_search(
 )
 
 glimpse(results)
-# Rows: 1,803
+# Rows: 500
 # Columns: 15
-# $ relevancia                           <dbl> 16.147, 13.397, 10.703, 8.714, 7.…
-# $ providencia                          <chr> "T-244/00", "T-1135/00", "T-920/0…
+# $ relevancia                           <dbl> 17.039, 11.153, 8.190, 7.372, 7.3…
+# $ providencia                          <chr> "T-1045/01", "T-523/92", "T-1532/…
 # $ tipo                                 <chr> "Tutela", "Tutela", "Tutela", "Tu…
-# $ fecha_sentencia                      <chr> "2000-03-03", "2000-08-30", "2000…
-# $ magistrado_s_ponentes                <chr> "", "Alfredo Beltrán Sierra", "Ed…
+# $ fecha_sentencia                      <chr> "2001-10-03", "1992-09-18", "2000…
+# $ magistrado_s_ponentes                <chr> "", "Ciro Angarita Baron", "Carlo…
 # $ magistrado_s_s_alvamento_a_claracion <lgl> NA, NA, NA, NA, NA, NA, NA, NA, N…
-# $ tema_subtema                         <chr> "", "ACCION DE TUTELA TRANSITORIA…
+# $ tema_subtema                         <chr> "", "ACCION DE TUTELA CONTRA SENT…
 # $ autoridades                          <lgl> NA, NA, NA, NA, NA, NA, NA, NA, N…
-# $ demandado                            <chr> "", "", "", "", "", "", "", "Sin …
-# $ demandante                           <chr> "FLOR ELVIRA RUSSI RODRIGUEZ", "C…
-# $ expediente                           <chr> "T-247550", "T-327235 Y OTROS", "…
+# $ demandado                            <chr> "Sin Información", "", "", "", ""…
+# $ demandante                           <chr> "MARIA SANDRA CRUZ PERDOMO VS. IN…
+# $ expediente                           <chr> "469070", "2598", "T-324358 Y OTR…
 # $ f_public                             <chr> "", "", "", "", "", "", "", "", "…
 # $ normas                               <chr> "", "", "", "", "", "", "", "", "…
-# $ sintesis                             <chr> "Sin Información", "Sin Informaci…
+# $ sintesis                             <chr> "Sin información", "Sin informaci…
 # $ url                                  <chr> "https://www.corteconstitucional.…
 ```
 
@@ -231,17 +233,17 @@ useful tidying, but you might want to consider doing things differently.
 ``` r
 df <- ccc_clean_dataset(results)
 glimpse(df)
-# Rows: 1,803
+# Rows: 500
 # Columns: 9
-# $ id          <chr> "T-001-00", "A-001-00", "T-002-00", "T-005-00", "T-007-00"…
-# $ type        <fct> T, NA, T, T, T, T, T, T, C, C, NA, T, T, T, T, T, T, T, T,…
-# $ year        <int> 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000…
-# $ date        <date> 2000-01-12, 2000-01-12, 2000-01-13, 2000-01-13, 2000-01-1…
-# $ descriptors <list> <"DERECHO A LA ATENCION MEDICA INTEGRAL DE ANCIANO-Examen…
-# $ mp          <list> "jose gregorio hernandez galindo", "jose gregorio hernand…
-# $ date_public <date> NA, 2000-01-28, NA, NA, NA, NA, NA, NA, NA, NA, 2000-02-0…
-# $ file        <chr> "T-245392", "T-246504", "T-235171", "T-239345", "T-246991"…
-# $ url         <chr> "https://www.corteconstitucional.gov.co/relatoria/2000/T-0…
+# $ id          <chr> "T-008-92", "T-009-92", "T-429-92", "T-439-92", "T-453-92"…
+# $ type        <fct> T, T, T, T, T, T, T, T, T, T, T, C, C, C, C, T, T, T, T, T…
+# $ year        <int> 1992, 1992, 1992, 1992, 1992, 1992, 1992, 1992, 1992, 1992…
+# $ date        <date> 1992-05-18, 1992-05-22, 1992-06-24, 1992-07-02, 1992-07-1…
+# $ descriptors <list> <"ACCION DE TUTELA-Improcedencia", "ACCION POPULAR", "DER…
+# $ mp          <list> "fabio moron diaz", "alejandro martinez caballero", "ciro…
+# $ date_public <date> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+# $ file        <chr> "399", "T-030", "1011", "1088", "1239", "1707", "399", "25…
+# $ url         <chr> "https://www.corteconstitucional.gov.co/relatoria/1992/T-0…
 ```
 
 Next you’ll want to download some texts. You can use either `ccc_txt()`
@@ -258,48 +260,44 @@ txts <- vector("list", nrow(df_subset))
 for (i in seq_along(txts)) {
   txts[[i]] <- ccc_txt(df_subset$url[[i]])
 }
-# https://www.corteconstitucional.gov.co/relatoria/autos/2000/A114-00.htm
-# https://www.corteconstitucional.gov.co/relatoria/2000/T-618-00.htm
-# https://www.corteconstitucional.gov.co/relatoria/2001/T-1040-01.htm
-# https://www.corteconstitucional.gov.co/relatoria/2000/T-1666-00.htm
-# https://www.corteconstitucional.gov.co/relatoria/2000/T-1391-00.htm
+# https://www.corteconstitucional.gov.co/relatoria/2000/C-533-00.htm
+# https://www.corteconstitucional.gov.co/relatoria/2000/T-1350-00.htm
+# https://www.corteconstitucional.gov.co/relatoria/2000/T-1561-00.htm
+# https://www.corteconstitucional.gov.co/relatoria/1995/T-110-95.htm
+# https://www.corteconstitucional.gov.co/relatoria/2001/T-345-01.htm
 
 names(txts) <- df_subset$id
 
 glimpse(txts)
 # List of 5
-#  $ A-114-00 : chr "\r\n Auto 114/00\r\n\r\n \r\n CONFLICTO DE COMPETENCIA EN TUTELA\r\n\r\n \r\n PRESIDENTE DE LA REPUBLICA-Incomp"| __truncated__
-#  $ T-618-00 : chr "\r\n Sentencia T-618/00\r\n\r\n \r\n PRINCIPIO DE UNIVERSALIDAD DEL SISTEMA DE SEGURIDAD SOCIAL EN SALUD-Protec"| __truncated__
-#  $ T-1040-01: chr "\r\n Sentencia T-1040/01\r\n\r\n \r\n DECRETO REGLAMENTARIO DE COMPETENCIA EN TUTELA-Inaplicación\r\n\r\n \r\n "| __truncated__
-#  $ T-1666-00: chr "\r\n Sentencia T-1666/00\r\n\r\n \r\n ACCION DE TUTELA CONTRA PARTICULARES-Indefensión\r\n\r\n \r\n CONTAMINACI"| __truncated__
-#  $ T-1391-00: chr "\r\n Sentencia T-1391/00\r\n\r\n \r\n ACCION DE TUTELA-Hecho superado por pago de acreencias laborales\r\n\r\n "| __truncated__
+#  $ C-533-00 : chr "\r\n Sentencia C-533/00\r\n\r\n \r\n FAMILIA-Origen/FAMILIA-Formas\r\n\r\n \r\n FAMILIA-Diferencias entre forma"| __truncated__
+#  $ T-1350-00: chr "\r\n Sentencia T-1350/00\r\n\r\n \r\n\r\n \r\n DERECHO AL PAGO OPORTUNO DEL SALARIO-Fundamental\r\n\r\n \r\n SA"| __truncated__
+#  $ T-1561-00: chr "\r\n Sentencia T-1561/00\r\n\r\n \r\n ACCION DE TUTELA CONTRA PARTICULARES-Subordinación\r\n\r\n \r\n ACCION DE"| __truncated__
+#  $ T-110-95 : chr "\r\n Sentencia No. T-110/95\r\n\r\n \r\n\r\n \r\n DERECHOS DEL NIÑO-Cuidado personal de la madre\r\n\r\n \r\n E"| __truncated__
+#  $ T-345-01 : chr "\r\n Sentencia T-345/01   \r\n\r\n \r\n DERECHO AL MINIMO VITAL DEL PENSIONADO-Pago oportuno de mesadas\r\n\r\n"| __truncated__
 ```
 
 Finally, you can `extract_citations()` easily as follows:
 
 ``` r
 lapply(txts, extract_citations)
-# $`A-114-00`
-# [1] "C-037-96" "C-037-96"
+# $`C-533-00`
+# [1] "C-239-94" "C-533-00"
 # 
-# $`T-618-00`
-#  [1] "SU-111-97" "T-618-00"  "T-730-99"  "SU-562-99" "T-827-99"  "T-295-99" 
-#  [7] "T-475-92"  "SU-062-99" "SU-562-99" "SU-480-97" "T-489-98"  "T-669-97" 
-# [13] "T-287-95"  "T-385-98"  "T-018-99"  "C-098-96"  "C-507-99"  "C-098-96" 
-# [19] "T-123-94"  "T-037-95"  "C-507-99"  "T-542-92"  "C-098-96"  "C-507-99" 
-# [25] "SU-562-99" "T-114-97"  "T-542-93"  "T-401-92"  "T-123-94"  "T-542-92" 
-# [31] "T-261-95"  "C-481-98"  "T-097-94" 
+# $`T-1350-00`
+#  [1] "T-259-99"  "T-308-99"  "T-299-97"  "T-308-99"  "T-323-96"  "T-399-98" 
+#  [7] "T-106-99"  "T-259-99"  "SU-995-99" "T-661-97"  "T-1350-00" "SU-995-99"
+# [13] "SU-995-99" "SU-995-99" "SU-995-99" "SU-995-99" "SU-995-99" "T-620-00" 
+# [19] "T-335-00"  "T-259-99"  "T-171-NA"  "T-020-99" 
 # 
-# $`T-1040-01`
-# [1] "C-1507-00" "T-1040-01" "T-407-92"  "T-483-93"  "T-427-92"  "C-531-00" 
-# [7] "C-351-00"  "SU-789-00" "T-1757-00"
+# $`T-1561-00`
+#  [1] "SU-995-99" "T-011-98"  "T-172-97"  "T-437-96"  "T-576-97"  "SU-667-98"
+#  [7] "T-075-98"  "SU-995-99" "T-246-00"  "T-606-99"  "T-241-00"  "T-1561-00"
+# [13] "T-529-97"  "T-129-00"  "T-146-00"  "T-231-00"  "T-259-99" 
 # 
-# $`T-1666-00`
-#  [1] "T-357-95"  "T-394-97"  "T-630-98"  "T-403-92"  "T-210-94"  "T-394-97" 
-#  [7] "T-614-97"  "T-214-98"  "T-1666-00" "T-025-94"  "T-630-98"  "T-210-94" 
-# [13] "T-028-94" 
+# $`T-110-95`
+# [1] "T-110-95"
 # 
-# $`T-1391-00`
-# [1] "T-675-96"  "T-1391-00" "T-167-97"  "T-463-97"  "T-281-98"  "T-288-98" 
-# [7] "T-278-99"
+# $`T-345-01`
+# [1] "T-630-99" "T-929-00" "T-126-00" "T-345-01"
 ```
