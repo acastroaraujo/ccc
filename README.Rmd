@@ -21,6 +21,7 @@ knitr::include_graphics("man/figures/logo.png")
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/acastroaraujo/ccc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/acastroaraujo/ccc/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The `ccc` package helps get information from the Colombian Constitutional Court.
