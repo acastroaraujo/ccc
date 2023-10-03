@@ -29,4 +29,4 @@ docterms <- df |>
     lemma = factor(lemma, levels = ok_lemmas)
   )
 
-usethis::use_data(docterms, overwrite = TRUE)
+usethis::use_data(docterms, overwrite = TRUE, compress = "xz") 

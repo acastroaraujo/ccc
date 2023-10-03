@@ -55,4 +55,4 @@ gender_cases <- gender |>
   relocate(id, type, tema, href) |> 
   distinct()
 
-usethis::use_data(gender_cases, overwrite = TRUE)
+usethis::use_data(gender_cases, overwrite = TRUE, compress = "xz")

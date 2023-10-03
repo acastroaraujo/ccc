@@ -115,5 +115,5 @@ jctt_cases <- d |>
   left_join(msv) |> 
   left_join(mav)
 
-usethis::use_data(jctt_cases, overwrite = TRUE)
-usethis::use_data(jctt_edge_list, overwrite = TRUE)
+usethis::use_data(jctt_cases, overwrite = TRUE, compress = "xz")
+usethis::use_data(jctt_edge_list, overwrite = TRUE, compress = "xz")

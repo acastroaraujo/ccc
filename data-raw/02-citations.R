@@ -56,7 +56,7 @@ citations <- edge_list |>
     to = factor(to, levels = case_levels)
   )
 
-usethis::use_data(citations, overwrite = TRUE)
+usethis::use_data(citations, overwrite = TRUE, compress = "xz")
 
 # modify metadata ---------------------------------------------------------
 
