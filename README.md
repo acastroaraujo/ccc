@@ -1,9 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<img src="man/figures/logo.png" width="40%" />
-
-# ccc
+# ccc <img src="man/figures/logo.png" align="right" width="240">
 
 <!-- badges: start -->
 
