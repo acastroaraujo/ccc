@@ -17,15 +17,14 @@ reference:
   contents:
   - create_dtm
   - create_citation_adj_mat
-  - metadata, citations
-  - docterms
-  - gender_cases
-  - jctt_cases, jctt_edge_list
+  - rulings
+  - gender
+  - jctt
 
 - title: Search
   contents:
   - ccc_search
-  - ccc_clean_data
+  - ccc_clean_dataset
   - ccc_txt
   - ccc_rtf
   - extract_citations

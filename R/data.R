@@ -1,5 +1,5 @@
 
-#' 30 Year Data
+#' Rulings (30 Years)
 #'
 #' These datasets go over the first 30 years of the Colombian Constitutional 
 #' Court's history. They were created using this package. See the following 
@@ -14,22 +14,22 @@
 #' all cases.}
 #' }
 #'
-#' @format NULL
 #' @source https://www.corteconstitucional.gov.co/relatoria/
-#' @examples
-#' metadata
-#' citations
-#' docterms
+#' 
+#' @name rulings
+#' @format NULL
+
+#' @rdname rulings
+#' @format NULL
 "metadata"
 
-#' @rdname metadata
+#' @rdname rulings
 #' @format NULL
 "citations"
 
-#' @rdname metadata
+#' @rdname rulings
 #' @format NULL
 "docterms"
-
 
 
 #' Gender Equality Cases
@@ -38,8 +38,13 @@
 #' 
 #' https://github.com/acastroaraujo/ccc/tree/master/data-raw/gender.R
 #' 
+#' @name gender
+#' 
 #' @source https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php
 #' 
+#' @format NULL
+
+#' @rdname gender
 #' @format NULL
 "gender_cases"
 
