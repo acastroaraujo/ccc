@@ -6,11 +6,15 @@ url: https://acastroaraujo.github.io/ccc/
 
 template:
   bootstrap: 5
+  bootswatch: litera
   bslib:
-    base_font: {google: "Crimson Text"}
+    base_font: {google: "Crimson Pro    "}
     heading_font: {google: "IM Fell DW Pica SC"}
-    code_font: {google: "JetBrains Mono"}
-    
+    code_font: {google: "Fira Code"} 
+    code-font-size: "0.8em"
+
+navbar:
+  bg: light
 
 reference:
 - title: Datasets

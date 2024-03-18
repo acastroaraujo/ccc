@@ -1,0 +1,11 @@
+
+/*-- scss:defaults --*/
+
+@import url('https://www.cssfontstack.com/Optima');
+$optima-font: 'Optima', sans-serif;
+
+/*-- scss:rules --*/
+
+.navbar {
+  font-family: $optima-font;
+}

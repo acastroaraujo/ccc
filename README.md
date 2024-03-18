@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ccc <img src="man/figures/logo.png" align="right" width="240">
+# ccc <img src="man/figures/logo.png" align="right" height="138" style="float:right; height:200px;">
 
 <!-- badges: start -->
 
@@ -53,7 +53,7 @@ the first ruling was published.
 
 ``` r
 glimpse(citations)
-# Rows: 631,274
+# Rows: 631,549
 # Columns: 5
 # $ from      <fct> C-001-18, C-001-18, C-001-18, C-001-18, C-001-18, C-001-18, …
 # $ to        <fct> C-004-93, C-007-01, C-008-17, C-030-03, C-037-96, C-041-93, …
@@ -105,7 +105,7 @@ mean(M == 0)
 # [1] 0.9134069
 ```
 
-92% of the cells in this matrix are empty, which is why we call it a
+91% of the cells in this matrix are empty, which is why we call it a
 “sparse matrix.”
 
 Here’s a random subset of this matrix
