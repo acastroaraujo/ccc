@@ -16,10 +16,6 @@ NULL
 #' 
 #' @return a dgCMatrix
 #' @export
-#'
-#' @examples
-#' 
-#' create_dtm()
 #' 
 create_dtm <- function() {
   
@@ -28,6 +24,7 @@ create_dtm <- function() {
   
   row_names <- levels(ccc::docterms$doc_id)
   col_names <- levels(ccc::docterms$lemma)
+  
   i <- match(ccc::docterms$doc_id, row_names)
   j <- match(ccc::docterms$lemma, col_names)
   
@@ -39,3 +36,32 @@ create_dtm <- function() {
   return(M)
   
 }
+
+
+#' Sparse Citation Matrix
+#'
+#' Creates a citation matrix from the edge list in ccc::citations
+#' 
+#' @return a dgCMatrix
+#' @export
+#' 
+create_citation_adj_mat <- function() {
+  
+  rlang::check_installed("Matrix")
+  if (!rlang::is_attached("package:Matrix")) require("Matrix")
+  
+  i <- match(as.character(ccc::citations$from), ccc::metadata$id)
+  j <- match(as.character(ccc::citations$to), ccc::metadata$id)
+  n <- nrow(ccc::metadata)
+  
+  M <- Matrix::sparseMatrix(
+    i = i, j = j, x = ccc::citations$weight,
+    dims = c(n, n),
+    dimnames = list(ccc::metadata$id, ccc::metadata$id)
+  )
+  
+  return(M)
+  
+}
+
+

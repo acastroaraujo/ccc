@@ -81,11 +81,11 @@ glimpse(metadata)
 
 ``` r
 glimpse(docterms)
-# Rows: 26,053,177
+# Rows: 25,403,840
 # Columns: 3
 # $ doc_id <fct> C-001-18, C-001-18, C-001-18, C-001-18, C-001-18, C-001-18, C-0…
-# $ lemma  <fct> abierta, abierto, abordar, absoluta, abstracto, academia, acade…
-# $ n      <int> 1, 1, 1, 1, 12, 3, 1, 2, 1, 7, 2, 1, 1, 1, 1, 2, 1, 1, 1, 3, 3,…
+# $ lemma  <fct> abierto, abordar, absoluto, abstracto, academia, academico, aca…
+# $ n      <int> 2, 1, 1, 12, 3, 1, 2, 1, 7, 1, 2, 1, 1, 1, 2, 1, 1, 1, 3, 3, 3,…
 ```
 
 You can get a document-term matrix instead of `docterms` easily with the
@@ -97,12 +97,12 @@ package.*
 ``` r
 M <- create_dtm()
 # Loading required package: Matrix
-dim(M) ## number of rows (documents) and columns (word counts)
-# [1] 27179 12658
+dim(M) ## number of rows (documents) and columns (words)
+# [1] 27179 10794
 
 ## sparsity
 mean(M == 0) 
-# [1] 0.924271
+# [1] 0.9134069
 ```
 
 92% of the cells in this matrix are empty, which is why we call it a
@@ -111,32 +111,32 @@ mean(M == 0)
 Here’s a random subset of this matrix
 
 ``` r
-set.seed(1)
+set.seed(99)
 i <- sample(nrow(M), 20)
 j <- sample(ncol(M), 5)
 M[i, j] 
 # 20 x 5 sparse Matrix of class "dgCMatrix"
-#           asignado pension aplicable paciente medicion
-# T-389-19         1       .         1        .        .
-# T-764-01         .      18         1        .        .
-# C-513-13         1      10         .        .        .
-# T-958-04         .      22         1        .        .
-# T-185-13         .       .         1        .        .
-# T-904-07         .       7         1        .        .
-# T-1099-05        .      11         2        .        .
-# T-047-11         6       .         2        1        .
-# C-409-09         .       .         1        .        .
-# T-199-21         .       1         1        1        .
-# T-126-02         1       .         .       11        .
-# T-147-04         .       .         1        .        .
-# T-826-14         .      47         4        .        .
-# T-404-14         .       .         1        .        .
-# T-236-09         .       .         1        .        .
-# T-803-07         .       .         .       11        .
-# T-426-95         .       .         1        .        .
-# T-218-01         .       4         .        .        .
-# T-1036-07        .       .         .        1        .
-# T-034-94         1       .         1        .        .
+#           filosofia intentar causales maestro aforo
+# C-629-96          .        .        .       .     .
+# SU-771-14         .        .        .       .     .
+# T-140-11          .        .        .       .     .
+# C-189-98          .        1        .       .     .
+# T-1208-03         .        .        .       .     .
+# T-478-06          .        .        .       .     .
+# T-703-11          .        1        1       .     .
+# T-1243-00         .        .        .       .     .
+# C-304-12          .        .        .       .     .
+# C-040-93          .        .        .       .     .
+# T-1631-00         .        .        .       .     .
+# T-073-05          .        .        .       .     .
+# T-1481-00         .        .        .       .     .
+# T-082-94          .        .        .       .     .
+# T-701-96          .        .        .       .     .
+# C-915-01          .        .        .       .     .
+# C-828-13          .        .        .       .     .
+# T-1363-00         .        .        .       .     .
+# T-270-04          .        3        .       .     3
+# C-583-02          .        .        .       .     .
 ```
 
 **Gender**
@@ -208,17 +208,17 @@ results <- ccc_search(
 glimpse(results)
 # Rows: 500
 # Columns: 15
-# $ relevancia                           <dbl> 17.039, 11.153, 8.190, 7.372, 7.3…
-# $ providencia                          <chr> "T-1045/01", "T-523/92", "T-1532/…
+# $ relevancia                           <dbl> 18.195, 8.886, 7.660, 7.656, 7.63…
+# $ providencia                          <chr> "T-1045/01", "T-1532/00", "T-049/…
 # $ tipo                                 <chr> "Tutela", "Tutela", "Tutela", "Tu…
-# $ fecha_sentencia                      <chr> "2001-10-03", "1992-09-18", "2000…
-# $ magistrado_s_ponentes                <chr> "", "Ciro Angarita Baron", "Carlo…
+# $ fecha_sentencia                      <chr> "2001-10-03", "2000-11-15", "1999…
+# $ magistrado_s_ponentes                <chr> "", "Carlos Gaviria Díaz", "José …
 # $ magistrado_s_s_alvamento_a_claracion <lgl> NA, NA, NA, NA, NA, NA, NA, NA, N…
-# $ tema_subtema                         <chr> "", "ACCION DE TUTELA CONTRA SENT…
+# $ tema_subtema                         <chr> "", "ACCION DE TUTELA TRANSITORIA…
 # $ autoridades                          <lgl> NA, NA, NA, NA, NA, NA, NA, NA, N…
 # $ demandado                            <chr> "Sin Información", "", "", "", ""…
 # $ demandante                           <chr> "MARIA SANDRA CRUZ PERDOMO VS. IN…
-# $ expediente                           <chr> "469070", "2598", "T-324358 Y OTR…
+# $ expediente                           <chr> "469070", "T-324358 Y OTROS", "T-…
 # $ f_public                             <chr> "", "", "", "", "", "", "", "", "…
 # $ normas                               <chr> "", "", "", "", "", "", "", "", "…
 # $ sintesis                             <chr> "Sin información", "Sin informaci…
@@ -234,7 +234,7 @@ glimpse(df)
 # Rows: 500
 # Columns: 9
 # $ id          <chr> "T-008-92", "T-009-92", "T-429-92", "T-439-92", "T-453-92"…
-# $ type        <fct> T, T, T, T, T, T, T, T, T, T, T, C, C, C, C, T, T, T, T, T…
+# $ type        <fct> T, T, T, T, T, T, T, T, T, T, C, C, C, C, T, T, T, T, T, T…
 # $ year        <int> 1992, 1992, 1992, 1992, 1992, 1992, 1992, 1992, 1992, 1992…
 # $ date        <date> 1992-05-18, 1992-05-22, 1992-06-24, 1992-07-02, 1992-07-1…
 # $ descriptors <list> <"ACCION DE TUTELA-Improcedencia", "ACCION POPULAR", "DER…
@@ -258,44 +258,41 @@ txts <- vector("list", nrow(df_subset))
 for (i in seq_along(txts)) {
   txts[[i]] <- ccc_txt(df_subset$url[[i]])
 }
-# https://www.corteconstitucional.gov.co/relatoria/2000/C-533-00.htm
-# https://www.corteconstitucional.gov.co/relatoria/2000/T-1350-00.htm
-# https://www.corteconstitucional.gov.co/relatoria/2000/T-1561-00.htm
-# https://www.corteconstitucional.gov.co/relatoria/1995/T-110-95.htm
-# https://www.corteconstitucional.gov.co/relatoria/2001/T-345-01.htm
+# https://www.corteconstitucional.gov.co/relatoria/1996/C-389-96.htm
+# https://www.corteconstitucional.gov.co/relatoria/1995/T-012-95.htm
+# https://www.corteconstitucional.gov.co/relatoria/2000/T-1231-00.htm
+# https://www.corteconstitucional.gov.co/relatoria/1992/T-512-92.htm
+# https://www.corteconstitucional.gov.co/relatoria/1999/C-183-99.htm
 
 names(txts) <- df_subset$id
 
 glimpse(txts)
 # List of 5
-#  $ C-533-00 : chr "\r\n Sentencia C-533/00\r\n\r\n \r\n FAMILIA-Origen/FAMILIA-Formas\r\n\r\n \r\n FAMILIA-Diferencias entre forma"| __truncated__
-#  $ T-1350-00: chr "\r\n Sentencia T-1350/00\r\n\r\n \r\n\r\n \r\n DERECHO AL PAGO OPORTUNO DEL SALARIO-Fundamental\r\n\r\n \r\n SA"| __truncated__
-#  $ T-1561-00: chr "\r\n Sentencia T-1561/00\r\n\r\n \r\n ACCION DE TUTELA CONTRA PARTICULARES-Subordinación\r\n\r\n \r\n ACCION DE"| __truncated__
-#  $ T-110-95 : chr "\r\n Sentencia No. T-110/95\r\n\r\n \r\n\r\n \r\n DERECHOS DEL NIÑO-Cuidado personal de la madre\r\n\r\n \r\n E"| __truncated__
-#  $ T-345-01 : chr "\r\n Sentencia T-345/01   \r\n\r\n \r\n DERECHO AL MINIMO VITAL DEL PENSIONADO-Pago oportuno de mesadas\r\n\r\n"| __truncated__
+#  $ C-389-96 : chr "\r\n Sentencia C-389/96\r\n\r\n \r\n CONTROL DE CONSTITUCIONALIDAD-Alcance\r\n\r\n \r\n La Corte tiene bien est"| __truncated__
+#  $ T-012-95 : chr "\r\n Sentencia No. T-012/95\r\n\r\n \r\n\r\n \r\n ACCION DE TUTELA-Hecho consumado\r\n\r\n \r\n El juez de prim"| __truncated__
+#  $ T-1231-00: chr "\r\n Sentencia T-1231/00\r\n\r\n \r\n ACCION DE TUTELA CONTRA PARTICULARES-Subordinación\r\n\r\n \r\n ACCION DE"| __truncated__
+#  $ T-512-92 : chr "\r\n Sentencia No. T-512/92\r\n\r\n \r\n RECTIFICACION DE INFORMACION/ACCION DE TUTELA-Improcedencia/PRINCIPIO "| __truncated__
+#  $ C-183-99 : chr "\r\n Sentencia C-183/99\r\n\r\n \r\n\r\n \r\n EMBARGO DE SALARIOS Y PRESTACIONES DE FUNCIONARIOS Y EMPLEADOS DE"| __truncated__
 ```
 
 Finally, you can `extract_citations()` easily as follows:
 
 ``` r
 lapply(txts, extract_citations)
-# $`C-533-00`
-# [1] "C-239-94" "C-533-00"
+# $`C-389-96`
+# [1] "C-389-96" "C-371-94" "C-496-94" "T-190-93" "T-553-94" "C-445-95"
 # 
-# $`T-1350-00`
-#  [1] "T-259-99"  "T-308-99"  "T-299-97"  "T-308-99"  "T-323-96"  "T-399-98" 
-#  [7] "T-106-99"  "T-259-99"  "SU-995-99" "T-661-97"  "T-1350-00" "SU-995-99"
-# [13] "SU-995-99" "SU-995-99" "SU-995-99" "SU-995-99" "SU-995-99" "T-620-00" 
-# [19] "T-335-00"  "T-259-99"  "T-171-NA"  "T-020-99" 
+# $`T-012-95`
+# [1] "T-519-92" "T-494-93" "T-012-95"
 # 
-# $`T-1561-00`
-#  [1] "SU-995-99" "T-011-98"  "T-172-97"  "T-437-96"  "T-576-97"  "SU-667-98"
-#  [7] "T-075-98"  "SU-995-99" "T-246-00"  "T-606-99"  "T-241-00"  "T-1561-00"
-# [13] "T-529-97"  "T-129-00"  "T-146-00"  "T-231-00"  "T-259-99" 
+# $`T-1231-00`
+#  [1] "SU-995-99" "T-172-97"  "T-437-96"  "T-576-97"  "SU-667-98" "T-075-98" 
+#  [7] "SU-995-99" "T-246-00"  "T-606-99"  "T-246-00"  "T-1231-00" "T-529-97" 
+# [13] "T-129-00"  "T-146-00"  "T-231-00"  "T-259-99" 
 # 
-# $`T-110-95`
-# [1] "T-110-95"
+# $`T-512-92`
+# [1] "T-512-92"
 # 
-# $`T-345-01`
-# [1] "T-630-99" "T-929-00" "T-126-00" "T-345-01"
+# $`C-183-99`
+# [1] "C-556-94" "C-556-94" "C-556-94" "C-556-94" "C-556-94" "C-183-99"
 ```

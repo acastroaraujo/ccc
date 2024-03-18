@@ -76,18 +76,18 @@ _Note. Using this function will automatically load the `Matrix` package._
 
 ```{r}
 M <- create_dtm()
-dim(M) ## number of rows (documents) and columns (word counts)
+dim(M) ## number of rows (documents) and columns (words)
 
 ## sparsity
 mean(M == 0) 
 ```
 
-92% of the cells in this matrix are empty, which is why we call it a "sparse matrix."
+91% of the cells in this matrix are empty, which is why we call it a "sparse matrix."
 
 Here's a random subset of this matrix
 
 ```{r}
-set.seed(1)
+set.seed(99)
 i <- sample(nrow(M), 20)
 j <- sample(ncol(M), 5)
 M[i, j] 
