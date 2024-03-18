@@ -1,0 +1,31 @@
+authors:
+  Andres Castro Araújo:
+    href: https://acastroaraujo.github.io/
+
+url: https://acastroaraujo.github.io/ccc/
+
+template:
+  bootstrap: 5
+  bslib:
+    base_font: {google: "Crimson Text"}
+    heading_font: {google: "IM Fell DW Pica SC"}
+    code_font: {google: "JetBrains Mono"}
+    
+
+reference:
+- title: Datasets
+  contents:
+  - create_dtm
+  - create_citation_adj_mat
+  - metadata, citations
+  - docterms
+  - gender_cases
+  - jctt_cases, jctt_edge_list
+
+- title: Search
+  contents:
+  - ccc_search
+  - ccc_clean_data
+  - ccc_txt
+  - ccc_rtf
+  - extract_citations
