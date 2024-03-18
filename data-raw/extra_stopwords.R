@@ -580,8 +580,6 @@ stopwords <- c(
   "sanin", 
   "greiffenstein", 
   "simon",
-  "sala",
-  "plena", 
   "mesa", 
   "victoria",
   "tafur",

@@ -12,7 +12,7 @@ lemma_counts <- df |>
   mutate(prop = n / n_docs)
 
 ok_lemmas <- lemma_counts |> 
-  filter(prop >= 0.004) |> 
+  filter(prop >= 0.005) |> 
   anti_join(tibble(lemma = stopwords)) |> 
   pull(lemma)
 
@@ -28,5 +28,7 @@ docterms <- df |>
     doc_id = factor(doc_id, levels = docs),
     lemma = factor(lemma, levels = ok_lemmas)
   )
+
+class(docterms) <- c("tbl_df", "tbl", "data.frame")
 
 usethis::use_data(docterms, overwrite = TRUE, compress = "xz") 

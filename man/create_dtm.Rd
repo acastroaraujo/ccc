@@ -12,8 +12,3 @@ a dgCMatrix
 \description{
 Creates a document-term matrix from the built-in docterms dataset
 }
-\examples{
-
-create_dtm()
-
-}

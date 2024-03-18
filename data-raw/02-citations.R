@@ -42,7 +42,8 @@ edge_list <- edge_list |>
   rename(from_date = date) |> 
   left_join(metadata, by = c("to" = "id"), relationship = "many-to-one") |> 
   rename(to_date = date) |> 
-  filter(from_date >= to_date)
+  ## allow for 100 days of time travel [!]
+  filter(to_date - from_date <= 100)
 
 # export ------------------------------------------------------------------
 
