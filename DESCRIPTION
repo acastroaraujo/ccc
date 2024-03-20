@@ -1,8 +1,8 @@
 Package: ccc
 Title: Sentencias de la Corte Constitucional de Colombia
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
-    person("andrés", "castro araújo", , "acastroaraujo@gmai.com", role = c("aut", "cre"))
+    person("Andrés", "Castro Araújo", , "andres.castro.araujo@duke.edu", role = c("aut", "cre"))
 Description: Este paquete sirve para extraer y trabajar con las sentencias
     de la Corte Constitucional de Colombia.
 License: MIT + file LICENSE
@@ -28,4 +28,4 @@ LazyDataCompression: xz
 RoxygenNote: 7.3.1
 URL: https://github.com/acastroaraujo/ccc, https://acastroaraujo.github.io/ccc/
 BugReports: https://github.com/acastroaraujo/ccc/issues
-
+Config/Needs/website: rmarkdown
