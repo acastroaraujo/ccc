@@ -16,3 +16,17 @@ test_that("underlying database has not changed", {
   
   expect_equal(out1, out2)
 })
+
+
+test_that("search isn't setting a limit on results", {
+  
+  results <- ccc_search(
+    text = "familia", 
+    date_start = "2000-01-01", 
+    date_end = "2001-12-31"
+  )
+  
+  expect_equal(nrow(results), 1682)
+  
+})
+
