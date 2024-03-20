@@ -20,11 +20,10 @@ docterms
 \description{
 These datasets go over the first 30 years of the Colombian Constitutional 
 Court's history. They were created using this package. See the following 
-link to get access to the scripts that produced them (00-05):
+link to get access to the scripts that produced them:
+https://github.com/acastroaraujo/ccc/tree/master/data-raw
 }
 \details{
-https://github.com/acastroaraujo/ccc/tree/master/data-raw
-
 \describe{
   \item{metadata}{A data frame with additional information on each case.}
   \item{citations}{An edge list.}

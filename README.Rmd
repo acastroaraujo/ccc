@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/acastroaraujo/ccc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/acastroaraujo/ccc/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The `ccc` package helps get information from the Colombian Constitutional Court.
+The `ccc` package helps get information about rulings from the Colombian Constitutional Court in a way that is convenient for quantitative analysis.
 
 You can install the current version from [GitHub](https://github.com/) with:
 
@@ -29,135 +29,16 @@ You can install the current version from [GitHub](https://github.com/) with:
 devtools::install_github("acastroaraujo/ccc")
 ```
 
-It has the following functions:
+It provides two main things:
 
-- `ccc_search`
-- `ccc_clean_data`
-- `ccc_txt`
-- `ccc_rtf`
-- `extract_citations`
+- Various convenient functions for searching and downloading rulings directly from the [CCC website](https://www.corteconstitucional.gov.co/)
 
-And the following datasets:
+- Various built-in datasets ready for analysis. The datasets were created using [the scripts](https://github.com/acastroaraujo/ccc/tree/master/data-raw).
 
-- `metadata`
-- `citations`
-- `docterms`
-- `gender_cases`
-- `jctt_cases`
-- `jctt_edge_list`
+A BibTeX entry for LaTeX users is:
 
-These datasets were created using these [scripts](https://github.com/acastroaraujo/ccc/tree/master/data-raw).
-
-## Data
-
-```{r, warning=FALSE, message=FALSE}
-library(ccc)
-library(dplyr)
+```{r, comment="", echo=FALSE}
+toBibtex(citation("ccc"))
 ```
 
-**Thirty Years**
-
-There are 3 built-in datasets in this package that cover 30 years after the first ruling was published.
-
-```{r}
-glimpse(citations)
-```
-
-```{r}
-glimpse(metadata)
-```
-
-```{r}
-glimpse(docterms)
-```
-
-You can get a document-term matrix instead of `docterms` easily with the `create_dtm()` function. The result will be a very sparse matrix.
-
-_Note. Using this function will automatically load the `Matrix` package._
-
-```{r}
-M <- create_dtm()
-dim(M) ## number of rows (documents) and columns (words)
-
-## sparsity
-mean(M == 0) 
-```
-
-91% of the cells in this matrix are empty, which is why we call it a "sparse matrix."
-
-Here's a random subset of this matrix
-
-```{r}
-set.seed(99)
-i <- sample(nrow(M), 20)
-j <- sample(ncol(M), 5)
-M[i, j] 
-```
-
-**Gender**
-
-`gender_cases` contains cases related to gender equality across a variety of topics, collected by experts [here](https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php)
-
-```{r}
-glimpse(gender_cases)
-```
-
-**Transitional Justice**
-
-`jctt_*` datasets contain cases from the "[Justicia Constitucional en Tiempos de Transición](http://justiciatransicional.uniandes.edu.co/web/)" by Universidad de Los Andes. 
-
-```{r}
-glimpse(jctt_cases)
-```
-
-`jctt_edge_list` contains citation data to sources "outside" the CCC.
-
-```{r}
-glimpse(jctt_edge_list)
-```
-
-## Download
-
-Use the `ccc_search()` function to look up some cases.
-
-```{r}
-results <- ccc_search(
-  text = "familia", 
-  date_start = "2000-01-01", 
-  date_end = "2001-12-31"
-)
-
-glimpse(results)
-```
-
-This data is a little messy. The `ccc_clean_dataset()` provides some useful tidying, but you might want to consider doing things differently.
-
-```{r}
-df <- ccc_clean_dataset(results)
-glimpse(df)
-```
-
-Next you'll want to download some texts. You can use either `ccc_txt()` or `ccc_rtf()`. I prefer `ccc_txt()` because most rtf files don't include footnotes.
-
-Here I'll show you how to download 5 random rulings.
-
-```{r}
-df_subset <- slice_sample(df, n = 5)
-
-txts <- vector("list", nrow(df_subset))
-
-for (i in seq_along(txts)) {
-  txts[[i]] <- ccc_txt(df_subset$url[[i]])
-}
-
-names(txts) <- df_subset$id
-
-glimpse(txts)
-```
-
-Finally, you can `extract_citations()` easily as follows:
-
-```{r}
-lapply(txts, extract_citations)
-```
 

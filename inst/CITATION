@@ -1,0 +1,10 @@
+
+bibentry(
+  bibtype  = "Manual",
+  title    = "ccc: Colombian Constitutional Court data for use in R",
+  author   = person(given = "Andrés", family = "Castro Araújo",
+             email = "andres.castro.araujo@duke.edu"),
+  year     = "2024",
+  note     = "R package version 0.1.0",
+  url      = "https://acastroaraujo.github.io/ccc/"
+)

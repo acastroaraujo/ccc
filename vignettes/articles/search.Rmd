@@ -1,0 +1,80 @@
+---
+title: "Search and Download"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+options(tibble.print_min = 6L, tibble.print_max = 6L)
+```
+
+## Packages
+
+```{r setup, message=FALSE}
+library(tidyverse)
+library(ccc)
+```
+
+## Search
+
+Use the `ccc_search()` function to look up some cases.
+
+```{r}
+results <- ccc_search(
+  text = "familia", 
+  date_start = "2000-01-01", 
+  date_end = "2001-12-31"
+)
+
+glimpse(results)
+```
+
+This data is a little messy. The `ccc_clean_dataset()` provides some useful tidying, but you might want to consider doing things differently.
+
+```{r}
+df <- ccc_clean_dataset(results)
+glimpse(df)
+```
+
+## Download
+
+Next you'll want to download some texts. You can use either `ccc_txt()` or `ccc_rtf()`. I prefer `ccc_txt()` because it seems most `.rtf` files don't include footnotes.
+
+This is how you download the first ruling:
+
+```{r}
+txt <- ccc_txt(df$url[[1]])
+```
+
+And this is how you'd download the first 5 rulings:
+
+```{r}
+txts <- lapply(df$url[1:5], ccc_txt)
+names(txts) <- df$id[1:5]
+glimpse(txts)
+```
+
+Each text will look something like this:
+
+```{r, results='asis'}
+txts[[1]] |> 
+  str_trunc(2000) |> 
+  cat()
+```
+
+## Citations
+
+Finally, you can `extract_citations()` for each individual document as follows:
+
+```{r}
+extract_citations(txts[[1]])
+```
+
+Or you can do something like this for all documents:
+
+```{r}
+lapply(txts, extract_citations)
+```

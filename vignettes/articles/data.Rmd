@@ -1,0 +1,357 @@
+---
+title: "Data"
+#resource_files:
+#  - figures/adj_mat_viz.
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+options(tibble.print_min = 6L, tibble.print_max = 6L)
+```
+
+*Note. All datasets described here were created using [these scripts](https://github.com/acastroaraujo/ccc/tree/master/data-raw), which use the functions described in the [search article](https://acastroaraujo.github.io/ccc/articles/search.html).*
+
+```{r setup, message=FALSE}
+library(tidyverse)
+library(ccc)
+library(Matrix)
+
+theme_set(
+  theme_light(base_family = "Crimson Text") + 
+  theme(strip.background = element_rect(fill = "#4C4C4C"))
+)
+```
+
+## Thirty Years
+
+*Note. All datasets described here were created using [these scripts](https://github.com/acastroaraujo/ccc/tree/master/data-raw), which use the functions described in the [search article](https://acastroaraujo.github.io/ccc/articles/search.html).*
+
+`ccc` collects a corpus of over `r scales::comma(nrow(metadata))` rulings made by the Colombian Constitutional Court (CCC) which cover the period of 30 years immediately after the first ruling was published on April 3, 1992. All together, they form a complex citation network with approximately `r scales::comma(nrow(citations))` ties among them.
+
+Each ruling has a standardized name (e.g., `C-776-03`, `T-025-04`, `SU-1184-01`). The prefix refers to the type of ruling; the infix carries no meaning; and the suffix indicates the year in which the ruling was made.
+
+There are three types of ruling:
+
+-   `C` refers to the cases in which the CCC decides whether a law, rule, administrative decision is compatible with constitutional norms—also known as *judicial review.*
+
+-   `T` refers to *tutela*, which is an individual complaint mechanism (or special writ) aimed at the protection of fundamental rights. These *tutelas* give ordinary citizens the power to go before any ordinary judge and request the protection of their "fundamental constitutional rights" whenever they perceive them be threatened. Each year, the CCC selects approximately 2% of these cases for review, and the final decision may uphold or reverse decisions made by lower courts.
+
+    A lot of these cases are related to healthcare access and pensions.
+
+-   `SU` refers to decisions in which the Court has decided to compile several `T` cases. They are a sort of legally binding "Annual Reviews" for the judicial system in Colombia.
+
+### Citations
+
+`metadata` contains information on each ruling.
+
+```{r}
+metadata
+```
+
+`citations` contains the citation network in "edge list" format. Each citation has a `weight` that refers to the *number* of times a ruling cites a previous case.
+
+```{r}
+citations
+```
+
+There is also a convenient function that turns these two datasets into a squared adjacency matrix.
+
+```{r}
+M <- create_citation_adj_mat()
+dim(M)
+```
+
+The resulting matrix $M$ is very sparse. It has `r scales::comma(prod(dim(M)))` cells and only `r scales::percent(mean(M > 0), accuracy = .001)` are non-zero.
+
+The following figure is my best attempt at visualizing the whole thing:
+
+![](figures/adj_mat_viz.png){width="50%"}
+
+*Note. If we were to observe an empty column, it would mean that none of the rulings created during that particular time period where cited in future rulings (i.e., rulings that failed to become precedent). If we were to observe an empty row, it would mean that none of the rulings created during that particular time period cited previous rulings. Both of these scenarios are entirely hypothetical.*
+
+**Technical Note**
+
+A citation network $\mathbf M$ is always **directed, asymmetric**, and **acyclic**---i.e., it points backwards in time.
+
+For our purposes, let's assume that $\mathbf M$ is lower triangular, meaning that all elements above the main diagonal are zero. This happens when the documents are arranged from first to last, the rows represent source documents, and the columns represent target documents. The main diagonal is also zero because we won't allow any document to cite itself.
+
+*Note. The direction of the citation can be considered backwards in time (i.e., documents citing past documents) or forwards in time (i.e., knowledge flowing from documents to future documents). Here I use a backward-looking convention. In acyclic temporal graphs of this sort, the in-degree of the earliest node is always zero and the out-degree of the newest node is also always zero.*
+
+I don't think it matters a lot, but the Colombian Constitutional Court matrix is not strictly lower triangular because some documents are published on the same day and in a few cases they will cite each other or create the illusion of time travel.
+
+For example, ruling `SU-399-12` cites ruling `SU-400-12` (both of them published on the same day). The upper triangular section of the $\mathbf M$ matrix for the Colombian Constitutional Court has 447 non-zero entries (decisions were).
+
+This problem is not unique to the CCC dataset; "some decisions handed down by the same Court in a short period of time do cite each other, a phenomenon present also in the scientific citation data for publications appearing in the same year" [@batagelj2014, pp. 13]. It can also be that scientific articles cite other articles in the same publication or that they cite unpublished work that later gets published.
+
+In short, citation networks of this type are *almost* acyclic.
+
+Following @batagelj2014 [pp. 82] we can think of at least two strategies for dealing with this: (1) deleting problematic edges; (2) removing cycles by *shrinking* them or merging problematic nodes. A third alternative that mostly applies to academic citations is using some sort of pre-print duplication of problematic nodes.
+
+_Extra_
+
+Other rulings were modified many years later for privacy concerns (e.g., T-1315-01, T-1003-99). The names of the involved parties were replaced by a fictitious name (e.g., Mauricio, Miguel). I allowed for 100 days of time travel, which only removes around 250 citations. _I am being very nitpicky_.
+
+### Text Features
+
+`docterms`
+
+The `docterms` dataset contains a data frame with document identifiers (`doc_id`) and word counts (`lemma` and `n`). It has `r scales::comma(nrow(docterms))` rows.
+
+```{r}
+glimpse(docterms)
+
+length(levels(docterms$doc_id)) # number of documents
+length(levels(docterms$lemma))  # vocabulary size
+```
+
+There are `r scales::comma(length(unique(docterms$doc_id)))` unique documents with a vocabulary size of `r scales::comma(length(levels(docterms$lemma)))`.
+
+DESCRIBE LEMMATIZATION PROCESS
+
+**Steps to create data:**
+
+-   [download metadata](https://github.com/acastroaraujo/ccc/blob/master/data-raw/00-metadata.R)
+-   [download raw texts](https://github.com/acastroaraujo/ccc/blob/master/data-raw/01-get-texts.R)
+-   [extract citations](https://github.com/acastroaraujo/ccc/blob/master/data-raw/02-citations.R)
+-   [lemmatization](https://github.com/acastroaraujo/ccc/blob/master/data-raw/03-process-texts.R)
+-   [further text pre-processing](https://github.com/acastroaraujo/ccc/blob/master/data-raw/04-docterms.R)
+
+@denny2018
+
+The following function creates a sparse document term matrix.
+
+```{r}
+## sparsity
+# mean(M == 0) 
+```
+
+
+91% of the cells in this matrix are empty, which is why we call it a "sparse matrix."
+
+Here's a random subset of this matrix
+
+length of documents over time
+
+### Other
+
+**Gender**
+
+`gender_cases` contains cases related to gender equality across a variety of topics, collected by experts [here](https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php)
+
+```{r}
+glimpse(gender_cases)
+```
+
+**Transitional Justice**
+
+`jctt_*` datasets contain cases from the "[Justicia Constitucional en Tiempos de Transición](http://justiciatransicional.uniandes.edu.co/web/)" by Universidad de Los Andes. 
+
+```{r}
+glimpse(jctt_cases)
+```
+
+`jctt_edge_list` contains citation data to sources "outside" the CCC.
+
+```{r}
+glimpse(jctt_edge_list)
+```
+
+## Visualizations
+
+### Time Series Decomposition
+
+```{r, eval=FALSE}
+
+library(tsibble)
+library(fable)
+library(feasts)
+
+d <- metadata |> 
+  select(id, date, indegree, outdegree, type) |> 
+  mutate(yearmonth = yearmonth(date)) |> 
+  summarise(
+    n = n(),
+    indegree = mean(indegree),
+    outdegree = mean(outdegree), 
+    .by = c(type, yearmonth)
+  ) |> 
+  as_tsibble(key = type, index = yearmonth) |> 
+  tsibble::fill_gaps() |> 
+  replace_na(replace = list(n = 0, indegree = 0, outdegree = 0)) |> 
+  mutate(year = year(yearmonth), month = month(yearmonth, label = TRUE))
+
+data_stl <- d |> 
+    model(STL(n ~ trend(window = 21) + season(window = "periodic"))) |> 
+    components()
+
+data_stl |> 
+  filter(type == "SU") |> 
+  autoplot() +
+  labs(
+    title = "SU Rulings", subtitle = "STL Decomposition", 
+    caption = "n = trend + season_year + remainder",
+    x = NULL
+  ) 
+
+data_stl |> 
+  filter(type == "C") |> 
+  autoplot() +
+  labs(
+    title = "C Rulings", subtitle = "STL Decomposition", 
+    caption = "n = trend + season_year + remainder",
+    x = NULL
+  ) 
+
+data_stl |> 
+  filter(type == "T") |> 
+  autoplot() +
+  labs(
+    title = "T Rulings", subtitle = "STL Decomposition", 
+    caption = "n = trend + season_year + remainder",
+    x = NULL
+  )
+
+d <-  metadata |> 
+  select(id, date, indegree, outdegree, type, year) |> 
+  mutate(day = wday(date, label = TRUE)) |> 
+  summarise(
+    n = n(),
+    .by = c(type, year, day)
+  ) 
+
+d |> 
+  ggplot(aes(day, n)) + 
+  stat_summary(fun.data = \(x) mean_se(x, mult = 2), shape = 21, fill = "white")
+
+metadata |> 
+  mutate(day = wday(date, label = TRUE)) |> 
+  count(day, year) |> 
+  ggplot(aes(year, n)) + 
+  geom_line(show.legend = FALSE) + 
+  facet_wrap(~day, nrow = 1, strip.position = "bottom") + 
+  labs(x = NULL) +
+  theme(
+    axis.text.x = element_blank(), 
+    axis.ticks.x = element_blank(), 
+    strip.background = element_blank(), 
+    strip.text = element_text(color = "black")
+  )
+
+metadata |> 
+  count(date) |> 
+  as_tsibble(index = date) |> 
+  tsibble::fill_gaps() |> 
+  replace_na(list(n = 0)) |> 
+  mutate(day = wday(date, label = TRUE)) |> 
+  mutate(year = year(date)) |> 
+  ggplot(aes(factor(year), n)) + 
+  stat_summary(fun.data = \(x) mean_se(x, mult = 2), 
+               shape = 21, size = 1/10, linewidth = 1/5, stroke = 1/2) +
+  facet_wrap(~day, nrow = 1, strip.position = "bottom") + 
+  labs(x = NULL, y = "count") +
+  geom_hline(yintercept = 0, linetype = "dashed", linewidth = 1/5) +
+  theme(
+    axis.text.x = element_blank(), 
+    axis.ticks.x = element_blank(), 
+    strip.background = element_blank(), 
+    strip.text = element_text(color = "black"),
+    panel.grid.major.x = element_blank()
+  ) + 
+  scale_y_continuous(breaks = seq(0, 20, 2))
+```
+
+### Citations Across Time
+
+```{r}
+metadata |> 
+  pivot_longer(c(indegree, outdegree), names_to = "dtype", values_to = "degree") |> 
+  mutate(dtype = case_when(
+    dtype == "indegree" ~ "Average Inward Citations (in-degree)",
+    dtype == "outdegree" ~ "Average Outward Citations (out-degree)"
+  )) |> 
+  ggplot(aes(year, degree)) + 
+  stat_summary(
+    fun.data = \(x) mean_cl_boot(x, conf.int = 0.95), fatten = 1/2,
+    shape = 21, fill = "white", size = 1/10
+  ) + 
+  facet_grid(type~dtype, scales = "free_y") + 
+  scale_x_continuous(labels = seq(1992, 2022, 4), breaks = seq(1992, 2022, 4)) +
+  labs(y = NULL, x = NULL) +
+  theme(strip.text.y = element_text(angle = 0))
+```
+
+Talk about the Fowler stare decisis conjecture, but also @leskovec2007
+
+@fig-data-citations shows the average number of inward citations (in-degree) and outward-citations (out-degree) broken down by year and type. Note that, on average, the decisions written during 1992 tend to be significantly more cited that the ones written in other years, giving them some sort of "first-movers advantage" over the others---i.e., the most innovative thing of any kind is the first of its kind.
+
+### Centrality
+
+We can also transform $\mathbf M$ into a bi-partite citation network or a **co-citation network**. All co-citation networks are **undirected** and **symmetric**. They are also **weighted**---i.e., two papers are connected by *the number of other papers* *that cite both.* The `cocitation()` function in `igraph` makes the following calculation:
+
+$$
+\mathbf C = \mathbf{M}^\top \mathbf{M}
+$$
+
+A co-citation network can also look backwards in time such that two papers are connected by the number of *common references* (rather than the number of papers that cite both). This is often known as a **bibliographic coupling**. The `bibcoupling()` function in `igraph` makes the following calculation:
+
+$$
+\mathbf{B} = \mathbf{MM}^\top
+$$
+
+*Note. This folding of directed networks into undirected and symmetric networks is known in sociology as a "duality" [@breiger1974] and as two-mode projections in the larger networks literature [@borgatti1997; @everett2013].*
+
+@fowler2008 mostly focus on the centrality of individual cases, adapting the authority and hub scores developed by @kleinberg1999 for analyzing the Internet.
+
+other-01.qmd
+
+### Cross-Type Citations
+
+```{r, eval=FALSE}
+library(gt)
+
+tbl <- citations |> 
+  mutate(
+    from = str_extract(from, "^[TCSU]+"),
+    to = str_extract(to, "^[TCSU]+")
+  ) |> 
+  count(from, to)
+
+tab_maker <- function(d) {
+  
+  d |> 
+    ungroup() |> 
+    pivot_wider(names_from = to, values_from = n) |> 
+    gt(rowname_col = "from") |> 
+    tab_spanner(
+      "To", everything()
+    ) |> 
+    tab_stubhead("From") |> 
+    cols_align("center") |> 
+    opt_table_font("Amiri")
+  
+}
+
+tbl |> 
+  tab_maker() |> 
+  fmt_auto() 
+tbl |> 
+  mutate(n = n / sum(n)) |> 
+  tab_maker() |> 
+  fmt_percent(decimals = 1)
+tbl |> 
+  group_by(from) |> 
+  mutate(n = n / sum(n)) |> 
+  tab_maker() |> 
+  fmt_percent(decimals = 1) 
+tbl |> 
+  group_by(to) |> 
+  mutate(n = n / sum(n)) |> 
+  tab_maker() |> 
+  fmt_percent(decimals = 1) 
+```
+
+
