@@ -10,7 +10,7 @@ template:
   bslib:
     base_font: {google: "Crimson Text"}
     code_font: {google: "Fira Code"} 
-    code-font-size: "0.8em"
+    code_font_size: 0.8em
 
 navbar:
   bg: light

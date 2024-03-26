@@ -24,24 +24,16 @@ It provides two main things:
 
 - Various convenient functions for searching and downloading rulings
   directly from the [CCC
-  website](https://www.corteconstitucional.gov.co/)s
+  website](https://www.corteconstitucional.gov.co/).
 
-- Various built-in datasets ready for analysis. These datasets were
-  created using [the
-  scripts](https://github.com/acastroaraujo/ccc/tree/master/data-raw).
+- Various built-in datasets ready for analysis.
 
-To cite package ‘ccc’ in publications use:
-
-Castro Araújo A (2024). *ccc: Colombian Constitutional Court data for
-use in R*. R package version 0.0.1,
-<https://acastroaraujo.github.io/ccc/>.
-
-A BibTeX entry for LaTeX users is
+A BibTeX entry for LaTeX users is:
 
     @Manual{,
       title = {ccc: Colombian Constitutional Court data for use in R},
       author = {Andrés {Castro Araújo}},
       year = {2024},
-      note = {R package version 0.0.1},
+      note = {R package version 0.1.0},
       url = {https://acastroaraujo.github.io/ccc/},
     }

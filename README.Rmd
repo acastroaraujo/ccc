@@ -31,9 +31,9 @@ devtools::install_github("acastroaraujo/ccc")
 
 It provides two main things:
 
-- Various convenient functions for searching and downloading rulings directly from the [CCC website](https://www.corteconstitucional.gov.co/)
+- Various convenient functions for searching and downloading rulings directly from the [CCC website](https://www.corteconstitucional.gov.co/).
 
-- Various built-in datasets ready for analysis. The datasets were created using [the scripts](https://github.com/acastroaraujo/ccc/tree/master/data-raw).
+- Various built-in datasets ready for analysis.
 
 A BibTeX entry for LaTeX users is:
 

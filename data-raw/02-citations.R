@@ -41,9 +41,9 @@ edge_list <- edge_list |>
   left_join(metadata, by = c("from" = "id"), relationship = "many-to-one") |> 
   rename(from_date = date) |> 
   left_join(metadata, by = c("to" = "id"), relationship = "many-to-one") |> 
-  rename(to_date = date) |> 
+  rename(to_date = date) ## |> 
   ## allow for 100 days of time travel [!]
-  filter(to_date - from_date <= 100)
+  ## filter(to_date - from_date <= 100)
 
 # export ------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ usethis::use_data(citations, overwrite = TRUE, compress = "xz")
 
 metadata <- read_rds("data-raw/metadata.rds")
 
-dag <- igraph::graph_from_data_frame(
+net <- igraph::graph_from_data_frame(
   d = citations, 
   directed = TRUE,
   vertices = metadata
@@ -73,12 +73,12 @@ dag <- igraph::graph_from_data_frame(
 
 metadata <- metadata |> 
   left_join(
-    igraph::degree(dag, mode = "in") |> 
+    igraph::degree(net, mode = "in") |> 
       enframe("id", "indegree") |> 
       mutate(indegree = as.integer(indegree))
   ) |> 
   left_join(
-    igraph::degree(dag, mode = "out") |> 
+    igraph::degree(net, mode = "out") |> 
       enframe("id", "outdegree") |> 
       mutate(outdegree = as.integer(outdegree))
   ) 

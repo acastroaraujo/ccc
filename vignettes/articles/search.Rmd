@@ -5,7 +5,8 @@ title: "Search and Download"
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval=FALSE
 )
 
 options(tibble.print_min = 6L, tibble.print_max = 6L)
