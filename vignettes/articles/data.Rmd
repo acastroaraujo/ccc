@@ -178,7 +178,6 @@ theme_set(
 ## Networks
 
 library(igraph)
-library(ggraph)
 
 ## Time Series Decomposition
 
