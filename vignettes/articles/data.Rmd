@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
 )
 
 library(tibble)
+library(scales)
 options(tibble.print_min = 6L, tibble.print_max = 6L)
 ```
 
@@ -425,3 +426,5 @@ prop.table(tbl) |> round(3)
 prop.table(tbl, margin = 1) |> round(3)
 prop.table(tbl, margin = 2) |> round(3)
 ```
+
+## References
