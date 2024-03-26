@@ -16,7 +16,9 @@ library(tibble)
 options(tibble.print_min = 6L, tibble.print_max = 6L)
 ```
 
+::: {style="font-size: 0.8em;"}
 *Note. All datasets described here were created using [these scripts](https://github.com/acastroaraujo/ccc/tree/master/data-raw), which use the functions described in the [search article](https://acastroaraujo.github.io/ccc/articles/search.html) to download the data. See @denny2018 for an in-depth discussion of various pre-processing steps (e.g., removal of stop words, lemmatization, lowercasing).*
+:::
 
 ```{r setup, message=FALSE}
 library(ccc)
@@ -24,8 +26,6 @@ library(Matrix)
 ```
 
 ## Thirty Years
-
-*Note. All datasets described here were created using [these scripts](https://github.com/acastroaraujo/ccc/tree/master/data-raw), which use the functions described in the [search article](https://acastroaraujo.github.io/ccc/articles/search.html).*
 
 `ccc` collects a corpus of over `r scales::comma(nrow(metadata))` rulings made by the Colombian Constitutional Court (CCC) which cover the period of 30 years immediately after the first ruling was published on April 3, 1992. All together, they form a complex citation network with approximately `r scales::comma(nrow(citations))` ties among them.
 
@@ -347,7 +347,7 @@ The key insight is that we can transform the original (unweighted) citation matr
 
 Here, the diagonal elements of $\mathbf{C}$ correspond to the in-degree for each ruling (or the row sums of $\mathbf{M}$); whereas the diagonal elements of $\mathbf{B}$ correspond to the out-degree for each ruling (or the column sums of $\mathbf{M}$).
 
-Following @kleinberg1999, @fowler2008 calculate *authority* and *score* hubs for each ruling. These are the first eigenvectors of the $\mathbf{C}$ and $\mathbf{B}$ respectively.
+Following @kleinberg1999, @fowler2008 calculate *authority* and *score* hubs for each ruling. These are the first eigenvectors of $\mathbf{C}$ and $\mathbf{B}$ respectively.
 
 As @breiger2000 notes: "several stories might be, and are, told about eigenvectors. They are the low-dimensional scaffolds that support higher-dimensional structures." In this case, the story is supposed to be something like this:
 
@@ -391,7 +391,7 @@ igraph::as_data_frame(net, what = "vertices") |>
   geom_text(aes(label = top), size = 3, family = "Avenir")
 ```
 
-_Note. It makes sense that SU rulings are heavily represented as "hubs."_
+*Note. It makes sense that SU rulings are heavily represented as "hubs."*
 
 Finally, note that authority and hub scores are somewhat related to each other; however, by definition, the very first rulings can never be hubs and the very last rulings can never be authorities. Hence we see three clusters.
 
@@ -399,12 +399,12 @@ Finally, note that authority and hub scores are somewhat related to each other; 
 igraph::as_data_frame(net, what = "vertices") |> 
   ggplot(aes(authority, hub, color = date)) + 
   geom_point(alpha = 1/5) +
-  scale_x_log10() + scale_y_log10() + scale_color_viridis_c()
+  scale_x_log10() + scale_y_log10() + scale_color_viridis_c(trans = "date")
 ```
 
 ### Cross-Type Citations
 
-Finally, I will figure out how to visualize cross-type citations eventually. But in the mean time here are four tables: raw counts, proportions, row proportions, and column proportions. 
+Finally, I will figure out how to visualize cross-type citations eventually. But in the mean time here are four tables: raw counts, proportions, row proportions, and column proportions.
 
 ```{r}
 tbl <- citations |> 
