@@ -13,7 +13,6 @@ knitr::opts_chunk$set(
 )
 
 library(tibble)
-library(scales)
 options(tibble.print_min = 6L, tibble.print_max = 6L)
 ```
 
@@ -186,10 +185,6 @@ library(ggraph)
 library(tsibble)
 library(fable)
 library(feasts)
-
-## Table
-
-library(gt)
 ```
 
 ### Time Series Decomposition
