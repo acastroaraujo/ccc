@@ -40,6 +40,7 @@ jobs:
             any::tsibble
             any::fable
             any::feasts
+            any::Hmisc
           needs: website
 
       - name: Build site
