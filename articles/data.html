@@ -15,9 +15,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Crimson_Text-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/Fira_Code-0.4.9/font.css" rel="stylesheet">
-<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Data">
 <meta property="og:description" content="ccc">
@@ -346,7 +344,11 @@ researchers affiliated with Universidad de Los Andes.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## General Purpose</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_light</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"Crimson Text"</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -405,7 +407,7 @@ each case and add them together.</p>
 <p>These plots show cleaner trends in the data and remove some of the
 noise brought about by seasonal effects (e.g., there are fewer rulings
 during the month of January).</p>
-<p><img src="data_files/figure-html/unnamed-chunk-16-1.png" width="700"><img src="data_files/figure-html/unnamed-chunk-16-2.png" width="700"><img src="data_files/figure-html/unnamed-chunk-16-3.png" width="700"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;"><img src="data_files/figure-html/unnamed-chunk-16-2.png" width="80%" style="display: block; margin: auto;"><img src="data_files/figure-html/unnamed-chunk-16-3.png" width="80%" style="display: block; margin: auto;"></p>
 <p>We can also think about how this work gets distributed over the work
 week.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
@@ -421,7 +423,7 @@ week.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">day</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">10</span>, width <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary</a></span><span class="op">(</span>fun.data <span class="op">=</span> <span class="va">mean_se</span>, shape <span class="op">=</span> <span class="fl">21</span>, fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;"></p>
 <p>There are big outliers here—e.g., the CCC issued 50 rulings on
 Thursday June 22, 2000.</p>
 <p>And there’s also some heterogeneity across years.</p>
@@ -441,7 +443,7 @@ Thursday June 22, 2000.</p>
 <span>    panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-18-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="citations-across-time">Citations Across Time<a class="anchor" aria-label="anchor" href="#citations-across-time"></a>
@@ -468,7 +470,7 @@ thing of any kind is the first of its kind.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1992</span>, <span class="fl">2022</span>, <span class="fl">4</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1992</span>, <span class="fl">2022</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span>, x <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>strip.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;"></p>
 <p><span class="citation">Fowler and Jeon (2008)</span> interpret the
 panel on the right as evidence that the legal norm of <em>stare
 decisis,</em> but that’s definitely wishful thinking. <span class="citation">Leskovec, Kleinberg, and Faloutsos (2007)</span> show
@@ -492,7 +494,7 @@ of ruling.</em></p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1992</span>, <span class="fl">2022</span>, <span class="fl">4</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1992</span>, <span class="fl">2022</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span>, x <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>strip.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="centrality">Centrality<a class="anchor" aria-label="anchor" href="#centrality"></a>
@@ -528,10 +530,10 @@ to the out-degree for each ruling (or the column sums of <span class="math inlin
 <p>Following <span class="citation">Kleinberg (1999)</span>, <span class="citation">Fowler and Jeon (2008)</span> calculate
 <em>authority</em> and <em>score</em> hubs for each ruling. These are
 the first eigenvectors of <span class="math inline">\(\mathbf{C}\)</span> and <span class="math inline">\(\mathbf{B}\)</span> respectively.</p>
-<p>As <span class="citation">Breiger (2000)</span> notes: “several
-stories might be, and are, told about eigenvectors. They are the
-low-dimensional scaffolds that support higher-dimensional structures.”
-In this case, the story is supposed to be something like this:</p>
+<p>Ronald Breiger once noted that <em>“several stories might be, and
+are, told about eigenvectors. They are the low-dimensional scaffolds
+that support higher-dimensional structures.”</em> In this case, the
+story is supposed to go something like this:</p>
 <blockquote>
 <p>The authority score of a case depends on the number of times it is
 cited and the quality of the cases that cite it. Symmetrically, the hub
@@ -542,9 +544,8 @@ that come before the Court, while hub scores indicate the degree to
 which a case is well-grounded in previous important rulings.</p>
 <p><span class="citation">Fowler and Jeon (2008, 17)</span></p>
 </blockquote>
-<p>Calculating these scores is pretty straightforward using our
-data.</p>
-<p>Using the <code>igraph</code> package:</p>
+<p>Calculating these scores is pretty straightforward using the
+<code>igraph</code> package:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">net</span> <span class="op">&lt;-</span> <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/graph_from_data_frame.html" class="external-link">graph_from_data_frame</a></span><span class="op">(</span></span>
 <span>  <span class="co">## we will use the unweighted edge list</span></span>
@@ -563,7 +564,7 @@ but they’re not the same thing.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">indegree</span>, <span class="va">authority</span>, color <span class="op">=</span> <span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">top</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span>, family <span class="op">=</span> <span class="st">"Avenir"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;"></p>
 <p>The same goes for “hub” and “out-degree” measurements.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/graph_from_data_frame.html" class="external-link">as_data_frame</a></span><span class="op">(</span><span class="va">net</span>, what <span class="op">=</span> <span class="st">"vertices"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -571,7 +572,7 @@ but they’re not the same thing.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">outdegree</span>, <span class="va">hub</span>, color <span class="op">=</span> <span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">top</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span>, family <span class="op">=</span> <span class="st">"Avenir"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;"></p>
 <p><em>Note. It makes sense that SU rulings are heavily represented as
 “hubs.”</em></p>
 <p>Finally, note that authority and hub scores are somewhat related to
@@ -587,7 +588,7 @@ three clusters.</p>
 <span><span class="co">#&gt; infinite values.</span></span>
 <span><span class="co">#&gt; Warning in scale_y_log10(): <span style="color: #00BB00;">log-10</span> transformation introduced</span></span>
 <span><span class="co">#&gt; infinite values.</span></span></code></pre></div>
-<p><img src="data_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-24-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="cross-type-citations">Cross-Type Citations<a class="anchor" aria-label="anchor" href="#cross-type-citations"></a>
@@ -634,10 +635,6 @@ proportions, row proportions, and column proportions.</p>
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
-<div id="ref-breiger2000" class="csl-entry">
-Breiger, Ronald L. 2000. <span>“A Tool Kit for Practice Theory.”</span>
-<em>Poetics</em> 27 (2-3): 91115.
-</div>
 <div id="ref-denny2018" class="csl-entry">
 Denny, Matthew J., and Arthur Spirling. 2018. <span>“Text Preprocessing
 for Unsupervised Learning: Why It Matters, When It Misleads, and What to
