@@ -140,42 +140,16 @@ A[i, j]
 
 *Note. I am still unsatisfied with the Spanish lemmatization provided by spaCy, so this will probably change in the future if I figure out a better way.*
 
-### Other Cases
+### Centrality
 
-**Gender**
-
-`gender_cases` contains cases related to gender equality across a variety of topics, collected by domain experts [here](https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php).
-
-```{r}
-gender_cases
-```
-
-**Transitional Justice**
-
-`The jctt_*` datasets contain cases from the "[Justicia Constitucional en Tiempos de Transición](http://justiciatransicional.uniandes.edu.co/web/)" project, collected by researchers affiliated with Universidad de Los Andes.
-
-```{r}
-jctt_cases
-```
-
-`jctt_edge_list` contains citation data to sources "outside" the CCC (e.g., in international law).
-
-```{r}
-jctt_edge_list
-```
-
-## Visualizations
-
-This section relies heavily on various other packages.
+This section relies on some external packages.
 
 ```{r, message=FALSE}
 ## General Purpose
 
-library(dplyr)
-library(tidyr)
 library(ggplot2)
-library(lubridate)
-library(stringr)
+library(tidyr)
+library(dplyr)
 
 theme_set(
   theme_light(base_family = "Crimson Text") + 
@@ -185,112 +159,9 @@ theme_set(
 ## Networks
 
 library(igraph)
-
-## Time Series Decomposition
-
-library(tsibble)
-library(fable)
-library(feasts)
 ```
 
-### Time Series Decomposition
-
-The following graphs show a time series decomposition of the "birth rate" of new rulings per month across time. We do this quite easily by using the [tidyverts](https://tidyverts.org/) suite of packages developed by Rob Hyndman and company.
-
-The first thing to do is to create independent year-month values for each case and add them together.
-
-```{r}
-data_stl <- metadata |> 
-  select(id, date, type) |> 
-  mutate(yearmonth = yearmonth(date)) |> 
-  summarise(
-    n = n(),
-    .by = c(type, yearmonth)
-  ) |> 
-  tsibble::as_tsibble(key = type, index = yearmonth) |> 
-  tsibble::fill_gaps() |> 
-  replace_na(replace = list(n = 0)) |> 
-  mutate(year = year(yearmonth), month = month(yearmonth, label = TRUE)) |> 
-  ## this is where it all happens
-  model(STL(n ~ trend(window = 21) + season(window = "periodic"))) |> 
-  fabletools::components()
-
-data_stl
-```
-
-After this it's just a matter of using the `feasts::autoplot()` function.
-
-These plots show cleaner trends in the data and remove some of the noise brought about by seasonal effects (e.g., there are fewer rulings during the month of January).
-
-```{r, echo=FALSE}
-data_stl |> 
-  filter(type == "C") |> 
-  autoplot() +
-  labs(
-    title = "C Rulings", subtitle = "STL Decomposition", 
-    caption = "n = trend + season_year + remainder",
-    x = NULL
-  ) 
-
-data_stl |> 
-  filter(type == "SU") |> 
-  autoplot() +
-  labs(
-    title = "SU Rulings", subtitle = "STL Decomposition", 
-    caption = "n = trend + season_year + remainder",
-    x = NULL
-  ) 
-
-data_stl |> 
-  filter(type == "T") |> 
-  autoplot() +
-  labs(
-    title = "T Rulings", subtitle = "STL Decomposition", 
-    caption = "n = trend + season_year + remainder",
-    x = NULL
-  )
-```
-
-We can also think about how this work gets distributed over the work week.
-
-```{r}
-d <- metadata |> 
-  count(date) |> 
-  tsibble::as_tsibble(index = date) |> 
-  tsibble::fill_gaps() |> 
-  replace_na(list(n = 0)) |> 
-  mutate(day = wday(date, label = TRUE, week_start = 1)) |> 
-  mutate(year = year(date)) 
-
-d |> 
-  ggplot(aes(day, n)) + 
-  geom_jitter(alpha = 1/10, width = 1/4) +
-  stat_summary(fun.data = mean_se, shape = 21, fill = "white", color = "red")
-```
-
-There are big outliers here—e.g., the CCC issued 50 rulings on Thursday June 22, 2000.
-
-And there's also some heterogeneity across years.
-
-```{r}
-d |> 
-  ggplot(aes(factor(year), n)) + 
-  stat_summary(fun.data = mean_cl_boot, 
-               shape = 21, size = 1/10, linewidth = 1/5, stroke = 1/2) +
-  facet_wrap(~day, nrow = 1, strip.position = "bottom") + 
-  labs(x = NULL, y = "count") +
-  geom_hline(yintercept = 0, linetype = "dashed", linewidth = 1/5) +
-  theme(
-    axis.text.x = element_blank(), 
-    axis.ticks.x = element_blank(), 
-    strip.background = element_blank(), 
-    strip.text = element_text(color = "black"),
-    panel.grid.major.x = element_blank()
-  ) + 
-  scale_y_continuous(breaks = seq(0, 20, 2))
-```
-
-### Citations Across Time
+#### Citations Across Time
 
 The following Figure shows average in-degree (citations) and out-degree (references) made in each ruling across the years. Note that, on average, the decisions written during 1992 tend to be significantly more cited that the ones written in other years, giving them some sort of "first-movers advantage" over the others---i.e., the most innovative thing of any kind is the first of its kind.
 
@@ -334,7 +205,7 @@ metadata |>
   theme(strip.text.y = element_text(angle = 0))
 ```
 
-### Centrality
+#### Hubs and Authorities
 
 Instead focusing on in-degree or out-degree, we can follow @fowler2008 in calculating more sophisticated measures of centrality.
 
@@ -380,7 +251,7 @@ Measurements of authority are correlated with in-degree measurements, but they'r
 
 ```{r}
 igraph::as_data_frame(net, what = "vertices") |> 
-  mutate(top = if_else(rank(-authority) %in% 1:3, name, "")) |> 
+  mutate(top = ifelse(rank(-authority) %in% 1:3, name, "")) |> 
   ggplot(aes(indegree, authority, color = type)) + 
   geom_point(alpha = 1/5) + 
   geom_text(aes(label = top), size = 3, family = "Avenir")
@@ -407,23 +278,31 @@ igraph::as_data_frame(net, what = "vertices") |>
   scale_x_log10() + scale_y_log10() + scale_color_viridis_c(trans = "date")
 ```
 
-### Cross-Type Citations
+## Other Cases
 
-Finally, I will figure out how to visualize cross-type citations eventually. But in the mean time here are four tables: raw counts, proportions, row proportions, and column proportions.
+**Gender**
+
+`gender_cases` contains cases related to gender equality across a variety of topics, collected by domain experts [here](https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php).
 
 ```{r}
-tbl <- citations |> 
-  mutate(
-    from = str_extract(from, "^[TCSU]+"),
-    to = str_extract(to, "^[TCSU]+")
-  ) |> 
-  select(from, to) |> 
-  table()
-
-tbl
-prop.table(tbl) |> round(3)
-prop.table(tbl, margin = 1) |> round(3)
-prop.table(tbl, margin = 2) |> round(3)
+gender_cases
 ```
+
+**Transitional Justice**
+
+`The jctt_*` datasets contain cases from the "[Justicia Constitucional en Tiempos de Transición](http://justiciatransicional.uniandes.edu.co/web/)" project, collected by researchers affiliated with Universidad de Los Andes.
+
+```{r}
+jctt_cases
+```
+
+`jctt_edge_list` contains citation data to sources "outside" the CCC (e.g., in international law).
+
+```{r}
+jctt_edge_list
+```
+
+
+
 
 ## References

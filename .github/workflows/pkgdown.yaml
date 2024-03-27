@@ -38,11 +38,7 @@ jobs:
             any::tibble
             any::ggplot2
             any::tidyr
-            any::lubridate
             any::igraph
-            any::tsibble
-            any::fable
-            any::feasts
             any::Hmisc
           needs: website
 
