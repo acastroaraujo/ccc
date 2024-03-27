@@ -35,7 +35,10 @@ jobs:
           extra-packages: |
             any::pkgdown
             local::.
-            any::tidyverse
+            any::tibble
+            any::ggplot2
+            any::tidyr
+            any::lubridate
             any::igraph
             any::tsibble
             any::fable

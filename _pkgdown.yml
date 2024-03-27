@@ -8,8 +8,6 @@ template:
   bootstrap: 5
   bootswatch: litera
   bslib:
-    base_font: {google: "Crimson Text"}
-    code_font: {google: "Fira Code"} 
     code_font_size: 0.8em
 
 navbar:

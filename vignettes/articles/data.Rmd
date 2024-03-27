@@ -9,7 +9,10 @@ editor_options:
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  dpi = 300,
+  fig.align = "center",
+  out.width = "80%"
 )
 
 library(tibble)
@@ -168,7 +171,11 @@ This section relies heavily on various other packages.
 ```{r, message=FALSE}
 ## General Purpose
 
-library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(lubridate)
+library(stringr)
 
 theme_set(
   theme_light(base_family = "Crimson Text") + 
@@ -349,15 +356,13 @@ Here, the diagonal elements of $\mathbf{C}$ correspond to the in-degree for each
 
 Following @kleinberg1999, @fowler2008 calculate *authority* and *score* hubs for each ruling. These are the first eigenvectors of $\mathbf{C}$ and $\mathbf{B}$ respectively.
 
-As @breiger2000 notes: "several stories might be, and are, told about eigenvectors. They are the low-dimensional scaffolds that support higher-dimensional structures." In this case, the story is supposed to be something like this:
+Ronald Breiger once noted that _"several stories might be, and are, told about eigenvectors. They are the low-dimensional scaffolds that support higher-dimensional structures."_ In this case, the story is supposed to go something like this:
 
 > The authority score of a case depends on the number of times it is cited and the quality of the cases that cite it. Symmetrically, the hub score of a case depends on the number of cases it cites and the quality of the cases cited. Thus, authority scores indicate the degree to which a case is thought to be important for resolving other important issues that come before the Court, while hub scores indicate the degree to which a case is well-grounded in previous important rulings.
 >
 > @fowler2008 [pp. 17]
 
-Calculating these scores is pretty straightforward using our data.
-
-Using the `igraph` package:
+Calculating these scores is pretty straightforward using the `igraph` package:
 
 ```{r}
 net <- igraph::graph_from_data_frame(

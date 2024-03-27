@@ -14,8 +14,9 @@ options(tibble.print_min = 6L, tibble.print_max = 6L)
 ## Packages
 
 ```{r setup, message=FALSE}
-library(tidyverse)
 library(ccc)
+library(dplyr)
+library(stringr)
 ```
 
 ## Search
