@@ -287,68 +287,15 @@ provided by spaCy, so this will probably change in the future if I
 figure out a better way.</em></p>
 </div>
 <div class="section level3">
-<h3 id="other-cases">Other Cases<a class="anchor" aria-label="anchor" href="#other-cases"></a>
+<h3 id="centrality">Centrality<a class="anchor" aria-label="anchor" href="#centrality"></a>
 </h3>
-<p><strong>Gender</strong></p>
-<p><code>gender_cases</code> contains cases related to gender equality
-across a variety of topics, collected by domain experts <a href="https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php" class="external-link">here</a>.</p>
+<p>This section relies on some external packages.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gender_cases</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 471 × 4</span></span></span>
-<span><span class="co">#&gt;   id       type  tema                                 href                      </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> T-064-23 T     A LA IGUALDAD Y LA NO DISCRIMINACIÓN /relatoria/2023/T-064-23.…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> T-028-23 T     A LA IGUALDAD Y LA NO DISCRIMINACIÓN /relatoria/2023/T-028-23.…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> T-452-22 T     A LA IGUALDAD Y LA NO DISCRIMINACIÓN /relatoria/2022/T-452-22.…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> T-425-22 T     A LA IGUALDAD Y LA NO DISCRIMINACIÓN /relatoria/2022/T-425-22.…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> T-400-22 T     A LA IGUALDAD Y LA NO DISCRIMINACIÓN /relatoria/2022/T-400-22.…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> T-378-22 T     A LA IGUALDAD Y LA NO DISCRIMINACIÓN /relatoria/2022/T-378-22.…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 465 more rows</span></span></span></code></pre></div>
-<p><strong>Transitional Justice</strong></p>
-<p><code>The jctt_*</code> datasets contain cases from the “<a href="http://justiciatransicional.uniandes.edu.co/web/" class="external-link">Justicia
-Constitucional en Tiempos de Transición</a>” project, collected by
-researchers affiliated with Universidad de Los Andes.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">jctt_cases</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 123 × 11</span></span></span>
-<span><span class="co">#&gt;   id       type  date       precedent president href  keywords crimes   mp      </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> C-019-18 C     2018-04-04 Mantiene  Juan Man… /Rel… <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> C-020-18 C     2018-04-04 Mantiene  Juan Man… /Rel… <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> C-527-17 C     2017-08-14 Crea      Juan Man… /Rel… <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C-006-17 C     2017-01-18 Mantiene  Juan Man… /Rel… <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C-026-18 C     2018-04-11 Mantiene  Juan Man… /Rel… <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C-535-17 C     2017-08-17 Crea      Juan Man… /Rel… <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 117 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: msv &lt;list&gt;, mav &lt;list&gt;</span></span></span></code></pre></div>
-<p><code>jctt_edge_list</code> contains citation data to sources
-“outside” the CCC (e.g., in international law).</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">jctt_edge_list</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,660 × 7</span></span></span>
-<span><span class="co">#&gt;   from     to                     type  to_source to_system date       president</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> C-019-18 ONU, Asamblea General… C     Normas i… Sistema … 2018-04-04 Juan Man…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> C-019-18 ONU, Asamblea General… C     Normas i… Sistema … 2018-04-04 Juan Man…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> C-019-18 ONU, Asamblea General… C     Normas i… Sistema … 2018-04-04 Juan Man…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C-019-18 ONU, Convencion para … C     Normas i… Sistema … 2018-04-04 Juan Man…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C-019-18 ONU, Convencion Relat… C     Normas i… Sistema … 2018-04-04 Juan Man…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C-019-18 ONU, Asamblea General… C     Normas i… Sistema … 2018-04-04 Juan Man…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,654 more rows</span></span></span></code></pre></div>
-</div>
-</div>
-<div class="section level2">
-<h2 id="visualizations">Visualizations<a class="anchor" aria-label="anchor" href="#visualizations"></a>
-</h2>
-<p>This section relies heavily on various other packages.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## General Purpose</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_light</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"Crimson Text"</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -357,104 +304,17 @@ researchers affiliated with Universidad de Los Andes.</p>
 <span></span>
 <span><span class="co">## Networks</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r.igraph.org/" class="external-link">igraph</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## Time Series Decomposition</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tsibble.tidyverts.org" class="external-link">tsibble</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fable.tidyverts.org" class="external-link">fable</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://feasts.tidyverts.org/" class="external-link">feasts</a></span><span class="op">)</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="time-series-decomposition">Time Series Decomposition<a class="anchor" aria-label="anchor" href="#time-series-decomposition"></a>
-</h3>
-<p>The following graphs show a time series decomposition of the “birth
-rate” of new rulings per month across time. We do this quite easily by
-using the <a href="https://tidyverts.org/" class="external-link">tidyverts</a> suite of
-packages developed by Rob Hyndman and company.</p>
-<p>The first thing to do is to create independent year-month values for
-each case and add them together.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_stl</span> <span class="op">&lt;-</span> <span class="va">metadata</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">date</span>, <span class="va">type</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>yearmonth <span class="op">=</span> <span class="fu"><a href="https://tsibble.tidyverts.org/reference/year-month.html" class="external-link">yearmonth</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span>
-<span>    n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">type</span>, <span class="va">yearmonth</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">tsibble</span><span class="fu">::</span><span class="fu"><a href="https://tsibble.tidyverts.org/reference/as-tsibble.html" class="external-link">as_tsibble</a></span><span class="op">(</span>key <span class="op">=</span> <span class="va">type</span>, index <span class="op">=</span> <span class="va">yearmonth</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">tsibble</span><span class="fu">::</span><span class="fu"><a href="https://tsibble.tidyverts.org/reference/fill_gaps.html" class="external-link">fill_gaps</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/replace_na.html" class="external-link">replace_na</a></span><span class="op">(</span>replace <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html" class="external-link">year</a></span><span class="op">(</span><span class="va">yearmonth</span><span class="op">)</span>, month <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">yearmonth</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="co">## this is where it all happens</span></span>
-<span>  <span class="fu"><a href="https://fabletools.tidyverts.org/reference/model.html" class="external-link">model</a></span><span class="op">(</span><span class="fu"><a href="https://feasts.tidyverts.org/reference/STL.html" class="external-link">STL</a></span><span class="op">(</span><span class="va">n</span> <span class="op">~</span> <span class="fu">trend</span><span class="op">(</span>window <span class="op">=</span> <span class="fl">21</span><span class="op">)</span> <span class="op">+</span> <span class="fu">season</span><span class="op">(</span>window <span class="op">=</span> <span class="st">"periodic"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">fabletools</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/components.html" class="external-link">components</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">data_stl</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A dable: 1,069 x 8 [1M]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Key:     type, .model [3]</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># :        n = trend + season_year + remainder</span></span></span>
-<span><span class="co">#&gt;   type  .model         yearmonth     n trend season_year remainder season_adjust</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;mth&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> C     <span style="color: #949494;">"</span>STL(n ~ tren…  1992 May     3  3.35      4.76      -<span style="color: #BB0000;">5.11</span>          -<span style="color: #BB0000;">1.76</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> C     <span style="color: #949494;">"</span>STL(n ~ tren…  1992 Jun     4  4.73     -<span style="color: #BB0000;">2.46</span>       1.73           6.46</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> C     <span style="color: #949494;">"</span>STL(n ~ tren…  1992 Jul     5  6.12     -<span style="color: #BB0000;">1.31</span>       0.198          6.31</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C     <span style="color: #949494;">"</span>STL(n ~ tren…  1992 Aug     4  7.50      1.70      -<span style="color: #BB0000;">5.20</span>           2.30</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C     <span style="color: #949494;">"</span>STL(n ~ tren…  1992 Sep     6  8.68     -<span style="color: #BB0000;">0.043</span><span style="color: #BB0000; text-decoration: underline;">5</span>    -<span style="color: #BB0000;">2.63</span>           6.04</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C     <span style="color: #949494;">"</span>STL(n ~ tren…  1992 Oct    18  9.86      3.41       4.73          14.6 </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,063 more rows</span></span></span></code></pre></div>
-<p>After this it’s just a matter of using the
-<code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">feasts::autoplot()</a></code> function.</p>
-<p>These plots show cleaner trends in the data and remove some of the
-noise brought about by seasonal effects (e.g., there are fewer rulings
-during the month of January).</p>
-<p><img src="data_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;"><img src="data_files/figure-html/unnamed-chunk-16-2.png" width="80%" style="display: block; margin: auto;"><img src="data_files/figure-html/unnamed-chunk-16-3.png" width="80%" style="display: block; margin: auto;"></p>
-<p>We can also think about how this work gets distributed over the work
-week.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">metadata</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">tsibble</span><span class="fu">::</span><span class="fu"><a href="https://tsibble.tidyverts.org/reference/as-tsibble.html" class="external-link">as_tsibble</a></span><span class="op">(</span>index <span class="op">=</span> <span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">tsibble</span><span class="fu">::</span><span class="fu"><a href="https://tsibble.tidyverts.org/reference/fill_gaps.html" class="external-link">fill_gaps</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/replace_na.html" class="external-link">replace_na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>day <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/day.html" class="external-link">wday</a></span><span class="op">(</span><span class="va">date</span>, label <span class="op">=</span> <span class="cn">TRUE</span>, week_start <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html" class="external-link">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span> </span>
-<span></span>
-<span><span class="va">d</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">day</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">10</span>, width <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary</a></span><span class="op">(</span>fun.data <span class="op">=</span> <span class="va">mean_se</span>, shape <span class="op">=</span> <span class="fl">21</span>, fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;"></p>
-<p>There are big outliers here—e.g., the CCC issued 50 rulings on
-Thursday June 22, 2000.</p>
-<p>And there’s also some heterogeneity across years.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary</a></span><span class="op">(</span>fun.data <span class="op">=</span> <span class="va">mean_cl_boot</span>, </span>
-<span>               shape <span class="op">=</span> <span class="fl">21</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">10</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">5</span>, stroke <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">day</span>, nrow <span class="op">=</span> <span class="fl">1</span>, strip.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
-<span>    axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, </span>
-<span>    axis.ticks.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, </span>
-<span>    strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, </span>
-<span>    strip.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
-<span>    panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data_files/figure-html/unnamed-chunk-18-1.png" width="80%" style="display: block; margin: auto;"></p>
-</div>
-<div class="section level3">
-<h3 id="citations-across-time">Citations Across Time<a class="anchor" aria-label="anchor" href="#citations-across-time"></a>
-</h3>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r.igraph.org/" class="external-link">igraph</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="citations-across-time">Citations Across Time<a class="anchor" aria-label="anchor" href="#citations-across-time"></a>
+</h4>
 <p>The following Figure shows average in-degree (citations) and
 out-degree (references) made in each ruling across the years. Note that,
 on average, the decisions written during 1992 tend to be significantly
 more cited that the ones written in other years, giving them some sort
 of “first-movers advantage” over the others—i.e., the most innovative
 thing of any kind is the first of its kind.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">indegree</span>, <span class="va">outdegree</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"dtype"</span>, values_to <span class="op">=</span> <span class="st">"degree"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>dtype <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
@@ -470,7 +330,7 @@ thing of any kind is the first of its kind.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1992</span>, <span class="fl">2022</span>, <span class="fl">4</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1992</span>, <span class="fl">2022</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span>, x <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>strip.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;"></p>
 <p><span class="citation">Fowler and Jeon (2008)</span> interpret the
 panel on the right as evidence that the legal norm of <em>stare
 decisis,</em> but that’s definitely wishful thinking. <span class="citation">Leskovec, Kleinberg, and Faloutsos (2007)</span> show
@@ -478,7 +338,7 @@ that that out-degree tends to grow over time in many different kinds of
 networks.</p>
 <p>The following Figure disaggregates both kinds of citation by <em>type
 of ruling.</em></p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">indegree</span>, <span class="va">outdegree</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"dtype"</span>, values_to <span class="op">=</span> <span class="st">"degree"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>dtype <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
@@ -494,11 +354,11 @@ of ruling.</em></p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1992</span>, <span class="fl">2022</span>, <span class="fl">4</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1992</span>, <span class="fl">2022</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span>, x <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>strip.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data_files/figure-html/unnamed-chunk-20-1.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-13-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level3">
-<h3 id="centrality">Centrality<a class="anchor" aria-label="anchor" href="#centrality"></a>
-</h3>
+<div class="section level4">
+<h4 id="hubs-and-authorities">Hubs and Authorities<a class="anchor" aria-label="anchor" href="#hubs-and-authorities"></a>
+</h4>
 <p>Instead focusing on in-degree or out-degree, we can follow <span class="citation">Fowler and Jeon (2008)</span> in calculating more
 sophisticated measures of centrality.</p>
 <p>The key insight is that we can transform the original (unweighted)
@@ -546,7 +406,7 @@ which a case is well-grounded in previous important rulings.</p>
 </blockquote>
 <p>Calculating these scores is pretty straightforward using the
 <code>igraph</code> package:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">net</span> <span class="op">&lt;-</span> <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/graph_from_data_frame.html" class="external-link">graph_from_data_frame</a></span><span class="op">(</span></span>
 <span>  <span class="co">## we will use the unweighted edge list</span></span>
 <span>  d <span class="op">=</span> <span class="va">citations</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">!</span><span class="va">weight</span><span class="op">)</span>, </span>
@@ -558,28 +418,28 @@ which a case is well-grounded in previous important rulings.</p>
 <span><span class="fu"><a href="https://r.igraph.org/reference/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span><span class="op">$</span><span class="va">hub</span> <span class="op">&lt;-</span> <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/hub_score.html" class="external-link">hub_score</a></span><span class="op">(</span><span class="va">net</span>, scale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">vector</span></span></code></pre></div>
 <p>Measurements of authority are correlated with in-degree measurements,
 but they’re not the same thing.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/graph_from_data_frame.html" class="external-link">as_data_frame</a></span><span class="op">(</span><span class="va">net</span>, what <span class="op">=</span> <span class="st">"vertices"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>top <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rank.html" class="external-link">rank</a></span><span class="op">(</span><span class="op">-</span><span class="va">authority</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">name</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>top <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rank.html" class="external-link">rank</a></span><span class="op">(</span><span class="op">-</span><span class="va">authority</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="va">name</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">indegree</span>, <span class="va">authority</span>, color <span class="op">=</span> <span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">top</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span>, family <span class="op">=</span> <span class="st">"Avenir"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;"></p>
 <p>The same goes for “hub” and “out-degree” measurements.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/graph_from_data_frame.html" class="external-link">as_data_frame</a></span><span class="op">(</span><span class="va">net</span>, what <span class="op">=</span> <span class="st">"vertices"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>top <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rank.html" class="external-link">rank</a></span><span class="op">(</span><span class="op">-</span><span class="va">hub</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="va">name</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">outdegree</span>, <span class="va">hub</span>, color <span class="op">=</span> <span class="va">type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">top</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span>, family <span class="op">=</span> <span class="st">"Avenir"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="data_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;"></p>
 <p><em>Note. It makes sense that SU rulings are heavily represented as
 “hubs.”</em></p>
 <p>Finally, note that authority and hub scores are somewhat related to
 each other; however, by definition, the very first rulings can never be
 hubs and the very last rulings can never be authorities. Hence we see
 three clusters.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/graph_from_data_frame.html" class="external-link">as_data_frame</a></span><span class="op">(</span><span class="va">net</span>, what <span class="op">=</span> <span class="st">"vertices"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">authority</span>, <span class="va">hub</span>, color <span class="op">=</span> <span class="va">date</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
@@ -588,48 +448,59 @@ three clusters.</p>
 <span><span class="co">#&gt; infinite values.</span></span>
 <span><span class="co">#&gt; Warning in scale_y_log10(): <span style="color: #00BB00;">log-10</span> transformation introduced</span></span>
 <span><span class="co">#&gt; infinite values.</span></span></code></pre></div>
-<p><img src="data_files/figure-html/unnamed-chunk-24-1.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level3">
-<h3 id="cross-type-citations">Cross-Type Citations<a class="anchor" aria-label="anchor" href="#cross-type-citations"></a>
-</h3>
-<p>Finally, I will figure out how to visualize cross-type citations
-eventually. But in the mean time here are four tables: raw counts,
-proportions, row proportions, and column proportions.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="va">citations</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    from <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html" class="external-link">str_extract</a></span><span class="op">(</span><span class="va">from</span>, <span class="st">"^[TCSU]+"</span><span class="op">)</span>,</span>
-<span>    to <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html" class="external-link">str_extract</a></span><span class="op">(</span><span class="va">to</span>, <span class="st">"^[TCSU]+"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">from</span>, <span class="va">to</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tbl</span></span>
-<span><span class="co">#&gt;     to</span></span>
-<span><span class="co">#&gt; from      C     SU      T</span></span>
-<span><span class="co">#&gt;   C  133015   1985  18369</span></span>
-<span><span class="co">#&gt;   SU   6082   3710  18562</span></span>
-<span><span class="co">#&gt;   T   45280  27812 377613</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html" class="external-link">prop.table</a></span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     to</span></span>
-<span><span class="co">#&gt; from     C    SU     T</span></span>
-<span><span class="co">#&gt;   C  0.210 0.003 0.029</span></span>
-<span><span class="co">#&gt;   SU 0.010 0.006 0.029</span></span>
-<span><span class="co">#&gt;   T  0.072 0.044 0.597</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html" class="external-link">prop.table</a></span><span class="op">(</span><span class="va">tbl</span>, margin <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     to</span></span>
-<span><span class="co">#&gt; from     C    SU     T</span></span>
-<span><span class="co">#&gt;   C  0.867 0.013 0.120</span></span>
-<span><span class="co">#&gt;   SU 0.215 0.131 0.655</span></span>
-<span><span class="co">#&gt;   T  0.100 0.062 0.838</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html" class="external-link">prop.table</a></span><span class="op">(</span><span class="va">tbl</span>, margin <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     to</span></span>
-<span><span class="co">#&gt; from     C    SU     T</span></span>
-<span><span class="co">#&gt;   C  0.721 0.059 0.044</span></span>
-<span><span class="co">#&gt;   SU 0.033 0.111 0.045</span></span>
-<span><span class="co">#&gt;   T  0.246 0.830 0.911</span></span></code></pre></div>
 </div>
+</div>
+<div class="section level2">
+<h2 id="other-cases">Other Cases<a class="anchor" aria-label="anchor" href="#other-cases"></a>
+</h2>
+<p><strong>Gender</strong></p>
+<p><code>gender_cases</code> contains cases related to gender equality
+across a variety of topics, collected by domain experts <a href="https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php" class="external-link">here</a>.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gender_cases</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 471 × 4</span></span></span>
+<span><span class="co">#&gt;   id       type  tema                                 href                      </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> T-064-23 T     A LA IGUALDAD Y LA NO DISCRIMINACIÓN /relatoria/2023/T-064-23.…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> T-028-23 T     A LA IGUALDAD Y LA NO DISCRIMINACIÓN /relatoria/2023/T-028-23.…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> T-452-22 T     A LA IGUALDAD Y LA NO DISCRIMINACIÓN /relatoria/2022/T-452-22.…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> T-425-22 T     A LA IGUALDAD Y LA NO DISCRIMINACIÓN /relatoria/2022/T-425-22.…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> T-400-22 T     A LA IGUALDAD Y LA NO DISCRIMINACIÓN /relatoria/2022/T-400-22.…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> T-378-22 T     A LA IGUALDAD Y LA NO DISCRIMINACIÓN /relatoria/2022/T-378-22.…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 465 more rows</span></span></span></code></pre></div>
+<p><strong>Transitional Justice</strong></p>
+<p><code>The jctt_*</code> datasets contain cases from the “<a href="http://justiciatransicional.uniandes.edu.co/web/" class="external-link">Justicia
+Constitucional en Tiempos de Transición</a>” project, collected by
+researchers affiliated with Universidad de Los Andes.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">jctt_cases</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 123 × 11</span></span></span>
+<span><span class="co">#&gt;   id       type  date       precedent president href  keywords crimes   mp      </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> C-019-18 C     2018-04-04 Mantiene  Juan Man… /Rel… <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> C-020-18 C     2018-04-04 Mantiene  Juan Man… /Rel… <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> C-527-17 C     2017-08-14 Crea      Juan Man… /Rel… <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C-006-17 C     2017-01-18 Mantiene  Juan Man… /Rel… <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C-026-18 C     2018-04-11 Mantiene  Juan Man… /Rel… <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C-535-17 C     2017-08-17 Crea      Juan Man… /Rel… <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;tibble&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 117 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: msv &lt;list&gt;, mav &lt;list&gt;</span></span></span></code></pre></div>
+<p><code>jctt_edge_list</code> contains citation data to sources
+“outside” the CCC (e.g., in international law).</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">jctt_edge_list</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,660 × 7</span></span></span>
+<span><span class="co">#&gt;   from     to                     type  to_source to_system date       president</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> C-019-18 ONU, Asamblea General… C     Normas i… Sistema … 2018-04-04 Juan Man…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> C-019-18 ONU, Asamblea General… C     Normas i… Sistema … 2018-04-04 Juan Man…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> C-019-18 ONU, Asamblea General… C     Normas i… Sistema … 2018-04-04 Juan Man…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C-019-18 ONU, Convencion para … C     Normas i… Sistema … 2018-04-04 Juan Man…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C-019-18 ONU, Convencion Relat… C     Normas i… Sistema … 2018-04-04 Juan Man…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C-019-18 ONU, Asamblea General… C     Normas i… Sistema … 2018-04-04 Juan Man…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,654 more rows</span></span></span></code></pre></div>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
