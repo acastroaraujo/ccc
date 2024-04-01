@@ -88,9 +88,7 @@
 <div style="font-size: 0.8em;">
 <p><em>Note. All datasets described here were created using <a href="https://github.com/acastroaraujo/ccc/tree/master/data-raw" class="external-link">these
 scripts</a>, which use the functions described in the <a href="https://acastroaraujo.github.io/ccc/articles/search.html">search
-and download article</a>. See <span class="citation">Denny and Spirling
-(2018)</span> for an in-depth discussion of various pre-processing steps
-(e.g., removal of stop words, lemmatization, lowercasing).</em></p>
+and download article</a>.</em></p>
 </div>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/acastroaraujo/ccc" class="external-link">ccc</a></span><span class="op">)</span></span>
@@ -135,17 +133,17 @@ Colombia.</p></li>
 <p><code>metadata</code> contains information on each ruling.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">metadata</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 27,179 × 11</span></span></span>
-<span><span class="co">#&gt;   id     type   year date       indegree outdegree descriptors mp    date_public</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;lis&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> T-001… T      <span style="text-decoration: underline;">1</span>992 1992-04-03      187         0 <span style="color: #949494;">&lt;chr [14]&gt;</span>  <span style="color: #949494;">&lt;chr&gt;</span> <span style="color: #BB0000;">NA</span>         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> C-004… C      <span style="text-decoration: underline;">1</span>992 1992-05-07      118         0 <span style="color: #949494;">&lt;chr [11]&gt;</span>  <span style="color: #949494;">&lt;chr&gt;</span> <span style="color: #BB0000;">NA</span>         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> T-002… T      <span style="text-decoration: underline;">1</span>992 1992-05-08      272         0 <span style="color: #949494;">&lt;chr [4]&gt;</span>   <span style="color: #949494;">&lt;chr&gt;</span> 1992-02-08 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> T-003… T      <span style="text-decoration: underline;">1</span>992 1992-05-11      142         0 <span style="color: #949494;">&lt;chr [8]&gt;</span>   <span style="color: #949494;">&lt;chr&gt;</span> <span style="color: #BB0000;">NA</span>         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C-005… C      <span style="text-decoration: underline;">1</span>992 1992-05-11        7         1 <span style="color: #949494;">&lt;chr [11]&gt;</span>  <span style="color: #949494;">&lt;chr&gt;</span> <span style="color: #BB0000;">NA</span>         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> T-006… T      <span style="text-decoration: underline;">1</span>992 1992-05-12      225         0 <span style="color: #949494;">&lt;chr [21]&gt;</span>  <span style="color: #949494;">&lt;chr&gt;</span> <span style="color: #BB0000;">NA</span>         </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 27,179 × 12</span></span></span>
+<span><span class="co">#&gt;   id      type   year date       indegree outdegree word_count descriptors mp   </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;lis&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> T-001-… T      <span style="text-decoration: underline;">1</span>992 1992-04-03      187         0       <span style="text-decoration: underline;">7</span>060 <span style="color: #949494;">&lt;chr [14]&gt;</span>  <span style="color: #949494;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> C-004-… C      <span style="text-decoration: underline;">1</span>992 1992-05-07      118         0      <span style="text-decoration: underline;">20</span>107 <span style="color: #949494;">&lt;chr [11]&gt;</span>  <span style="color: #949494;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> T-002-… T      <span style="text-decoration: underline;">1</span>992 1992-05-08      272         0       <span style="text-decoration: underline;">7</span>597 <span style="color: #949494;">&lt;chr [4]&gt;</span>   <span style="color: #949494;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> T-003-… T      <span style="text-decoration: underline;">1</span>992 1992-05-11      142         0       <span style="text-decoration: underline;">5</span>760 <span style="color: #949494;">&lt;chr [8]&gt;</span>   <span style="color: #949494;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C-005-… C      <span style="text-decoration: underline;">1</span>992 1992-05-11        7         1       <span style="text-decoration: underline;">6</span>869 <span style="color: #949494;">&lt;chr [11]&gt;</span>  <span style="color: #949494;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> T-006-… T      <span style="text-decoration: underline;">1</span>992 1992-05-12      225         0      <span style="text-decoration: underline;">32</span>408 <span style="color: #949494;">&lt;chr [21]&gt;</span>  <span style="color: #949494;">&lt;chr&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 27,173 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: file &lt;chr&gt;, url &lt;chr&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: date_public &lt;date&gt;, file &lt;chr&gt;, url &lt;chr&gt;</span></span></span></code></pre></div>
 <p><code>citations</code> contains the citation network in “edge list”
 format. Each citation has a <code>weight</code> that refers to the
 <em>number</em> of times a ruling cites a previous case.</p>
@@ -235,6 +233,11 @@ Constitutional Court has various non-zero entries.</p>
 <div class="section level3">
 <h3 id="text-features">Text Features<a class="anchor" aria-label="anchor" href="#text-features"></a>
 </h3>
+<div style="font-size: 0.8em;">
+<p><em>See <span class="citation">Denny and Spirling (2018)</span> for
+an in-depth discussion of various pre-processing steps (e.g., removal of
+stop words, lemmatization, lowercasing).</em></p>
+</div>
 <p>The <code>docterms</code> dataset contains a data frame with document
 identifiers (<code>doc_id</code>) and word counts (<code>lemma</code>
 and <code>n</code>). It has 25,403,840 rows.</p>
@@ -322,7 +325,7 @@ thing of any kind is the first of its kind.</p>
 <span>  <span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">degree</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary</a></span><span class="op">(</span></span>
-<span>    fun.data <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/hmisc.html" class="external-link">mean_cl_boot</a></span><span class="op">(</span><span class="va">x</span>, conf.int <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">3</span>,<span class="co">#fatten = 1/2, size = 2,</span></span>
+<span>    fun.data <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/hmisc.html" class="external-link">mean_cl_boot</a></span><span class="op">(</span><span class="va">x</span>, conf.int <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">3</span>,</span>
 <span>    shape <span class="op">=</span> <span class="fl">21</span>, fill <span class="op">=</span> <span class="st">"white"</span>, stroke <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">dtype</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -389,11 +392,11 @@ elements of <span class="math inline">\(\mathbf{B}\)</span> correspond
 to the out-degree for each ruling (or the column sums of <span class="math inline">\(\mathbf{M}\)</span>).</p>
 <p>Following <span class="citation">Kleinberg (1999)</span>, <span class="citation">Fowler and Jeon (2008)</span> calculate
 <em>authority</em> and <em>score</em> hubs for each ruling. These are
-the first eigenvectors of <span class="math inline">\(\mathbf{C}\)</span> and <span class="math inline">\(\mathbf{B}\)</span> respectively.</p>
-<p>Ronald Breiger once noted that <em>“several stories might be, and
-are, told about eigenvectors. They are the low-dimensional scaffolds
-that support higher-dimensional structures.”</em> In this case, the
-story is supposed to go something like this:</p>
+the first eigenvectors of <span class="math inline">\(\mathbf{C}\)</span> and <span class="math inline">\(\mathbf{B}\)</span> respectively. Ronald Breiger
+once noted that <em>“several stories might be, and are, told about
+eigenvectors. They are the low-dimensional scaffolds that support
+higher-dimensional structures.”</em> In this case, the story is supposed
+to go something like this:</p>
 <blockquote>
 <p>The authority score of a case depends on the number of times it is
 cited and the quality of the cases that cite it. Symmetrically, the hub
@@ -428,6 +431,11 @@ but they’re not the same thing.</p>
 <span><span class="co">#&gt; Warning in scale_x_log10(): <span style="color: #00BB00;">log-10</span> transformation introduced infinite values.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">log-10</span> transformation introduced infinite values.</span></span></code></pre></div>
 <p><img src="data_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;"></p>
+<p><em>Note. Given the large number of <code>T</code> cases, it makes
+sense that the most “central” C rulings define what a tutela is
+(<code>C-543-92</code>) and further clarify the circumstances under
+which a tutela can be presented against decisions made by lower courts
+(C-590-05).</em></p>
 <p>The same goes for “hub” and “out-degree” measurements.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/graph_from_data_frame.html" class="external-link">as_data_frame</a></span><span class="op">(</span><span class="va">net</span>, what <span class="op">=</span> <span class="st">"vertices"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -459,6 +467,26 @@ three clusters.</p>
 <p><img src="data_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 </div>
+<div class="section level3">
+<h3 id="length-of-documents">Length of Documents<a class="anchor" aria-label="anchor" href="#length-of-documents"></a>
+</h3>
+<p>Along with the increase in citations over time, an important feature
+of how the CCC rulings have evolved over time concerns the length of
+each document.</p>
+<p>There is a variable called <code>word_count</code> in the
+<code>metadata</code> dataset which allows us to see changes over
+time.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">metadata</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">word_count</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html" class="external-link">stat_summary</a></span><span class="op">(</span></span>
+<span>    fun.data <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/hmisc.html" class="external-link">mean_cl_boot</a></span><span class="op">(</span><span class="va">x</span>, conf.int <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">3</span>,</span>
+<span>    shape <span class="op">=</span> <span class="fl">21</span>, fill <span class="op">=</span> <span class="st">"white"</span>, stroke <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1992</span>, <span class="fl">2022</span>, <span class="fl">4</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1992</span>, <span class="fl">2022</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"n"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, title <span class="op">=</span> <span class="st">"Average Number of Words in Each Ruling Per Year"</span><span class="op">)</span> </span></code></pre></div>
+<p><img src="data_files/figure-html/unnamed-chunk-18-1.png" width="80%" style="display: block; margin: auto;"></p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="other-cases">Other Cases<a class="anchor" aria-label="anchor" href="#other-cases"></a>
@@ -466,7 +494,7 @@ three clusters.</p>
 <p><strong>Gender</strong></p>
 <p><code>gender_cases</code> contains cases related to gender equality
 across a variety of topics, collected by domain experts <a href="https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php" class="external-link">here</a>.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gender_cases</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 471 × 4</span></span></span>
 <span><span class="co">#&gt;   id       type  tema                                 href                      </span></span>
@@ -482,7 +510,7 @@ across a variety of topics, collected by domain experts <a href="https://www.cor
 <p><code>The jctt_*</code> datasets contain cases from the “<a href="http://justiciatransicional.uniandes.edu.co/web/" class="external-link">Justicia
 Constitucional en Tiempos de Transición</a>” project, collected by
 researchers affiliated with Universidad de Los Andes.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">jctt_cases</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 123 × 11</span></span></span>
 <span><span class="co">#&gt;   id       type  date       precedent president href  keywords crimes   mp      </span></span>
@@ -497,7 +525,7 @@ researchers affiliated with Universidad de Los Andes.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: msv &lt;list&gt;, mav &lt;list&gt;</span></span></span></code></pre></div>
 <p><code>jctt_edge_list</code> contains citation data to sources
 “outside” the CCC (e.g., in international law).</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">jctt_edge_list</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,660 × 7</span></span></span>
 <span><span class="co">#&gt;   from     to                     type  to_source to_system date       president</span></span>
