@@ -59,6 +59,12 @@ citations <- edge_list |>
 
 usethis::use_data(citations, overwrite = TRUE, compress = "xz")
 
+# add word counts -------------------------------------------
+
+word_count <- future_map_dbl(output, \(x) str_count(x, "\\b\\w+\\b")) |> 
+  enframe(name = "id", value = "word_count") |> 
+  mutate(word_count = as.integer(word_count))
+
 # modify metadata ---------------------------------------------------------
 
 metadata <- read_rds("data-raw/metadata.rds")
@@ -89,5 +95,11 @@ metadata <- metadata |>
   mutate(temp = readr::parse_integer(str_extract(id, "\\d+(?=-\\d{2})"))) |> 
   arrange(date, temp) |> 
   select(-temp)
+
+## add word_count
+
+metadata <- metadata |> 
+  left_join(word_count) |> 
+  select(id, type, year, date, indegree, outdegree, word_count, everything()) 
 
 usethis::use_data(metadata, overwrite = TRUE, compress = "xz")
