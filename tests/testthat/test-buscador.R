@@ -1,6 +1,5 @@
 
 
-
 # api-tests-NOT-for-rcmdcheck ---------------------------------------------
 
 test_that("underlying database has not changed", {
@@ -12,7 +11,7 @@ test_that("underlying database has not changed", {
   
   out2 <- metadata |> 
     dplyr::filter(id == "T-001-92") |> 
-    dplyr::select(-indegree, -outdegree)
+    dplyr::select(-indegree, -outdegree, -word_count)
   
   expect_equal(out1, out2)
 })

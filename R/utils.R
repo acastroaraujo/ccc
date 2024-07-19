@@ -19,9 +19,6 @@ NULL
 #' 
 create_dtm <- function() {
   
-  rlang::check_installed("Matrix")
-  if (!rlang::is_attached("package:Matrix")) require("Matrix")
-  
   row_names <- levels(ccc::docterms$doc_id)
   col_names <- levels(ccc::docterms$lemma)
   
@@ -46,9 +43,6 @@ create_dtm <- function() {
 #' @export
 #' 
 create_citation_adj_mat <- function() {
-  
-  rlang::check_installed("Matrix")
-  if (!rlang::is_attached("package:Matrix")) require("Matrix")
   
   i <- match(as.character(ccc::citations$from), ccc::metadata$id)
   j <- match(as.character(ccc::citations$to), ccc::metadata$id)

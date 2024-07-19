@@ -1,5 +1,5 @@
 
-#' Rulings (30 Years)
+#' Rulings (32 Years)
 #'
 #' These datasets go over the first 30 years of the Colombian Constitutional 
 #' Court's history. They were created using this package. See the following 

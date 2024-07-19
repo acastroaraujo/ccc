@@ -6,7 +6,7 @@ library(tidylog)
 
 # download ----------------------------------------------------------------
 
-date_seq <- 1992:2022 ## get first 30 years
+date_seq <- 1992:2024 ## get first 32 years
 out <- vector("list", length(date_seq))
 
 for (i in seq_along(date_seq)) {
@@ -26,7 +26,8 @@ for (i in seq_along(date_seq)) {
 metadata <- bind_rows(out) |> 
   select(-relevancia)
 
-end_date <- min(as.Date(metadata$fecha_sentencia)) + lubridate::years(30) + lubridate::days(15)
+#end_date <- min(as.Date(metadata$fecha_sentencia)) + lubridate::years(32) + lubridate::days(15)
+end_date <- as.Date("2024-04-03")
 
 metadata <- metadata |>
   ## keep subset of variables

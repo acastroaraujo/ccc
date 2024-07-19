@@ -6,7 +6,7 @@
 \alias{metadata}
 \alias{citations}
 \alias{docterms}
-\title{Rulings (30 Years)}
+\title{Rulings (32 Years)}
 \source{
 https://www.corteconstitucional.gov.co/relatoria/
 }
