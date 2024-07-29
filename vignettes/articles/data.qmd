@@ -23,7 +23,9 @@ options(tibble.print_min = 6L, tibble.print_max = 6L)
 *Note. All datasets described here were created using [these scripts](https://github.com/acastroaraujo/ccc/tree/master/data-raw), which use the functions described in the [search and download article](https://acastroaraujo.github.io/ccc/articles/search.html).*
 :::
 
-```{r setup}
+```{r}
+#| label: setup
+
 library(ccc)
 ```
 
@@ -147,7 +149,11 @@ A[i, j]
 
 This section relies on some external packages.
 
-```{r, message=FALSE}
+```{r}
+#| message: false
+#| code-fold: true
+#| code-summary: "Packages and Setup"
+
 ## General Purpose
 
 library(ggplot2)
@@ -169,6 +175,8 @@ library(igraph)
 The following Figure shows average in-degree (citations) and out-degree (references) made in each ruling across the years. Note that, on average, the decisions written during 1992 tend to be significantly more cited that the ones written in other years, giving them some sort of "first-movers advantage" over the others---i.e., the most innovative thing of any kind is the first of its kind.
 
 ```{r}
+#| code-fold: true
+
 metadata |> 
   pivot_longer(c(indegree, outdegree), names_to = "dtype", values_to = "degree") |> 
   mutate(dtype = case_when(
@@ -181,7 +189,7 @@ metadata |>
     shape = 21, fill = "white", stroke = 1/2
   ) + 
   facet_grid(~dtype, scales = "free_y") + 
-  scale_x_continuous(labels = seq(1992, 2022, 4), breaks = seq(1992, 2022, 4)) +
+  scale_x_continuous(labels = seq(1992, 2024, 4), breaks = seq(1992, 2024, 4)) +
   labs(y = NULL, x = NULL) +
   theme(strip.text.y = element_text(angle = 0))
 ```
@@ -191,6 +199,8 @@ metadata |>
 The following Figure disaggregates both kinds of citation by *type of ruling.*
 
 ```{r}
+#| code-fold: true
+
 metadata |> 
   pivot_longer(c(indegree, outdegree), names_to = "dtype", values_to = "degree") |> 
   mutate(dtype = case_when(
@@ -203,7 +213,7 @@ metadata |>
     shape = 21, fill = "white", size = 1/10
   ) + 
   facet_grid(type ~ dtype) + 
-  scale_x_continuous(labels = seq(1992, 2022, 4), breaks = seq(1992, 2022, 4)) +
+  scale_x_continuous(labels = seq(1992, 2024, 4), breaks = seq(1992, 2024, 4)) +
   labs(y = NULL, x = NULL) +
   theme(strip.text.y = element_text(angle = 0))
 ```
@@ -228,7 +238,7 @@ The key insight is that we can transform the original (unweighted) citation matr
 
 Here, the diagonal elements of $\mathbf{C}$ correspond to the in-degree for each ruling (or the row sums of $\mathbf{M}$); whereas the diagonal elements of $\mathbf{B}$ correspond to the out-degree for each ruling (or the column sums of $\mathbf{M}$).
 
-Following @kleinberg1999, @fowler2008 calculate *authority* and *score* hubs for each ruling. These are the first eigenvectors of $\mathbf{C}$ and $\mathbf{B}$ respectively. Ronald Breiger once noted that _"several stories might be, and are, told about eigenvectors. They are the low-dimensional scaffolds that support higher-dimensional structures."_ In social networks, eigenvectors are interpreted as a measure of "centrality" which roughly translates to the extent to which a node well-connected to other well-connected nodes. 
+Following @kleinberg1999, @fowler2008 calculate *authority* and *score* hubs for each ruling. These are the first eigenvectors of $\mathbf{C}$ and $\mathbf{B}$ respectively. Ronald Breiger once noted that *"several stories might be, and are, told about eigenvectors. They are the low-dimensional scaffolds that support higher-dimensional structures."* In social networks, eigenvectors are interpreted as a measure of "centrality" which roughly translates to the extent to which a node well-connected to other well-connected nodes.
 
 In this case, the story is supposed to go something like this:
 
@@ -239,6 +249,8 @@ In this case, the story is supposed to go something like this:
 Calculating these scores is pretty straightforward using the `igraph` package:
 
 ```{r}
+#| code-fold: show
+
 net <- igraph::graph_from_data_frame(
   ## we will use the unweighted edge list
   d = citations |> select(!weight), 
@@ -253,6 +265,8 @@ V(net)$hub <- igraph::hub_score(net, scale = FALSE)$vector
 Measurements of authority are correlated with in-degree measurements, but they're not the same thing.
 
 ```{r}
+#| code-fold: true
+
 igraph::as_data_frame(net, what = "vertices") |> 
   mutate(top = ifelse(rank(-authority) %in% 1:15, name, "")) |> 
   ggplot(aes(indegree, authority, color = type)) + 
@@ -261,11 +275,13 @@ igraph::as_data_frame(net, what = "vertices") |>
   scale_x_log10() 
 ```
 
-_Note. Given the large number of `T` cases, it makes sense that the most "central" C rulings define what a tutela is (`C-543-92`) and further clarify the circumstances under which a tutela can be presented against decisions made by lower courts (C-590-05)._
+*Note. Given the large number of `T` cases, it makes sense that the most "central" C rulings define what a tutela is (`C-543-92`) and further clarify the circumstances under which a tutela can be presented against decisions made by lower courts (C-590-05).*
 
 The same goes for "hub" and "out-degree" measurements.
 
 ```{r}
+#| code-fold: true
+
 igraph::as_data_frame(net, what = "vertices") |> 
   mutate(top = if_else(rank(-hub) %in% 1:15, name, NA_character_)) |> 
   ggplot(aes(outdegree, hub, color = type)) + 
@@ -279,6 +295,8 @@ igraph::as_data_frame(net, what = "vertices") |>
 Finally, note that authority and hub scores are somewhat related to each other; however, by definition, the very first rulings can never be hubs and the very last rulings can never be authorities. Hence we see three clusters.
 
 ```{r}
+#| code-fold: true
+
 igraph::as_data_frame(net, what = "vertices") |> 
   ggplot(aes(authority, hub, color = date)) + 
   geom_point(alpha = 1/5, size = 1/3) +
@@ -292,13 +310,15 @@ Along with the increase in citations over time, an important feature of how the 
 There is a variable called `word_count` in the `metadata` dataset which allows us to see changes over time.
 
 ```{r}
+#| code-fold: true
+
 metadata |> 
   ggplot(aes(year, word_count)) + 
   stat_summary(
     fun.data = \(x) mean_cl_boot(x, conf.int = 0.95), size = 1/3,
     shape = 21, fill = "white", stroke = 1/2
   ) +
-  scale_x_continuous(labels = seq(1992, 2022, 4), breaks = seq(1992, 2022, 4)) +
+  scale_x_continuous(labels = seq(1992, 2024, 4), breaks = seq(1992, 2024, 4)) +
   labs(y = "n", x = NULL, title = "Average Number of Words in Each Ruling Per Year") 
 ```
 
@@ -325,8 +345,5 @@ jctt_cases
 ```{r}
 jctt_edge_list
 ```
-
-
-
 
 ## References
