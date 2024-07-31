@@ -41,6 +41,7 @@ jobs:
             any::igraph
             any::Hmisc
             any::ggrepel
+            any::quarto
           needs: website
 
       - name: Set up Quarto
