@@ -44,11 +44,12 @@ jobs:
             any::Hmisc
             any::ggrepel
             any::quarto
+            any::remotes
           needs: website
           
+      ## remove the following chunk once we have a new version of pkgdown with the fix
       - name: Install custom pkgdown
         run: |
-          install.packages(c("remotes", "devtools"))
           remotes::install_github("ethanbass/pkgdown@qmd_articles")
 
       - name: Build site
