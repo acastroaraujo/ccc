@@ -16,7 +16,10 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Search and Download">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="search_files/libs/quarto-html/popper.min.js"></script><script src="search_files/libs/quarto-html/tippy.umd.min.js"></script><link href="search_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="search_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Search and Download">
+<meta property="og:image" content="https://acastroaraujo.github.io/ccc/logo.png">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -54,35 +57,36 @@
 
 
   </div>
-</nav><div class="container template-article">
-
-
-
-
+</nav><div class="container template-quarto">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Search and Download</h1>
-            
-      
-      <small class="dont-index">Source: <a href="https://github.com/acastroaraujo/ccc/blob/master/vignettes/articles/search.Rmd" class="external-link"><code>vignettes/articles/search.Rmd</code></a></small>
-      <div class="d-none name"><code>search.Rmd</code></div>
+
+
+
+
+      <small class="dont-index">Source: <a href="https://github.com/acastroaraujo/ccc/blob/master/vignettes/search.qmd" class="external-link"><code>vignettes/search.qmd</code></a></small>
+      <div class="d-none name"><code></code></div>
     </div>
 
-    
-    
-<div class="section level2">
-<h2 id="packages">Packages<a class="anchor" aria-label="anchor" href="#packages"></a>
+
+
+
+
+
+    <section class="level2"><h2 id="packages">Packages<a class="anchor" aria-label="anchor" href="#packages"></a>
 </h2>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/acastroaraujo/ccc" class="external-link">ccc</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="search">Search<a class="anchor" aria-label="anchor" href="#search"></a>
+</section><section class="level2"><h2 id="search">Search<a class="anchor" aria-label="anchor" href="#search"></a>
 </h2>
 <p>Use the <code><a href="../reference/ccc_search.html">ccc_search()</a></code> function to look up some cases.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ccc_search.html">ccc_search</a></span><span class="op">(</span></span>
 <span>  text <span class="op">=</span> <span class="st">"familia"</span>, </span>
 <span>  date_start <span class="op">=</span> <span class="st">"2000-01-01"</span>, </span>
@@ -91,52 +95,59 @@
 <span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1,552</span></span>
-<span><span class="co">#&gt; Columns: 14</span></span>
-<span><span class="co">#&gt; $ relevancia                           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 18.308, 8.892, 4.902, 4.897, 4.89…</span></span>
-<span><span class="co">#&gt; $ providencia                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "T-1045/01", "T-1532/00", "T-029/…</span></span>
-<span><span class="co">#&gt; $ tipo                                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Tutela", "Tutela", "Tutela", "Tu…</span></span>
-<span><span class="co">#&gt; $ fecha_sentencia                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2001-10-03", "2000-11-15", "2001…</span></span>
-<span><span class="co">#&gt; $ magistrado_s_ponentes                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "Carlos Gaviria Díaz", "Aleja…</span></span>
-<span><span class="co">#&gt; $ magistrado_s_s_alvamento_a_claracion <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
-<span><span class="co">#&gt; $ tema_subtema                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "ACCION DE TUTELA TRANSITORIA…</span></span>
-<span><span class="co">#&gt; $ demandado                            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Sin Información", "", "", "Sin I…</span></span>
-<span><span class="co">#&gt; $ demandante                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "MARIA SANDRA CRUZ PERDOMO VS. IN…</span></span>
-<span><span class="co">#&gt; $ expediente                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "469070", "T-324358 Y OTROS", "T-…</span></span>
-<span><span class="co">#&gt; $ f_public                             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "", "", "", "", "", "", "", "…</span></span>
-<span><span class="co">#&gt; $ normas                               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "", "", "", "CODIGO CIVIL. AR…</span></span>
-<span><span class="co">#&gt; $ sintesis                             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "", "", "", "", "", "", "", "", "…</span></span>
-<span><span class="co">#&gt; $ url                                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "https://www.corteconstitucional.…</span></span></code></pre></div>
-<p>This data is a little messy. The <code><a href="../reference/ccc_clean_dataset.html">ccc_clean_dataset()</a></code>
-provides some useful tidying, but you might want to consider doing
-things differently.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; Columns: 22</span></span>
+<span><span class="co">#&gt; $ relevancia                           &lt;dbl&gt; 17.686, 8.592, 4.914, 4.908, 4.90…</span></span>
+<span><span class="co">#&gt; $ providencia                          &lt;chr&gt; "T-1045/01", "T-1532/00", "T-029/…</span></span>
+<span><span class="co">#&gt; $ tipo                                 &lt;chr&gt; "Tutela", "Tutela", "Tutela", "Tu…</span></span>
+<span><span class="co">#&gt; $ fecha_sentencia                      &lt;chr&gt; "2001-10-03", "2000-11-15", "2001…</span></span>
+<span><span class="co">#&gt; $ magistrado_s_ponentes                &lt;chr&gt; "", "Carlos Gaviria Díaz", "Aleja…</span></span>
+<span><span class="co">#&gt; $ magistrado_s_s_alvamento_a_claracion &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
+<span><span class="co">#&gt; $ tema_subtema                         &lt;chr&gt; "", "ACCION DE TUTELA TRANSITORIA…</span></span>
+<span><span class="co">#&gt; $ tipo_de_proceso                      &lt;chr&gt; "", "Acciones de Tutela", "Accion…</span></span>
+<span><span class="co">#&gt; $ derechos_relatoria                   &lt;chr&gt; "", "", "", "", "", "", "", "", "…</span></span>
+<span><span class="co">#&gt; $ derechos_tutelados                   &lt;chr&gt; "", "", "", "", "", "", "", "", "…</span></span>
+<span><span class="co">#&gt; $ instancias                           &lt;chr&gt; "", "PALMIRA VALLE JUZGADO 2 CIVI…</span></span>
+<span><span class="co">#&gt; $ demandado                            &lt;chr&gt; "Sin Información", "", "", "Sin I…</span></span>
+<span><span class="co">#&gt; $ demandante                           &lt;chr&gt; "MARIA SANDRA CRUZ PERDOMO VS. IN…</span></span>
+<span><span class="co">#&gt; $ expediente                           &lt;chr&gt; "469070", "T-324358 Y OTROS", "T-…</span></span>
+<span><span class="co">#&gt; $ f_public                             &lt;chr&gt; "", "", "", "", "", "", "", "", "…</span></span>
+<span><span class="co">#&gt; $ normas                               &lt;chr&gt; "", "", "", "", "CODIGO CIVIL. AR…</span></span>
+<span><span class="co">#&gt; $ resuelve                             &lt;chr&gt; "en nombre del pueblo y por manda…</span></span>
+<span><span class="co">#&gt; $ seguimiento                          &lt;chr&gt; "", "", "Array", "", "", "Array",…</span></span>
+<span><span class="co">#&gt; $ sintesis                             &lt;chr&gt; "", "", "", "", "", "", "", "", "…</span></span>
+<span><span class="co">#&gt; $ tema                                 &lt;chr&gt; "DERECHOS AL TRABAJO VIDA Y MINIM…</span></span>
+<span><span class="co">#&gt; $ sala_seguimiento                     &lt;chr&gt; "Sala plena/Revisión", "Sala plen…</span></span>
+<span><span class="co">#&gt; $ url                                  &lt;chr&gt; "https://www.corteconstitucional.…</span></span></code></pre></div>
+</div>
+<p>This data is a little messy. The <code><a href="../reference/ccc_clean_dataset.html">ccc_clean_dataset()</a></code> provides some useful tidying, but you might want to consider doing things differently.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ccc_clean_dataset.html">ccc_clean_dataset</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1,552</span></span>
 <span><span class="co">#&gt; Columns: 9</span></span>
-<span><span class="co">#&gt; $ id          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "T-001-00", "A-001-00", "T-002-00", "T-007-00", "T-005-00"…</span></span>
-<span><span class="co">#&gt; $ type        <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> T, A, T, T, T, T, T, T, C, C, T, T, T, T, T, T, T, T, T, T…</span></span>
-<span><span class="co">#&gt; $ year        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000…</span></span>
-<span><span class="co">#&gt; $ date        <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2000-01-12, 2000-01-12, 2000-01-13, 2000-01-13, 2000-01-1…</span></span>
-<span><span class="co">#&gt; $ descriptors <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> &lt;"DERECHO A LA ATENCION MEDICA INTEGRAL DE ANCIANO-Examen…</span></span>
-<span><span class="co">#&gt; $ mp          <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> "jose gregorio hernandez galindo", "jose gregorio hernand…</span></span>
-<span><span class="co">#&gt; $ date_public <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> NA, 2000-01-28, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
-<span><span class="co">#&gt; $ file        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "T-245392", "T-246504", "T-235171", "T-246991", "T-239345"…</span></span>
-<span><span class="co">#&gt; $ url         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "https://www.corteconstitucional.gov.co/relatoria/2000/T-0…</span></span></code></pre></div>
+<span><span class="co">#&gt; $ id          &lt;chr&gt; "T-001-00", "A-001-00", "T-002-00", "T-007-00", "T-005-00"…</span></span>
+<span><span class="co">#&gt; $ type        &lt;fct&gt; T, A, T, T, T, T, T, T, C, C, T, T, T, T, T, T, T, T, T, T…</span></span>
+<span><span class="co">#&gt; $ year        &lt;int&gt; 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000…</span></span>
+<span><span class="co">#&gt; $ date        &lt;date&gt; 2000-01-12, 2000-01-12, 2000-01-13, 2000-01-13, 2000-01-1…</span></span>
+<span><span class="co">#&gt; $ descriptors &lt;list&gt; &lt;"DERECHO A LA ATENCION MEDICA INTEGRAL DE ANCIANO-Examen…</span></span>
+<span><span class="co">#&gt; $ mp          &lt;list&gt; "jose gregorio hernandez galindo", "jose gregorio hernand…</span></span>
+<span><span class="co">#&gt; $ date_public &lt;date&gt; NA, 2000-01-28, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
+<span><span class="co">#&gt; $ file        &lt;chr&gt; "T-245392", "T-246504", "T-235171", "T-246991", "T-239345"…</span></span>
+<span><span class="co">#&gt; $ url         &lt;chr&gt; "https://www.corteconstitucional.gov.co/relatoria/2000/T-0…</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="download">Download<a class="anchor" aria-label="anchor" href="#download"></a>
+</section><section class="level2"><h2 id="download">Download<a class="anchor" aria-label="anchor" href="#download"></a>
 </h2>
-<p>Next you’ll want to download some texts. You can use either
-<code><a href="../reference/ccc_txt.html">ccc_txt()</a></code> or <code><a href="../reference/ccc_rtf.html">ccc_rtf()</a></code>. I prefer
-<code><a href="../reference/ccc_txt.html">ccc_txt()</a></code> because it seems most <code>.rtf</code> files
-don’t include footnotes.</p>
+<p>Next you’ll want to download some texts. You can use either <code><a href="../reference/ccc_txt.html">ccc_txt()</a></code> or <code><a href="../reference/ccc_rtf.html">ccc_rtf()</a></code>. I prefer <code><a href="../reference/ccc_txt.html">ccc_txt()</a></code> because it seems most <code>.rtf</code> files don’t include footnotes.</p>
 <p>This is how you download the first ruling:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ccc_txt.html">ccc_txt</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">url</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; https://www.corteconstitucional.gov.co/relatoria/2000/T-001-00.htm</span></span></code></pre></div>
+</div>
 <p>And this is how you’d download the first 5 rulings:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">txts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">url</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, <span class="va">ccc_txt</span><span class="op">)</span></span>
 <span><span class="co">#&gt; https://www.corteconstitucional.gov.co/relatoria/2000/T-001-00.htm</span></span>
 <span><span class="co">#&gt; https://www.corteconstitucional.gov.co/relatoria/autos/2000/A001-00.htm</span></span>
@@ -151,55 +162,33 @@ don’t include footnotes.</p>
 <span><span class="co">#&gt;  $ T-002-00: chr "\r\n Sentencia T-002/00\r\n\r\n \r\n EXTINCION DE DOMINIO-Bienes de pariente de presunto narcotraficante\r\n\r\"| __truncated__</span></span>
 <span><span class="co">#&gt;  $ T-007-00: chr "\r\n Sentencia T-007/00\r\n\r\n \r\n ACCION DE TUTELA-Procedencia excepcional pago de acreencias laborales/CONC"| __truncated__</span></span>
 <span><span class="co">#&gt;  $ T-005-00: chr "\r\n Sentencia T-005/00\r\n\r\n \r\n MEDIO DE DEFENSA JUDICIAL-Reintegro de mujer despedida por embarazo\r\n\r\"| __truncated__</span></span></code></pre></div>
+</div>
 <p>Each text will look something like this:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">txts</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trunc.html" class="external-link">str_trunc</a></span><span class="op">(</span><span class="fl">2000</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Sentencia T-001/00</p>
-<p>  DERECHO A LA ATENCION MEDICA INTEGRAL DE ANCIANO-Examen
-urgente/REVISION FALLO DE TUTELA-Fallecimiento del actor</p>
-<p>  La Corte considera necesario subrayar que la actividad de las
-entidades responsables de mantener la seguridad social en cuanto se
-refiere a las personas de la tercera edad están sujetas a la exigencia
-específica de cobijar todos los aspectos de la salud de los
-beneficiarios, que no otro es el significado de la expresión “integral”,
-usada por el Constituyente para referirse al contenido de la seguridad
-social que debe brindarse a los ancianos. Por tanto, el alcance de la
-protección y de los servicios a cargo de tales entes va mucho más allá
-del puro trámite de citas y consultas médicas, pues comprende el
-diagnóstico, la prevención, los tratamientos, los cuidados clínicos, los
-medicamentos, las cirugías, las terapias y todos aquellos elementos de
-atención que aseguren la eficiente cobertura de la seguridad social a
-favor de las personas de la tercera edad. La conducta negligente de la
-demandada y la negativa a brindar la atención requerida, es muy factible
-que haya incidido y de manera definitiva, en su pronto deceso.</p>
-<p>  DERECHO A LA SALUD-Práctica inmediata e íntegra de exámenes
-ordenados</p>
+<p>  DERECHO A LA ATENCION MEDICA INTEGRAL DE ANCIANO-Examen urgente/REVISION FALLO DE TUTELA-Fallecimiento del actor</p>
+<p>  La Corte considera necesario subrayar que la actividad de las entidades responsables de mantener la seguridad social en cuanto se refiere a las personas de la tercera edad están sujetas a la exigencia específica de cobijar todos los aspectos de la salud de los beneficiarios, que no otro es el significado de la expresión “integral”, usada por el Constituyente para referirse al contenido de la seguridad social que debe brindarse a los ancianos. Por tanto, el alcance de la protección y de los servicios a cargo de tales entes va mucho más allá del puro trámite de citas y consultas médicas, pues comprende el diagnóstico, la prevención, los tratamientos, los cuidados clínicos, los medicamentos, las cirugías, las terapias y todos aquellos elementos de atención que aseguren la eficiente cobertura de la seguridad social a favor de las personas de la tercera edad. La conducta negligente de la demandada y la negativa a brindar la atención requerida, es muy factible que haya incidido y de manera definitiva, en su pronto deceso.</p>
+<p>  DERECHO A LA SALUD-Práctica inmediata e íntegra de exámenes ordenados</p>
 <p>  SENTENCIA INHIBITORIA EN TUTELA-Improcedencia</p>
-<p>  No pudiendo ser inhibitoria la decisión por mandato del artículo
-29, parágrafo, del Decreto 2591 de 1991, habrá de ser negativa, no por
-haberse encontrado indemnes los derechos invocados, ni por entenderse
-exonerada la persona o entidad demandada, sino justamente por ser inútil
-e irrealizable -dadas las circunstancias- el proveído judicial, aun
-comprobada la conducta inconstitucional del sujeto pasivo de la demanda,
-como en el presente caso ocurre.</p>
+<p>  No pudiendo ser inhibitoria la decisión por mandato del artículo 29, parágrafo, del Decreto 2591 de 1991, habrá de ser negativa, no por haberse encontrado indemnes los derechos invocados, ni por entenderse exonerada la persona o entidad demandada, sino justamente por ser inútil e irrealizable -dadas las circunstancias- el proveído judicial, aun comprobada la conducta inconstitucional del sujeto pasivo de la demanda, como en el presente caso ocurre.</p>
 <p>  Referencia: Expediente T-245392</p>
-<p>  Acción de tutela instaurada por María Arledia García García contra
-el Seguro Social, Seccional Antioquia</p>
+<p>  Acción de tutela instaurada por María Arledia García García contra el Seguro Social, Seccional Antioquia</p>
 <p>  Magistrado Ponente: Dr. JOSÉ GREGORIO HERNÁNDEZ GALINDO</p>
 <p>  A…</p>
-</div>
-<div class="section level2">
-<h2 id="citations">Citations<a class="anchor" aria-label="anchor" href="#citations"></a>
+</section><section class="level2"><h2 id="citations">Citations<a class="anchor" aria-label="anchor" href="#citations"></a>
 </h2>
-<p>Finally, you can <code><a href="../reference/extract_citations.html">extract_citations()</a></code> for each individual
-document as follows:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>Finally, you can <code><a href="../reference/extract_citations.html">extract_citations()</a></code> for each individual document as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_citations.html">extract_citations</a></span><span class="op">(</span><span class="va">txts</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "T-555-97" "T-366-99" "T-428-98" "T-607-99" "T-428-98" "T-001-00"</span></span></code></pre></div>
+</div>
 <p>Or you can do something like this for all documents:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">txts</span>, <span class="va">extract_citations</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`T-001-00`</span></span>
 <span><span class="co">#&gt; [1] "T-555-97" "T-366-99" "T-428-98" "T-607-99" "T-428-98" "T-001-00"</span></span>
@@ -216,10 +205,110 @@ document as follows:</p>
 <span><span class="co">#&gt; $`T-005-00`</span></span>
 <span><span class="co">#&gt; [1] "C-470-97" "T-373-98" "T-005-00"</span></span></code></pre></div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+</section><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'light-border',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config);
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
-
 
 
     <footer><div class="pkgdown-footer-left">
@@ -227,7 +316,7 @@ document as follows:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>

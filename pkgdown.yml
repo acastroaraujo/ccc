@@ -1,10 +1,10 @@
 pandoc: 3.1.11
-pkgdown: 2.1.0
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  articles/data: data.html
-  articles/search: search.html
-last_built: 2024-07-19T01:41Z
+  data: data.html
+  search: search.html
+last_built: 2024-11-02T03:13Z
 urls:
   reference: https://acastroaraujo.github.io/ccc/reference
   article: https://acastroaraujo.github.io/ccc/articles
