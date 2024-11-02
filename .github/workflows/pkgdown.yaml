@@ -35,7 +35,7 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
-            any::pkgdown
+            ethanbass/pkgdown@qmd_articles
             local::.
             any::tibble
             any::ggplot2
@@ -46,11 +46,6 @@ jobs:
             any::quarto
             any::remotes
           needs: website
-          
-      ## remove the following chunk once we have a new version of pkgdown with the fix
-      - name: Install custom pkgdown
-        run: |
-          remotes::install_github("ethanbass/pkgdown@qmd_articles")
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
