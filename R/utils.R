@@ -1,4 +1,6 @@
 
+#' @import Matrix
+
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage(
     "Para m\u00e1s informaci\u00f3n:\n",

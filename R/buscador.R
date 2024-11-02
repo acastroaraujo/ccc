@@ -1,5 +1,4 @@
 
-
 #' Buscador de Sentencias
 #'
 #' @param text a text query
@@ -28,21 +27,28 @@ ccc_search <- function(text, date_start, date_end) {
       "accion" = "search",
       "OrderbyOption" = "des__score",
       "maxprov" = "10000",
-      "datos_exportar[0]" = "prov_sentencia",
-      "datos_exportar[1]" = "prov_f_sentencia",
-      "datos_exportar[2]" = "prov_magistrados",
-      "datos_exportar[3]" = "prov_proceso_term",
-      "datos_exportar[4]" = "prov_tipo",
-      "datos_exportar[5]" = "prov_f_public",
-      "datos_exportar[6]" = "prov_autoridades",
-      "datos_exportar[7]" = "prov_expediente",
-      "datos_exportar[8]" = "prov_demandado",
-      "datos_exportar[9]" = "prov_demandante",
-      "datos_exportar[10]" = "prov_normas",
-      "datos_exportar[11]" = "prov_descriptores",
-      "datos_exportar[12]" = "prov_sintesis"
+      "datos_exportar[]" = "prov_sentencia",
+      "datos_exportar[]" = "prov_f_sentencia",
+      "datos_exportar[]" = "prov_magistrados",
+      "datos_exportar[]" = "prov_proceso_terminos",
+      "datos_exportar[]" = "prov_tipo", 
+      "datos_exportar[]" = "prov_expediente",
+      "datos_exportar[]" = "prov_f_public",
+      "datos_exportar[]" = "prov_autoridades",
+      "datos_exportar[]" = "sala_seguimiento",
+      "datos_exportar[]" = "prov_demandado",
+      "datos_exportar[]" = "prov_demandante",
+      "datos_exportar[]" = "prov_normas",
+      "datos_exportar[]" = "prov_descriptores",
+      "datos_exportar[]" = "instancias",
+      "datos_exportar[]" = "derechos",
+      "datos_exportar[]" = "prov_tema",
+      "datos_exportar[]" = "prov_seguimiento",
+      "datos_exportar[]" = "prov_sintesis",
+      "datos_exportar[]" = "prov_resuelve"
     ),
-    encode = "multipart"
+    encode = "multipart", 
+    httr::user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36")
   )
   
   stopifnot(httr::status_code(output) == 200)
@@ -52,7 +58,7 @@ ccc_search <- function(text, date_start, date_end) {
     utils::tail(-1) |> ## remove header
     purrr::map_chr(function(x) {
       x |> ## Extract the first link of each row
-        rvest::html_elements("a") |> 
+        rvest::html_elements(css = "a") |> 
         rvest::html_attr("href") |> 
         purrr::pluck(1)
     })

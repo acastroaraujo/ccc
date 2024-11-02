@@ -11,7 +11,7 @@ ccc_rtf <- function(url) {
   if (!stringr::str_detect(url, pattern = "\\.htm")) stop(call. = FALSE, "el url debe terminar en .htm")
   message(url)
   
-  input <- httr::RETRY("GET", url)
+  input <- httr::RETRY("GET", url, httr::user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"))
   
   link_rtf <- input |> 
     httr::content(encoding = "latin1") |> 
@@ -40,7 +40,7 @@ ccc_txt <- function(url) {
   if (!stringr::str_detect(url, pattern = "\\.htm")) stop(call. = FALSE, "el url debe terminar en .htm")
   message(url)
   
-  input <- httr::RETRY("GET", url) 
+  input <- httr::RETRY("GET", url, httr::user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36")) 
   stopifnot(httr::status_code(input) == 200)
   website <- rvest::read_html(input)
   
