@@ -7,3 +7,5 @@ ccc.Rproj
 .Rprofile
 playground.R
 docs
+/doc/
+/Meta/

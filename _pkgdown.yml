@@ -1,13 +1,16 @@
+url: https://acastroaraujo.github.io/ccc/
+
 authors:
   Andres Castro Araújo:
     href: https://acastroaraujo.github.io/
 
-url: https://acastroaraujo.github.io/ccc/
-
 template:
   bootstrap: 5
-  bootswatch: litera
   bslib:
+    primary: "#0054AD"
+    danger: "#A6081A"
+    border-radius: 0.5rem
+    btn-border-radius: 0.25rem
     code_font_size: 0.8em
 
 navbar:

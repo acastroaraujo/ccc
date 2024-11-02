@@ -1,9 +1,15 @@
 ---
 title: "Data"
-#resource_files:
 bibliography: references.bib
-editor_options: 
-  chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Data}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+format: 
+  html:
+    theme: none
+    minimal: true
+    embed-resources: true
 ---
 
 ```{r, include = FALSE}
