@@ -9,7 +9,9 @@ on:
     types: [published]
   workflow_dispatch:
 
-name: pkgdown
+name: pkgdown.yaml
+
+permissions: read-all
 
 jobs:
   pkgdown:
@@ -43,9 +45,11 @@ jobs:
             any::ggrepel
             any::quarto
           needs: website
-
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
+          
+      - name: Install custom pkgdown
+        run: |
+          install.packages(c("remotes", "devtools"))
+          remotes::install_github("ethanbass/pkgdown@qmd_articles")
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)

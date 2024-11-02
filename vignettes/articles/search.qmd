@@ -1,14 +1,5 @@
 ---
 title: "Search and Download"
-vignette: >
-  %\VignetteIndexEntry{Search and Download}
-  %\VignetteEngine{quarto::html}
-  %\VignetteEncoding{UTF-8}
-format: 
-  html:
-    theme: none
-    minimal: true
-    embed-resources: true
 ---
 
 ```{r, include = FALSE}

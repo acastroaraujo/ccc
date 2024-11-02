@@ -1,15 +1,6 @@
 ---
 title: "Data"
 bibliography: references.bib
-vignette: >
-  %\VignetteIndexEntry{Data}
-  %\VignetteEngine{quarto::html}
-  %\VignetteEncoding{UTF-8}
-format: 
-  html:
-    theme: none
-    minimal: true
-    embed-resources: true
 ---
 
 ```{r, include = FALSE}

@@ -16,6 +16,9 @@ template:
 navbar:
   bg: light
 
+quarto:
+  enabled: true
+
 reference:
 - title: Datasets
   contents:
