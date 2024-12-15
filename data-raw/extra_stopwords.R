@@ -622,5 +622,4 @@ stopwords <- c(
   "pineros" 
 )
 
-
 stopwords <- union(stopwords, textclean::replace_non_ascii(tm::stopwords("spanish")))

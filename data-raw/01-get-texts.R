@@ -3,7 +3,7 @@ library(ccc)
 library(tidyverse)
 library(progress)
 
-# download ----------------------------------------------------------------
+# Download ----------------------------------------------------------------
 
 outfolder <- here::here("data-raw", "texts")
 if (!dir.exists(outfolder)) dir.create(outfolder)
@@ -31,7 +31,7 @@ while (length(texts_left) > 0) {
   
 }
 
-# debug -------------------------------------------------------------------
+# Debug -------------------------------------------------------------------
 
 library(furrr)
 

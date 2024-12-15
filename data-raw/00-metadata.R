@@ -3,8 +3,7 @@ library(tidyverse)
 library(ccc)
 library(tidylog)
 
-
-# download ----------------------------------------------------------------
+# Download ----------------------------------------------------------------
 
 date_seq <- 1992:2024 ## get first 32 years
 out <- vector("list", length(date_seq))
@@ -21,7 +20,7 @@ for (i in seq_along(date_seq)) {
   Sys.sleep(runif(1, 2, 5))
 }
 
-# clean up ----------------------------------------------------------------
+# Clean up ----------------------------------------------------------------
 
 metadata <- bind_rows(out) |> 
   select(-relevancia)

@@ -19,7 +19,7 @@ ccc_rtf <- function(url) {
     rvest::html_attr("href") |> 
     purrr::pluck(1)
   
-  out <- striprtf::read_rtf(paste0("https://www.corteconstitucional.gov.co/", link_rtf))
+  out <- striprtf::read_rtf(stringr::str_squish(paste0("https://www.corteconstitucional.gov.co/", link_rtf)), encoding = "latin1")
   
   return(paste(out, collapse = "\n"))
   
