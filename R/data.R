@@ -54,7 +54,6 @@
 #' 
 #' \describe{
 #'   \item{jctt_cases}{A data frame of cases, along with some nested variables.}
-#'   \item{jctt_edge_list}{An edge list of cases to citations to "outside" sources}
 #' }
 #' 
 #' https://github.com/acastroaraujo/ccc/tree/master/data-raw/transitional_justice_uniandes.R
@@ -69,6 +68,4 @@
 #' @format NULL
 "jctt_cases"
 
-#' @rdname jctt
-#' @format NULL
-"jctt_edge_list"
+

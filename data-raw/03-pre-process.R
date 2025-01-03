@@ -11,7 +11,6 @@ rds_files <- dir("data-raw/texts", full.names = TRUE)
 for (i in seq_along(rds_files)) {
 
   txt <- readr::read_rds(rds_files[[i]])
-  # txt <- readr::read_rds("data-raw/texts/C-143-18.rds")
   # replace XXXXXX-Xxxxxx with XXXXX. Xxxxx
   txt <- stringr::str_replace_all(txt, "([:upper:]+)-([:upper:][:lower:]+)", "\\1. \\2") 
   # add sentence structure to weird line breaks

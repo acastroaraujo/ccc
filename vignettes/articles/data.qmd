@@ -110,13 +110,13 @@ sum(M[upper.tri(M)] > 0L)
 *See @denny2018 for an in-depth discussion of various pre-processing steps (e.g., removal of stop words, lemmatization, lowercasing).*
 :::
 
-The `docterms` dataset contains a data frame with document identifiers (`doc_id`) and word counts (`lemma` and `n`). It has `r scales::comma(nrow(docterms))` rows.
+The `docterms` dataset contains a data frame with document identifiers (`id`) and word counts (`lemma` and `n`). It has `r scales::comma(nrow(docterms))` rows.
 
 ```{r}
 docterms
 ```
 
-This dataset contains `r scales::comma(length(unique(docterms$doc_id)))` unique documents with a vocabulary size of `r scales::comma(length(levels(docterms$lemma)))`.
+This dataset contains `r scales::comma(length(unique(docterms$id)))` unique documents with a vocabulary size of `r scales::comma(length(levels(docterms$lemma)))`.
 
 The `create_dtm()` function creates a sparse document-term matrix from the information contained in `docterms`.
 
@@ -335,12 +335,6 @@ gender_cases
 
 ```{r}
 jctt_cases
-```
-
-`jctt_edge_list` contains citation data to sources "outside" the CCC (e.g., in international law).
-
-```{r}
-jctt_edge_list
 ```
 
 ## References

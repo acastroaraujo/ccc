@@ -4,15 +4,12 @@
 \name{jctt}
 \alias{jctt}
 \alias{jctt_cases}
-\alias{jctt_edge_list}
 \title{Justicia Constitucional en Tiempos de Transicion}
 \source{
 http://justiciatransicional.uniandes.edu.co/web/
 }
 \usage{
 jctt_cases
-
-jctt_edge_list
 }
 \description{
 Covers cases from 1992-10-28 to 2019-04-03
@@ -20,7 +17,6 @@ Covers cases from 1992-10-28 to 2019-04-03
 \details{
 \describe{
   \item{jctt_cases}{A data frame of cases, along with some nested variables.}
-  \item{jctt_edge_list}{An edge list of cases to citations to "outside" sources}
 }
 
 https://github.com/acastroaraujo/ccc/tree/master/data-raw/transitional_justice_uniandes.R
