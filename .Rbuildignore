@@ -13,4 +13,4 @@
 ^doc$
 ^Meta$
 ^/.quarto/$
-^.conda$
+^\.conda$

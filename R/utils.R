@@ -21,10 +21,10 @@ NULL
 #' 
 create_dtm <- function() {
   
-  row_names <- levels(ccc::docterms$doc_id)
+  row_names <- levels(ccc::docterms$id)
   col_names <- levels(ccc::docterms$lemma)
   
-  i <- match(ccc::docterms$doc_id, row_names)
+  i <- match(ccc::docterms$id, row_names)
   j <- match(ccc::docterms$lemma, col_names)
   
   M <- Matrix::sparseMatrix(
