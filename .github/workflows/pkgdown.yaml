@@ -4,7 +4,6 @@ on:
   push:
     branches: [main, master]
   pull_request:
-    branches: [main, master]
   release:
     types: [published]
   workflow_dispatch:
@@ -43,8 +42,6 @@ jobs:
             any::igraph
             any::Hmisc
             any::ggrepel
-            any::quarto
-            any::remotes
           needs: website
 
       - name: Build site

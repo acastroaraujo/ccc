@@ -1,5 +1,4 @@
 url: https://acastroaraujo.github.io/ccc/
-
 authors:
   Andres Castro Araújo:
     href: https://acastroaraujo.github.io/
@@ -7,17 +6,14 @@ authors:
 template:
   bootstrap: 5
   bslib:
-    primary: "#0054AD"
-    danger: "#A6081A"
+    primary: '#0054AD'
+    danger: '#A6081A'
     border-radius: 0.5rem
     btn-border-radius: 0.25rem
     code_font_size: 0.8em
 
 navbar:
   bg: light
-
-quarto:
-  enabled: true
 
 reference:
 - title: Datasets
@@ -27,7 +23,6 @@ reference:
   - rulings
   - gender
   - jctt
-
 - title: Search
   contents:
   - ccc_search
@@ -35,3 +30,4 @@ reference:
   - ccc_txt
   - ccc_rtf
   - extract_citations
+
