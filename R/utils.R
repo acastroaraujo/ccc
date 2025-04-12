@@ -59,5 +59,3 @@ create_citation_adj_mat <- function() {
   return(M)
   
 }
-
-

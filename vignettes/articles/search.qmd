@@ -1,19 +1,17 @@
 ---
 title: "Search and Download"
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-
-options(tibble.print_min = 6L, tibble.print_max = 6L)
-```
 
 ## Packages
 
-```{r setup, message=FALSE}
+```{r}
+#| label: Setup
+#| message: false
+
 library(ccc)
 library(dplyr)
 library(stringr)
@@ -60,7 +58,7 @@ glimpse(txts)
 
 Each text will look something like this:
 
-```{r, results='asis'}
+```{r}
 txts[[1]] |> 
   str_trunc(2000) |> 
   cat()

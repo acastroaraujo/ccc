@@ -21,19 +21,20 @@ for (i in seq_along(date_seq)) {
 
 # Clean up ----------------------------------------------------------------
 
-metadata <- bind_rows(out) |>
-  select(-relevancia)
+metadata <- dplyr::bind_rows(out) |>
+  dplyr::select(-relevancia)
 
-#end_date <- min(as.Date(metadata$fecha_sentencia)) + lubridate::years(32) + lubridate::days(15)
 end_date <- as.Date("2024-04-03")
+
+# Note. The name space is left unspecified because I wanted to use tidylog here.
 
 metadata <- metadata |>
   ## keep subset of variables
   select(
     "id" = "providencia",
     "date" = "fecha_sentencia",
-    "file" = "expediente",
-    "mp" = "magistrado_s_ponentes",
+    # "file" = "expediente", # old code
+    # "mp" = "magistrado_s_ponentes", # old code
     "descriptors" = "tema_subtema",
     "url"
   ) |>
@@ -60,7 +61,8 @@ metadata <- metadata |>
   )) |>
   ## Clarify NAs
   mutate(across(
-    all_of(c("mp", "descriptors")),
+    # all_of(c("mp", "descriptors")), # old code
+    all_of("descriptors"),
     \(x) ifelse(str_detect(x, "(s|S)in (i|I)nformacion"), NA_character_, x)
   )) |>
   ## In case of duplicates, the following two lines keep the case  with the
@@ -68,14 +70,17 @@ metadata <- metadata |>
   ## on different dates.
   arrange(date) |>
   distinct(id, .keep_all = TRUE) |>
-  ## get mp into list-column
-  mutate(mp = tolower(mp)) |>
-  mutate(mp = str_remove_all(mp, "\\(conjuez\\)")) |>
-  mutate(mp = str_split(mp, "\r\n")) |>
-  mutate(mp = map(mp, str_squish)) |>
+  ## get mp into list-column, this is old code
+  # mutate(mp = tolower(mp)) |>
+  # mutate(mp = str_remove_all(mp, "\\(conjuez\\)")) |>
+  # mutate(mp = str_split(mp, "\r\n")) |>
+  # mutate(mp = map(mp, str_squish)) |>
   ## get descriptors into list-column
   mutate(descriptors = str_split(descriptors, "\r\n")) |>
   mutate(descriptors = map(descriptors, str_squish)) |>
-  relocate("id", "type", "year", "date", "descriptors", "mp", "file", "url")
+  # relocate("id", "type", "year", "date", "descriptors", "mp", "file", "url") # old code
+  relocate("id", "type", "year", "date", "descriptors", "url")
 
-write_rds(metadata, "data-raw/metadata.rds", compress = "gz")
+readr::write_rds(metadata, "data-raw/metadata_init.rds", compress = "gz")
+
+

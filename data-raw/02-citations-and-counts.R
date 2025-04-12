@@ -5,46 +5,54 @@ library(ccc)
 library(furrr)
 
 textfolder <- here::here("data-raw", "texts")
-
-plan(multisession, workers = parallel::detectCores() - 1L)
+future::plan(multisession, workers = parallel::detectCores() - 1L)
 
 output <- dir(textfolder, full.names = TRUE) |>
-  furrr::future_map(\(x) str_squish(read_rds(x)))
+  furrr::future_map(\(x) stringr::str_squish(read_rds(x)))
 
-names(output) <- dir(textfolder) |> str_remove("\\.rds")
+names(output) <- dir(textfolder) |> stringr::str_remove("\\.rds")
+
+# get word count to remove annulled rulings
+word_count <- furrr::future_map_dbl(output, \(x) stringr::str_count(x, "\\b\\w+\\b")) |>
+  tibble::enframe(name = "id", value = "word_count") |>
+  dplyr::mutate(word_count = as.integer(word_count))
+
+metadata <- readr::read_rds("data-raw/metadata_init.rds") |> 
+  dplyr::left_join(word_count) |>
+  ## remove annulled rulings
+  dplyr::filter(word_count >= 200) 
 
 # citations ---------------------------------------------------------------
 
-citations <- future_map(output, ccc::extract_citations)
+citations <- furrr::future_map(output, ccc::extract_citations)
 names(citations) <- names(output)
 
 input_el <- citations |>
-  enframe(name = "from", value = "to") |>
-  unnest(cols = "to")
+  tibble::enframe(name = "from", value = "to") |>
+  tidyr::unnest(cols = "to")
 
 edge_list <- input_el |>
   ## remove self-citation
-  filter(from != to) |>
+  dplyr::filter(from != to) |> 
   ## remove typos
-  filter(to %in% names(citations))
+  dplyr::filter(from %in% metadata$id, to %in% metadata$id)
 
 message("weighted network: ", scales::comma(nrow(edge_list)))
-message("unweighted network: ", scales::comma(nrow(distinct(edge_list))))
+message("unweighted network: ", scales::comma(nrow(dplyr::distinct(edge_list))))
 
 # add relevant metadata ---------------------------------------------------
 
-metadata <- read_rds("data-raw/metadata.rds") |>
-  select(id, date) |>
-  drop_na()
+metadata <- metadata |>
+  dplyr::select(id, date) 
 
 edge_list <- edge_list |>
-  count(from, to, name = "weight") |>
-  left_join(metadata, by = c("from" = "id"), relationship = "many-to-one") |>
-  rename(from_date = date) |>
-  left_join(metadata, by = c("to" = "id"), relationship = "many-to-one") |>
-  rename(to_date = date) |>
+  dplyr::count(from, to, name = "weight") |>
+  dplyr::left_join(metadata, by = c("from" = "id"), relationship = "many-to-one") |>
+  dplyr::rename(from_date = date) |>
+  dplyr::left_join(metadata, by = c("to" = "id"), relationship = "many-to-one") |>
+  dplyr::rename(to_date = date) |>
   ## allow for 100 days of time travel [!]
-  filter(to_date - from_date <= 100)
+  dplyr::filter(to_date - from_date <= 100) 
 
 # export ------------------------------------------------------------------
 
@@ -53,22 +61,16 @@ edge_list <- edge_list |>
 case_levels <- metadata$id
 
 citations <- edge_list |>
-  mutate(
+  dplyr::mutate(
     from = factor(from, levels = case_levels),
     to = factor(to, levels = case_levels)
   )
 
 usethis::use_data(citations, overwrite = TRUE, compress = "xz")
 
-# add word counts -------------------------------------------
-
-word_count <- future_map_dbl(output, \(x) str_count(x, "\\b\\w+\\b")) |>
-  enframe(name = "id", value = "word_count") |>
-  mutate(word_count = as.integer(word_count))
-
 # modify metadata ---------------------------------------------------------
 
-metadata <- read_rds("data-raw/metadata.rds")
+metadata <- readr::read_rds("data-raw/metadata_init.rds")
 
 net <- igraph::graph_from_data_frame(
   d = citations,
@@ -79,35 +81,32 @@ net <- igraph::graph_from_data_frame(
 ## make sure it is degree and not strength!!)
 
 metadata <- metadata |>
-  left_join(
+  dplyr::left_join(
     igraph::degree(net, mode = "in") |>
-      enframe("id", "indegree") |>
-      mutate(indegree = as.integer(indegree))
+      tibble::enframe("id", "indegree") |>
+      dplyr::mutate(indegree = as.integer(indegree))
   ) |>
   left_join(
     igraph::degree(net, mode = "out") |>
-      enframe("id", "outdegree") |>
-      mutate(outdegree = as.integer(outdegree))
+      tibble::enframe("id", "outdegree") |>
+      dplyr::mutate(outdegree = as.integer(outdegree))
   )
 
 metadata <- metadata |>
-  select(id, type, year, date, indegree, outdegree, everything()) |>
+  dplyr::select(id, type, year, date, indegree, outdegree, dplyr::everything()) |>
   ## add id order after date.
-  mutate(temp = readr::parse_integer(str_extract(id, "\\d+(?=-\\d{2})"))) |>
-  arrange(date, temp) |>
-  select(-temp)
+  dplyr::mutate(temp = readr::parse_integer(stringr::str_extract(id, "\\d+(?=-\\d{2})"))) |>
+  dplyr::arrange(date, temp) |>
+  dplyr::select(-temp)
 
 metadata <- metadata |>
   ## add word_count
-  left_join(word_count) |>
-  select(id, type, year, date, indegree, outdegree, word_count, everything())
-
-metadata <- metadata |>
+  dplyr::left_join(word_count) |>
+  dplyr::select(id, type, year, date, indegree, outdegree, word_count, dplyr::everything()) |> 
   ## remove annulled rulings
-  dplyr::filter(word_count >= 200) |>
-  ## remove `mp` since the data in the `cccLLM` is better
-  dplyr::select(!mp) |>
-  ## remove `file` since it's kinda useless
-  dplyr::select(!file)
+  dplyr::filter(word_count >= 200) 
 
+readr::write_rds(metadata, "data-raw/metadata.rds", compress = "gz")
 usethis::use_data(metadata, overwrite = TRUE, compress = "xz")
+
+

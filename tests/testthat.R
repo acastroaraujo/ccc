@@ -9,5 +9,5 @@
 library(testthat)
 library(ccc)
 
-# test_check("ccc")
+test_check("ccc")
 

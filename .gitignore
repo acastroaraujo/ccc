@@ -12,3 +12,4 @@ docs
 /.conda/
 playground.R
 todo.md
+**/.quarto/

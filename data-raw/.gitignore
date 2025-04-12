@@ -1,6 +1,4 @@
 texts
-texts-spacy
-spacy_subset.rds
 metadata.rds
 txts
 txts-entities

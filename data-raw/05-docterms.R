@@ -7,6 +7,8 @@ library(furrr)
 outfolder <- "data-raw/txts-lemmas"
 pos_list <- c("PROPN", "VERB", "NOUN", "ADJ")
 
+# Stop Words and Regex ----------------------------------------------------
+
 source("data-raw/stopwords.R")
 stop_words <- union(stop_words, stopwords::stopwords("es", source = "snowball"))
 stop_words <- union(
@@ -15,7 +17,6 @@ stop_words <- union(
 )
 source("data-raw/stopwords_extra.R")
 
-# roman numerals
 romans <- c(
   as.character(utils::as.roman(1:100)),
   tolower(utils::as.roman(1:100))
@@ -65,7 +66,7 @@ output <- furrr::future_map(
           lemma,
           pattern = c("−" = "", "<" = "", ">" = "", "´" = "", "`" = "")
         )
-      )
+      ) |> View()
   },
   .progress = TRUE
 )
@@ -78,10 +79,23 @@ df <- purrr::list_rbind(output) |>
       stringr::str_detect(lemma, "^lgbt") ~ "lgbt",
       stringr::str_detect(lemma, "^estatuta") ~ "estatutario",
       lemma == "estatitar" ~ "estatutario",
+      lemma == "adicionisar" ~ "adicionar",
+      lemma == "amenacer" ~ "amenazar",
       .default = lemma
     )
   ) |>
-  dplyr::count(id, lemma)
+  dplyr::count(id, lemma) |> 
+  ## remove final junk
+  dplyr::filter(stringr::str_detect(lemma, "^[a-zA-Z]+$"))
+
+# Removed Annulled Rulings ------------------------------------------------
+
+metadata <- readr::read_rds("data-raw/metadata.rds")
+
+df <- df |> 
+  dplyr::filter(id %in% metadata$id) 
+
+# Remove rare and common words --------------------------------------------
 
 docs <- unique(df$id)
 n_docs <- length(docs)
@@ -91,7 +105,8 @@ lemma_counts <- df |>
   dplyr::mutate(prop = n / n_docs)
 
 ok_lemmas <- lemma_counts |>
-  dplyr::filter(prop >= 0.005, prop <= 0.99) |>
+  # Denny & Spirling (2018)
+  dplyr::filter(prop >= 0.01, prop <= 0.99) |>
   dplyr::pull(lemma)
 
 df <- df |>
@@ -108,3 +123,6 @@ docterms <- df |>
 class(docterms) <- c("tbl_df", "tbl", "data.frame")
 
 usethis::use_data(docterms, overwrite = TRUE, compress = "xz")
+
+
+

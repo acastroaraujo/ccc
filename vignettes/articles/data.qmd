@@ -1,16 +1,17 @@
 ---
 title: "Data"
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+    dpi: 300
+    fig.align: "center"
+    out.width: "80%"
 bibliography: references.bib
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  dpi = 300,
-  fig.align = "center",
-  out.width = "80%"
-)
+```{r}
+#| include: false
 
 library(tibble)
 options(tibble.print_min = 6L, tibble.print_max = 6L)
@@ -21,7 +22,7 @@ options(tibble.print_min = 6L, tibble.print_max = 6L)
 :::
 
 ```{r}
-#| label: setup
+#| label: Setup
 
 library(ccc)
 ```
