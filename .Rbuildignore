@@ -10,7 +10,9 @@
 ^docs$
 ^pkgdown$
 ^vignettes/articles$
+^vignettes/.quarto$
 ^doc$
 ^Meta$
 ^/.quarto/$
 ^\.conda$
+^todo.md$

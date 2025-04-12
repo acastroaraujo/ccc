@@ -8,7 +8,7 @@ Description: Este paquete sirve para extraer y trabajar con las sentencias
 License: MIT + file LICENSE
 Depends: 
     Matrix,
-    R (>= 2.10)
+    R (>= 3.5)
 Imports: 
     dplyr,
     httr,

@@ -5,9 +5,10 @@
 ccc.Rproj
 .DS_Store
 .Rprofile
-playground.R
 docs
 /doc/
 /Meta/
 /.venv/
-.conda
+/.conda/
+playground.R
+todo.md
