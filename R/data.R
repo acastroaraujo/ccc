@@ -1,33 +1,65 @@
 
-#' Rulings (32 Years)
+#' Metadata
 #'
-#' These datasets go over the first 30 years of the Colombian Constitutional 
-#' Court's history. They were created using this package. See the following 
-#' link to get access to the scripts that produced them:
-#' https://github.com/acastroaraujo/ccc/tree/master/data-raw
+#' The `metadata` dataset contains information about the rulings authored by
+#' the Colombian Constitutional Court. 
 #' 
+#' @source https://www.corteconstitucional.gov.co/relatoria/
+#'
+#' @format A data frame with nine variables:
 #' \describe{
-#'   \item{metadata}{A data frame with additional information on each case.}
-#'   \item{citations}{An edge list.}
-#'   \item{docterms}{A data frame with word counts for a subset of the vocabulary used across 
-#' all cases.}
+#' \item{\code{id}}{Ruling ID}
+#' \item{\code{type}}{Ruling Type (C, T, or SU)}
+#' \item{\code{year}}{Year}
+#' \item{\code{date}}{YYYY-MM-DD}
+#' \item{\code{indegree}}{Citation In-degree}
+#' \item{\code{outdegree}}{Citation Out-degree}
+#' \item{\code{word_count}}{Word Count}
+#' \item{\code{descriptors}}{Additional metadata added to some rulings by the Court}
+#' \item{\code{url}}{URL to see the ruling}
 #' }
 #'
-#' @source https://www.corteconstitucional.gov.co/relatoria/
 #' 
-#' @name rulings
-#' @format NULL
-
-#' @rdname rulings
-#' @format NULL
+#' @examples
+#'   metadata
 "metadata"
 
-#' @rdname rulings
-#' @format NULL
+#' Citations
+#'
+#' The `citations` dataset contains and edge list of rulings that form a large
+#' citation network.
+#' 
+#' @source https://www.corteconstitucional.gov.co/relatoria/
+#'
+#' @format A data frame with five variables:
+#' \describe{
+#' \item{\code{from}}{Ruling ID (Source)}
+#' \item{\code{to}}{Ruling ID (Target)}
+#' \item{\code{weight}}{Number of times cited}
+#' \item{\code{from_date}}{Source Date}
+#' \item{\code{to_date}}{Target Date}
+#' }
+#'
+#' @examples
+#'   citations 
 "citations"
 
-#' @rdname rulings
-#' @format NULL
+#' Document Terms
+#'
+#' The `doc_terms` dataset contains and edge list of rulings and lemmas (or 
+#' processed words).
+#' 
+#' @source https://www.corteconstitucional.gov.co/relatoria/
+#'
+#' @format A data frame with three variables:
+#' \describe{
+#' \item{\code{id}}{Ruling ID}
+#' \item{\code{lemma}}{A standardized word}
+#' \item{\code{n}}{Number of times used in the document}
+#' }
+#'
+#' @examples
+#'   docterms 
 "docterms"
 
 
@@ -37,14 +69,15 @@
 #' 
 #' https://github.com/acastroaraujo/ccc/tree/master/data-raw/gender.R
 #' 
-#' @name gender
-#' 
 #' @source https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php
 #' 
-#' @format NULL
-
-#' @rdname gender
-#' @format NULL
+#' @format A data frame with two variables:
+#' \describe{
+#' \item{\code{id}}{Ruling ID (Source)}
+#' \item{\code{tema}}{Topic}
+#' }
+#' @examples
+#'   gender_cases
 "gender_cases"
 
 
@@ -52,20 +85,13 @@
 #' 
 #' Covers cases from 1992-10-28 to 2019-04-03
 #' 
-#' \describe{
-#'   \item{jctt_cases}{A data frame of cases, along with some nested variables.}
-#' }
-#' 
 #' https://github.com/acastroaraujo/ccc/tree/master/data-raw/transitional_justice_uniandes.R
-#' 
-#' @name jctt
 #' 
 #' @source http://justiciatransicional.uniandes.edu.co/web/
 #' 
-#' @format NULL
-
-#' @rdname jctt
-#' @format NULL
+#' @format A chacter vector of rulings
+#' @examples
+#'   jctt_cases
 "jctt_cases"
 
 

@@ -15,3 +15,6 @@
 ^\.conda$
 ^todo.md$
 ^vignettes$
+^vignettes/articles$
+^vignettes/articles/\.quarto$
+^vignettes/articles/*_files$

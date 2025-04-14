@@ -16,13 +16,11 @@ navbar:
   bg: light
 
 reference:
-- title: Datasets
+- title: Ruling Datasets (32 Years)
   contents:
-  - create_dtm
-  - create_citation_adj_mat
-  - rulings
-  - gender
-  - jctt
+  - metadata
+  - citations
+  - docterms
 - title: Search
   contents:
   - ccc_search
@@ -30,4 +28,9 @@ reference:
   - ccc_txt
   - ccc_rtf
   - extract_citations
-
+- title: Misc.
+  contents:
+  - create_dtm
+  - create_citation_adj_mat
+  - gender_cases
+  - jctt_cases
