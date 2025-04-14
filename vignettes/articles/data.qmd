@@ -68,7 +68,7 @@ The resulting matrix $M$ is very sparse. It has `r scales::comma(prod(dim(M)))` 
 
 The following figure is my best attempt at visualizing the whole thing:
 
-_test, test_
+![](figures/adj_mat_viz.png){width="75%"}
 
 *Note. If we were to observe an empty column, it would mean that none of the rulings created during that particular time period where cited in future rulings (i.e., rulings that failed to become precedent). If we were to observe an empty row, it would mean that none of the rulings created during that particular time period cited previous rulings. Both of these scenarios are entirely hypothetical.*
 
