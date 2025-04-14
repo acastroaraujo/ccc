@@ -1,17 +1,16 @@
 ---
 title: "Data"
-knitr:
-  opts_chunk:
-    collapse: true
-    comment: '#>'
-    dpi: 300
-    fig.align: "center"
-    out.width: "80%"
 bibliography: references.bib
 ---
 
-```{r}
-#| include: false
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  dpi = 300,
+  fig.align = "center",
+  out.width = "80%"
+)
 
 library(tibble)
 options(tibble.print_min = 6L, tibble.print_max = 6L)
@@ -21,9 +20,7 @@ options(tibble.print_min = 6L, tibble.print_max = 6L)
 *Note. All datasets described here were created using [these scripts](https://github.com/acastroaraujo/ccc/tree/master/data-raw), which use the functions described in the [search and download article](https://acastroaraujo.github.io/ccc/articles/search.html).*
 :::
 
-```{r}
-#| label: Setup
-
+```{r, Setup}
 library(ccc)
 ```
 
@@ -145,12 +142,7 @@ A[i, j]
 
 ### Centrality
 
-This section relies on some external packages.
-
-```{r}
-#| message: false
-#| code-fold: true
-#| code-summary: "Packages and Setup"
+```{r, message = FALSE, echo = FALSE}
 
 ## General Purpose
 
@@ -172,8 +164,7 @@ library(igraph)
 
 The following Figure shows average in-degree (citations) and out-degree (references) made in each ruling across the years. Note that, on average, the decisions written during 1992 tend to be significantly more cited that the ones written in other years, giving them some sort of "first-movers advantage" over the others---i.e., the most innovative thing of any kind is the first of its kind.
 
-```{r}
-#| code-fold: true
+```{r, echo=FALSE, message=FALSE}
 
 metadata |> 
   pivot_longer(c(indegree, outdegree), names_to = "dtype", values_to = "degree") |> 
@@ -196,8 +187,7 @@ metadata |>
 
 The following Figure disaggregates both kinds of citation by *type of ruling.*
 
-```{r}
-#| code-fold: true
+```{r, message=FALSE, echo=FALSE}
 
 metadata |> 
   pivot_longer(c(indegree, outdegree), names_to = "dtype", values_to = "degree") |> 
@@ -246,8 +236,7 @@ In this case, the story is supposed to go something like this:
 
 Calculating these scores is pretty straightforward using the `igraph` package:
 
-```{r}
-#| code-fold: show
+```{r, message=FALSE, echo=FALSE}
 
 net <- igraph::graph_from_data_frame(
   ## we will use the unweighted edge list
@@ -262,8 +251,7 @@ V(net)$hub <- igraph::hub_score(net, scale = FALSE)$vector
 
 Measurements of authority are correlated with in-degree measurements, but they're not the same thing.
 
-```{r}
-#| code-fold: true
+```{r, message=FALSE, echo=FALSE}
 
 igraph::as_data_frame(net, what = "vertices") |> 
   mutate(top = ifelse(rank(-authority) %in% 1:15, name, "")) |> 
@@ -277,8 +265,7 @@ igraph::as_data_frame(net, what = "vertices") |>
 
 The same goes for "hub" and "out-degree" measurements.
 
-```{r}
-#| code-fold: true
+```{r, message=FALSE, echo=FALSE}
 
 igraph::as_data_frame(net, what = "vertices") |> 
   mutate(top = if_else(rank(-hub) %in% 1:15, name, NA_character_)) |> 
@@ -292,8 +279,7 @@ igraph::as_data_frame(net, what = "vertices") |>
 
 Finally, note that authority and hub scores are somewhat related to each other; however, by definition, the very first rulings can never be hubs and the very last rulings can never be authorities. Hence we see three clusters.
 
-```{r}
-#| code-fold: true
+```{r, message=FALSE, echo=FALSE}
 
 igraph::as_data_frame(net, what = "vertices") |> 
   ggplot(aes(authority, hub, color = date)) + 
@@ -307,8 +293,7 @@ Along with the increase in citations over time, an important feature of how the 
 
 There is a variable called `word_count` in the `metadata` dataset which allows us to see changes over time.
 
-```{r}
-#| code-fold: true
+```{r, message=FALSE, echo=FALSE}
 
 metadata |> 
   ggplot(aes(year, word_count)) + 

@@ -6,6 +6,16 @@ knitr:
     comment: '#>'
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  dpi = 300,
+  fig.align = "center",
+  out.width = "80%"
+)
+```
+
 ## Packages
 
 ```{r}
