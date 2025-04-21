@@ -364,20 +364,8 @@ which a case is well-grounded in previous important rulings.</p>
 </blockquote>
 <p>Calculating these scores is pretty straightforward using the
 <code>igraph</code> package:</p>
-<pre><code><span><span class="co">#&gt; Warning: `authority_score()` was deprecated in igraph 2.1.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `hits_scores()` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
-<span><span class="co">#&gt; Warning: `hub_score()` was deprecated in igraph 2.0.3.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `hits_scores()` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre>
 <p>Measurements of authority are correlated with in-degree measurements,
 but they’re not the same thing.</p>
-<pre><code><span><span class="co">#&gt; Warning in scale_x_log10(): <span style="color: #00BB00;">log-10</span> transformation introduced infinite values.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">log-10</span> transformation introduced infinite values.</span></span></code></pre>
 <p><img src="data_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;"></p>
 <p><em>Note. Given the large number of <code>T</code> cases, it makes
 sense that the most “central” C rulings define what a tutela is
@@ -385,10 +373,6 @@ sense that the most “central” C rulings define what a tutela is
 which a tutela can be presented against decisions made by lower courts
 (C-590-05).</em></p>
 <p>The same goes for “hub” and “out-degree” measurements.</p>
-<pre><code><span><span class="co">#&gt; Warning in scale_x_log10(): <span style="color: #00BB00;">log-10</span> transformation introduced infinite values.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">log-10</span> transformation introduced infinite values.</span></span>
-<span><span class="co">#&gt; Warning: Removed 28227 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_text_repel()`).</span></span></code></pre>
 <p><img src="data_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;"></p>
 <p><em>Note. It makes sense that SU rulings are heavily represented as
 “hubs.”</em></p>
@@ -396,10 +380,6 @@ which a tutela can be presented against decisions made by lower courts
 each other; however, by definition, the very first rulings can never be
 hubs and the very last rulings can never be authorities. Hence we see
 three clusters.</p>
-<pre><code><span><span class="co">#&gt; Warning in scale_x_log10(): <span style="color: #00BB00;">log-10</span> transformation introduced</span></span>
-<span><span class="co">#&gt; infinite values.</span></span>
-<span><span class="co">#&gt; Warning in scale_y_log10(): <span style="color: #00BB00;">log-10</span> transformation introduced</span></span>
-<span><span class="co">#&gt; infinite values.</span></span></code></pre>
 <p><img src="data_files/figure-html/unnamed-chunk-17-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -421,7 +401,7 @@ time.</p>
 <p><strong>Gender</strong></p>
 <p><code>gender_cases</code> contains cases related to gender equality
 across a variety of topics, collected by domain experts <a href="https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php" class="external-link">here</a>.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gender_cases</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 578 × 2</span></span></span>
 <span><span class="co">#&gt;   id       tema                                          </span></span>
@@ -437,7 +417,7 @@ across a variety of topics, collected by domain experts <a href="https://www.cor
 <p><code>The jctt_*</code> datasets contain cases from the “<a href="http://justiciatransicional.uniandes.edu.co/web/" class="external-link">Justicia
 Constitucional en Tiempos de Transición</a>” project, collected by
 researchers affiliated with Universidad de Los Andes.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">jctt_cases</span></span>
 <span><span class="co">#&gt;   [1] "C-019-18"  "C-020-18"  "C-527-17"  "C-006-17"  "C-026-18"  "C-535-17" </span></span>
 <span><span class="co">#&gt;   [7] "C-027-18"  "C-541-17"  "C-038-18"  "C-048-01"  "C-160-16"  "C-555-17" </span></span>
