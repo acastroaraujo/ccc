@@ -232,10 +232,10 @@ stop words, lemmatization, lowercasing).</em></p>
 </div>
 <p>The <code>docterms</code> dataset contains a data frame with document
 identifiers (<code>id</code>) and word counts (<code>lemma</code> and
-<code>n</code>). It has 24,878,381 rows.</p>
+<code>n</code>). It has 24,861,423 rows.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">docterms</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 24,878,381 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 24,861,423 × 3</span></span></span>
 <span><span class="co">#&gt;   id       lemma         n</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> C-001-18 abierto       2</span></span>
@@ -244,20 +244,20 @@ identifiers (<code>id</code>) and word counts (<code>lemma</code> and
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C-001-18 abstracto    12</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C-001-18 academia      3</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C-001-18 academico     1</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 24,878,375 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 24,861,417 more rows</span></span></span></code></pre></div>
 <p>This dataset contains 28,242 unique documents with a vocabulary size
-of 7,265.</p>
+of 7,251.</p>
 <p>The <code><a href="../reference/create_dtm.html">create_dtm()</a></code> function creates a sparse document-term
 matrix from the information contained in <code>docterms</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_dtm.html">create_dtm</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 28242  7265</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 28242  7251</span></span></code></pre></div>
 <p>Close to 91% of the cells in this matrix are empty, which is why we
 call it a “sparse matrix.”</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">A</span> <span class="op">==</span> <span class="fl">0L</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.8787474</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.8785961</span></span></code></pre></div>
 <p>Here is a random subset of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐀</mi><annotation encoding="application/x-tex">\mathbf{A}</annotation></semantics></math>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -266,17 +266,17 @@ call it a “sparse matrix.”</p>
 <span><span class="va">j</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="va">A</span><span class="op">[</span><span class="va">i</span>, <span class="va">j</span><span class="op">]</span></span>
 <span><span class="co">#&gt; 10 x 5 sparse Matrix of class "dgCMatrix"</span></span>
-<span><span class="co">#&gt;           accionada arbitrariedad diecisiete escala indicado</span></span>
-<span><span class="co">#&gt; T-895-00          .             .          .      .        1</span></span>
-<span><span class="co">#&gt; T-862-13          .             .          .      .        .</span></span>
-<span><span class="co">#&gt; T-052-03          .             .          .      .        .</span></span>
-<span><span class="co">#&gt; T-270-06          .             3          .      .        .</span></span>
-<span><span class="co">#&gt; T-725-99          .             .          .      .        1</span></span>
-<span><span class="co">#&gt; SU-396-17         .             .          .      2        .</span></span>
-<span><span class="co">#&gt; C-262-95          .             .          .      .        .</span></span>
-<span><span class="co">#&gt; T-061-22          3             .          .      .        1</span></span>
-<span><span class="co">#&gt; C-014-97          .             .          .      .        .</span></span>
-<span><span class="co">#&gt; T-300-06          .             1          .      .        .</span></span></code></pre></div>
+<span><span class="co">#&gt;           accionada arbitrariedad diecisiete escala indicar</span></span>
+<span><span class="co">#&gt; T-895-00          .             .          .      .       .</span></span>
+<span><span class="co">#&gt; T-862-13          .             .          .      .       2</span></span>
+<span><span class="co">#&gt; T-052-03          .             .          .      .       .</span></span>
+<span><span class="co">#&gt; T-270-06          .             3          .      .       3</span></span>
+<span><span class="co">#&gt; T-725-99          .             .          .      .       1</span></span>
+<span><span class="co">#&gt; SU-396-17         .             .          .      2      14</span></span>
+<span><span class="co">#&gt; C-262-95          .             .          .      .       5</span></span>
+<span><span class="co">#&gt; T-061-22          3             .          .      .     126</span></span>
+<span><span class="co">#&gt; C-014-97          .             .          .      .       .</span></span>
+<span><span class="co">#&gt; T-300-06          .             1          .      .       .</span></span></code></pre></div>
 <p><em>Note. I am still unsatisfied with the Spanish lemmatization
 provided by spaCy, so this will probably change in the future if I
 figure out a better way.</em></p>
