@@ -66,12 +66,15 @@ output <- furrr::future_map(
           lemma,
           pattern = c("−" = "", "<" = "", ">" = "", "´" = "", "`" = "")
         )
-      ) |> View()
+      ) 
   },
   .progress = TRUE
 )
 
 # Organize ---------------------------------------------------------------
+
+# Note. Many of the fixes in the `case_when` function are due to patterns
+# in which the original text was all capitalized.
 
 df <- purrr::list_rbind(output) |>
   dplyr::mutate(
@@ -81,12 +84,24 @@ df <- purrr::list_rbind(output) |>
       lemma == "estatitar" ~ "estatutario",
       lemma == "adicionisar" ~ "adicionar",
       lemma == "amenacer" ~ "amenazar",
+      lemma == "tranaitorio" ~ "transitorio",
+      lemma == "poblico" ~ "publico",
+      lemma == "finalidar" ~ "finalidad", 
+      lemma == "segur" ~ "seguro",
+      lemma == "extranrdionio" ~ "extraordinario",
+      lemma == "nivo" ~ "nino",
+      lemma == "inferar" ~ "inferir",
+      lemma == "indo" ~ "indole",
+      lemma == "parigraco" ~ "paragrafo",
+      lemma == "repoblica" ~ "republica",
+      lemma == "pensinal" ~ "pensional",
+      lemma == "osligacion" ~ "obligacion",
       .default = lemma
     )
   ) |>
   dplyr::count(id, lemma) |> 
   ## remove final junk
-  dplyr::filter(stringr::str_detect(lemma, "^[a-zA-Z]+$"))
+  dplyr::filter(stringr::str_detect(lemma, "^[a-zA-Z]+$")) 
 
 # Removed Annulled Rulings ------------------------------------------------
 

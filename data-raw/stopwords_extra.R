@@ -621,5 +621,7 @@ extra_stopwords <- c(
   "najar",
   "pineros",
   "cfr",
-  "ibid"
+  "ibid",
+  "victorio",
+  "sachicar"
 )
