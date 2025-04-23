@@ -623,5 +623,6 @@ extra_stopwords <- c(
   "cfr",
   "ibid",
   "victorio",
-  "sachicar"
+  "sachicar",
+  "vid"
 )

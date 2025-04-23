@@ -10,11 +10,14 @@ pos_list <- c("PROPN", "VERB", "NOUN", "ADJ")
 # Stop Words and Regex ----------------------------------------------------
 
 source("data-raw/stopwords.R")
-stop_words <- union(stop_words, stopwords::stopwords("es", source = "snowball"))
-stop_words <- union(
-  stop_words,
-  stopwords::stopwords("es", source = "stopwords-iso")
-)
+stop_words <- list(
+  stop_words, 
+  stopwords::stopwords("es", source = "snowball"), 
+  stopwords::stopwords("es", source = "stopwords-iso"),
+  stopwords::stopwords("en", source = "snowball")
+) |> 
+  purrr::reduce(union)
+
 source("data-raw/stopwords_extra.R")
 
 romans <- c(
@@ -74,7 +77,9 @@ output <- furrr::future_map(
 # Organize ---------------------------------------------------------------
 
 # Note. Many of the fixes in the `case_when` function are due to patterns
-# in which the original text was all capitalized.
+# in which the original text was all capitalized. I have done my best to 
+# find a lemmatization program that would work well for these documents, 
+# but this is as far as it goes. This was a lot of work.
 
 df <- purrr::list_rbind(output) |>
   dplyr::mutate(
@@ -90,12 +95,18 @@ df <- purrr::list_rbind(output) |>
       lemma == "segur" ~ "seguro",
       lemma == "extranrdionio" ~ "extraordinario",
       lemma == "nivo" ~ "nino",
+      lemma == "niia" ~ "nina",
       lemma == "inferar" ~ "inferir",
       lemma == "indo" ~ "indole",
       lemma == "parigraco" ~ "paragrafo",
       lemma == "repoblica" ~ "republica",
       lemma == "pensinal" ~ "pensional",
       lemma == "osligacion" ~ "obligacion",
+      stringr::str_detect(lemma, "^(articulos|arts?)$") ~ "articulo",
+      lemma == "participaciones" ~ "participacion",
+      stringr::str_detect(lemma, "^(fuerzas|fuerna)$") ~ "fuerza",
+      lemma == "carrero" ~ "carrera",
+      lemma == "reger" ~ "regir",
       .default = lemma
     )
   ) |>
