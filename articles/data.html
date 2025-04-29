@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Data • ccc</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -157,7 +156,7 @@ is very sparse. It has 797,610,564 cells and only 0.087% are
 non-zero.</p>
 <p>The following figure is my best attempt at visualizing the whole
 thing:</p>
-<p><img src="figures%2Fadj_mat_viz.png" style="width:75.0%"></p>
+<p><img src="figures/adj_mat_viz.png" style="width:75.0%"></p>
 <p><em>Note. If we were to observe an empty column, it would mean that
 none of the rulings created during that particular time period where
 cited in future rulings (i.e., rulings that failed to become precedent).
@@ -201,10 +200,10 @@ editorial note at the beginning of the document.</p>
 <span><span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ccc_txt.html">ccc_txt</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span></span>
 <span><span class="co">#&gt; https://www.corteconstitucional.gov.co/relatoria/1999/T-1003-99.htm</span></span>
 <span></span>
-<span><span class="va">txt</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trunc.html" class="external-link">str_trunc</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">300</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html" class="external-link">str_squish</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">str_wrap</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">txt</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trunc.html" class="external-link">str_trunc</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">300</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html" class="external-link">str_squish</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">str_wrap</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; NOTA DE RELATORIA: Mediante auto 397 de fecha 19 de julio de 2019, el cual se</span></span>
 <span><span class="co">#&gt; anexa en la parte final de esta providencia, se ordena suprimir el nombre y los</span></span>
@@ -395,52 +394,6 @@ time.</p>
 <p><img src="data_files/figure-html/unnamed-chunk-18-1.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div class="section level2">
-<h2 id="other-cases">Other Cases<a class="anchor" aria-label="anchor" href="#other-cases"></a>
-</h2>
-<p><strong>Gender</strong></p>
-<p><code>gender_cases</code> contains cases related to gender equality
-across a variety of topics, collected by domain experts <a href="https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php" class="external-link">here</a>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gender_cases</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 578 × 2</span></span></span>
-<span><span class="co">#&gt;   id       tema                                          </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                                         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> T-085-24 Derecho a la igualdad y a la no discriminación</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> T-082-24 Derecho a la igualdad y a la no discriminación</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> T-061-24 Derecho a la igualdad y a la no discriminación</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> T-063-24 Derecho a la igualdad y a la no discriminación</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C-054-24 Derecho a la igualdad y a la no discriminación</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> T-010-24 Derecho a la igualdad y a la no discriminación</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 572 more rows</span></span></span></code></pre></div>
-<p><strong>Transitional Justice</strong></p>
-<p><code>The jctt_*</code> datasets contain cases from the “<a href="http://justiciatransicional.uniandes.edu.co/web/" class="external-link">Justicia
-Constitucional en Tiempos de Transición</a>” project, collected by
-researchers affiliated with Universidad de Los Andes.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">jctt_cases</span></span>
-<span><span class="co">#&gt;   [1] "C-019-18"  "C-020-18"  "C-527-17"  "C-006-17"  "C-026-18"  "C-535-17" </span></span>
-<span><span class="co">#&gt;   [7] "C-027-18"  "C-541-17"  "C-038-18"  "C-048-01"  "C-160-16"  "C-555-17" </span></span>
-<span><span class="co">#&gt;  [13] "C-565-17"  "C-171-93"  "T-402-11"  "C-569-17"  "C-250-12"  "C-174-17" </span></span>
-<span><span class="co">#&gt;  [19] "C-253A-12" "C-180-14"  "C-936-10"  "C-052-12"  "C-740-13"  "C-287-14" </span></span>
-<span><span class="co">#&gt;  [25] "C-309-17"  "C-319-06"  "C-404-16"  "C-518-17"  "C-516-17"  "C-570-17" </span></span>
-<span><span class="co">#&gt;  [31] "C-608-17"  "C-492-17"  "C-470-17"  "C-469-17"  "C-752-13"  "C-532-13" </span></span>
-<span><span class="co">#&gt;  [37] "C-099-13"  "C-644-17"  "C-554-17"  "C-578-95"  "C-581-13"  "C-607-17" </span></span>
-<span><span class="co">#&gt;  [43] "T-159-11"  "C-753-13"  "C-069-94"  "C-018-18"  "C-730-17"  "C-025-18" </span></span>
-<span><span class="co">#&gt;  [49] "C-333-12"  "T-327-01"  "C-456-97"  "C-228-02"  "C-004-03"  "T-249-03" </span></span>
-<span><span class="co">#&gt;  [55] "C-160-17"  "C-224-17"  "C-911-13"  "C-013-18"  "C-253-17"  "C-331-17" </span></span>
-<span><span class="co">#&gt;  [61] "C-433-17"  "C-493-17"  "C-017-18"  "C-912-13"  "C-715-12"  "T-821-07" </span></span>
-<span><span class="co">#&gt;  [67] "T-458-10"  "C-871-03"  "C-979-05"  "C-067-18"  "C-029-09"  "C-795-14" </span></span>
-<span><span class="co">#&gt;  [73] "C-694-15"  "C-071-18"  "C-575-06"  "C-291-07"  "C-015-14"  "C-438-13" </span></span>
-<span><span class="co">#&gt;  [79] "C-070-18"  "SU-254-13" "C-240-09"  "C-073-18"  "C-781-12"  "T-453-05" </span></span>
-<span><span class="co">#&gt;  [85] "C-076-18"  "C-1199-08" "T-085-09"  "C-238-10"  "SU-139-19" "T-025-04" </span></span>
-<span><span class="co">#&gt;  [91] "C-094-18"  "C-462-13"  "C-784-14"  "C-574-92"  "C-084-16"  "C-757-08" </span></span>
-<span><span class="co">#&gt;  [97] "C-069-16"  "C-225-95"  "C-161-16"  "C-112-19"  "C-630-17"  "C-577-14" </span></span>
-<span><span class="co">#&gt; [103] "C-344-17"  "C-330-16"  "C-408-17"  "T-365-18"  "T-418-15"  "C-332-17" </span></span>
-<span><span class="co">#&gt; [109] "C-379-16"  "C-674-17"  "C-579-13"  "C-007-18"  "C-080-18"  "C-438-17" </span></span>
-<span><span class="co">#&gt; [115] "SU-256-99" "C-771-11"  "C-699-16"  "C-370-06"  "T-299-18"  "T-092-19" </span></span>
-<span><span class="co">#&gt; [121] "T-129-19"  "C-289-17"  "C-578-02"</span></span></code></pre></div>
-</div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
@@ -477,7 +430,7 @@ Leskovec, Jure, Jon Kleinberg, and Christos Faloutsos. 2007.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>
