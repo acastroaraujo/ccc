@@ -25,6 +25,6 @@ The `citations` dataset contains and edge list of rulings that form a large
 citation network.
 }
 \examples{
-  citations 
+  citations
 }
 \keyword{datasets}

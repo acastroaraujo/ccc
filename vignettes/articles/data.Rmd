@@ -87,10 +87,10 @@ These sorts of modifications are usually prefaced by a small editorial note at t
 url <- "https://www.corteconstitucional.gov.co/relatoria/1999/T-1003-99.htm"
 txt <- ccc_txt(url)
 
-txt |> 
-  stringr::str_trunc(width = 300) |> 
-  stringr::str_squish() |> 
-  stringr::str_wrap() |> 
+txt |>
+  stringr::str_trunc(width = 300) |>
+  stringr::str_squish() |>
+  stringr::str_wrap() |>
   cat()
 ```
 
@@ -151,8 +151,8 @@ library(tidyr)
 library(dplyr)
 
 theme_set(
-  theme_light(base_family = "Crimson Text") + 
-  theme(strip.background = element_rect(fill = "#4C4C4C"))
+  theme_light(base_family = "Crimson Text") +
+    theme(strip.background = element_rect(fill = "#4C4C4C"))
 )
 
 ## Networks
@@ -165,18 +165,27 @@ library(igraph)
 The following Figure shows average in-degree (citations) and out-degree (references) made in each ruling across the years. Note that, on average, the decisions written during 1992 tend to be significantly more cited that the ones written in other years, giving them some sort of "first-movers advantage" over the others---i.e., the most innovative thing of any kind is the first of its kind.
 
 ```{r, echo=FALSE, message=FALSE}
-metadata |> 
-  pivot_longer(c(indegree, outdegree), names_to = "dtype", values_to = "degree") |> 
-  mutate(dtype = case_when(
-    dtype == "indegree" ~ "Average Inward Citations (in-degree)",
-    dtype == "outdegree" ~ "Average Outward Citations (out-degree)"
-  )) |> 
-  ggplot(aes(year, degree)) + 
+metadata |>
+  pivot_longer(
+    c(indegree, outdegree),
+    names_to = "dtype",
+    values_to = "degree"
+  ) |>
+  mutate(
+    dtype = case_when(
+      dtype == "indegree" ~ "Average Inward Citations (in-degree)",
+      dtype == "outdegree" ~ "Average Outward Citations (out-degree)"
+    )
+  ) |>
+  ggplot(aes(year, degree)) +
   stat_summary(
-    fun.data = \(x) mean_cl_boot(x, conf.int = 0.95), size = 1/3,
-    shape = 21, fill = "white", stroke = 1/2
-  ) + 
-  facet_grid(~dtype, scales = "free_y") + 
+    fun.data = \(x) mean_cl_boot(x, conf.int = 0.95),
+    size = 1 / 3,
+    shape = 21,
+    fill = "white",
+    stroke = 1 / 2
+  ) +
+  facet_grid(~dtype, scales = "free_y") +
   scale_x_continuous(labels = seq(1992, 2024, 4), breaks = seq(1992, 2024, 4)) +
   labs(y = NULL, x = NULL) +
   theme(strip.text.y = element_text(angle = 0))
@@ -187,18 +196,27 @@ metadata |>
 The following Figure disaggregates both kinds of citation by *type of ruling.*
 
 ```{r, message=FALSE, echo=FALSE}
-metadata |> 
-  pivot_longer(c(indegree, outdegree), names_to = "dtype", values_to = "degree") |> 
-  mutate(dtype = case_when(
-    dtype == "indegree" ~ "Average Inward Citations (in-degree)",
-    dtype == "outdegree" ~ "Average Outward Citations (out-degree)"
-  )) |> 
-  ggplot(aes(year, degree)) + 
+metadata |>
+  pivot_longer(
+    c(indegree, outdegree),
+    names_to = "dtype",
+    values_to = "degree"
+  ) |>
+  mutate(
+    dtype = case_when(
+      dtype == "indegree" ~ "Average Inward Citations (in-degree)",
+      dtype == "outdegree" ~ "Average Outward Citations (out-degree)"
+    )
+  ) |>
+  ggplot(aes(year, degree)) +
   stat_summary(
-    fun.data = \(x) mean_cl_boot(x, conf.int = 0.68), fatten = 1/2,
-    shape = 21, fill = "white", size = 1/10
-  ) + 
-  facet_grid(type ~ dtype) + 
+    fun.data = \(x) mean_cl_boot(x, conf.int = 0.68),
+    fatten = 1 / 2,
+    shape = 21,
+    fill = "white",
+    size = 1 / 10
+  ) +
+  facet_grid(type ~ dtype) +
   scale_x_continuous(labels = seq(1992, 2024, 4), breaks = seq(1992, 2024, 4)) +
   labs(y = NULL, x = NULL) +
   theme(strip.text.y = element_text(angle = 0))
@@ -237,8 +255,8 @@ Calculating these scores is pretty straightforward using the `igraph` package:
 ```{r, message=FALSE, echo=FALSE}
 net <- igraph::graph_from_data_frame(
   ## we will use the unweighted edge list
-  d = citations |> select(!weight), 
-  directed = TRUE, 
+  d = citations |> select(!weight),
+  directed = TRUE,
   vertices = metadata |> select(id, type, date, year, indegree, outdegree)
 )
 
@@ -250,12 +268,17 @@ V(net)$hub <- out$hub
 Measurements of authority are correlated with in-degree measurements, but they're not the same thing.
 
 ```{r, message=FALSE, echo=FALSE, warning=FALSE}
-igraph::as_data_frame(net, what = "vertices") |> 
-  mutate(top = ifelse(rank(-authority) %in% 1:15, name, "")) |> 
-  ggplot(aes(indegree, authority, color = type)) + 
-  geom_point(alpha = 1/5) + 
-  ggrepel::geom_text_repel(aes(label = top), size = 2.5, family = "Avenir", max.overlaps = 50) + 
-  scale_x_log10() 
+igraph::as_data_frame(net, what = "vertices") |>
+  mutate(top = ifelse(rank(-authority) %in% 1:15, name, "")) |>
+  ggplot(aes(indegree, authority, color = type)) +
+  geom_point(alpha = 1 / 5) +
+  ggrepel::geom_text_repel(
+    aes(label = top),
+    size = 2.5,
+    family = "Avenir",
+    max.overlaps = 50
+  ) +
+  scale_x_log10()
 ```
 
 *Note. Given the large number of `T` cases, it makes sense that the most "central" C rulings define what a tutela is (`C-543-92`) and further clarify the circumstances under which a tutela can be presented against decisions made by lower courts (C-590-05).*
@@ -263,11 +286,16 @@ igraph::as_data_frame(net, what = "vertices") |>
 The same goes for "hub" and "out-degree" measurements.
 
 ```{r, message=FALSE, echo=FALSE, warning=FALSE}
-igraph::as_data_frame(net, what = "vertices") |> 
-  mutate(top = if_else(rank(-hub) %in% 1:15, name, NA_character_)) |> 
-  ggplot(aes(outdegree, hub, color = type)) + 
-  geom_point(alpha = 1/5) + 
-  ggrepel::geom_text_repel(aes(label = top), size = 2.5, family = "Avenir", max.overlaps = 50) + 
+igraph::as_data_frame(net, what = "vertices") |>
+  mutate(top = if_else(rank(-hub) %in% 1:15, name, NA_character_)) |>
+  ggplot(aes(outdegree, hub, color = type)) +
+  geom_point(alpha = 1 / 5) +
+  ggrepel::geom_text_repel(
+    aes(label = top),
+    size = 2.5,
+    family = "Avenir",
+    max.overlaps = 50
+  ) +
   scale_x_log10()
 ```
 
@@ -277,10 +305,12 @@ Finally, note that authority and hub scores are somewhat related to each other; 
 
 ```{r, message=FALSE, echo=FALSE, warning=FALSE}
 
-igraph::as_data_frame(net, what = "vertices") |> 
-  ggplot(aes(authority, hub, color = date)) + 
-  geom_point(alpha = 1/5, size = 1/3) +
-  scale_x_log10() + scale_y_log10() + scale_color_viridis_c(trans = "date")
+igraph::as_data_frame(net, what = "vertices") |>
+  ggplot(aes(authority, hub, color = date)) +
+  geom_point(alpha = 1 / 5, size = 1 / 3) +
+  scale_x_log10() +
+  scale_y_log10() +
+  scale_color_viridis_c(trans = "date")
 ```
 
 ### Length of Documents
@@ -290,32 +320,22 @@ Along with the increase in citations over time, an important feature of how the 
 There is a variable called `word_count` in the `metadata` dataset which allows us to see changes over time.
 
 ```{r, message=FALSE, echo=FALSE}
-metadata |> 
-  ggplot(aes(year, word_count)) + 
+metadata |>
+  ggplot(aes(year, word_count)) +
   stat_summary(
-    fun.data = \(x) mean_cl_boot(x, conf.int = 0.95), size = 1/3,
-    shape = 21, fill = "white", stroke = 1/2
+    fun.data = \(x) mean_cl_boot(x, conf.int = 0.95),
+    size = 1 / 3,
+    shape = 21,
+    fill = "white",
+    stroke = 1 / 2
   ) +
   scale_x_continuous(labels = seq(1992, 2024, 4), breaks = seq(1992, 2024, 4)) +
-  labs(y = "n", x = NULL, title = "Average Number of Words in Each Ruling Per Year") 
+  labs(
+    y = "n",
+    x = NULL,
+    title = "Average Number of Words in Each Ruling Per Year"
+  )
 ```
 
-## Other Cases
-
-**Gender**
-
-`gender_cases` contains cases related to gender equality across a variety of topics, collected by domain experts [here](https://www.corteconstitucional.gov.co/relatoria/equidaddegenero.php).
-
-```{r}
-gender_cases
-```
-
-**Transitional Justice**
-
-`The jctt_*` datasets contain cases from the "[Justicia Constitucional en Tiempos de Transición](http://justiciatransicional.uniandes.edu.co/web/)" project, collected by researchers affiliated with Universidad de Los Andes.
-
-```{r}
-jctt_cases
-```
 
 ## References

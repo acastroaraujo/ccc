@@ -19,10 +19,10 @@ https://www.corteconstitucional.gov.co/relatoria/
 docterms
 }
 \description{
-The `doc_terms` dataset contains and edge list of rulings and lemmas (or 
+The `doc_terms` dataset contains and edge list of rulings and lemmas (or
 processed words).
 }
 \examples{
-  docterms 
+  docterms
 }
 \keyword{datasets}
