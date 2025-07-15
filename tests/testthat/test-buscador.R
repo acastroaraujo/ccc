@@ -31,7 +31,7 @@ test_that("search isn't setting a limit on results", {
     date_end = "2001-12-31"
   )
   
-  website <- httr::GET("https://www1.corteconstitucional.gov.co/relatoria/buscador_new/?searchOption=texto&fini=2000-01-01&ffin=2001-12-31&buscar_por=familia&accion=search&verform=si&slop=1&buscador=buscador&qu=search_principalMatch&maxprov=100&OrderbyOption=des__score&tot_provi_found=1&tot_provi_show=1", httr::user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"))
+  website <- httr::GET("https://www.corteconstitucional.gov.co/relatoria/buscador_new/?searchOption=texto&fini=2000-01-01&ffin=2001-12-31&buscar_por=familia&accion=search&verform=si&slop=1&buscador=buscador&qu=search_principalMatch&maxprov=100&OrderbyOption=des__score&tot_provi_found=1&tot_provi_show=1", httr::user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"))
   
   total_number <- website |> 
     rvest::read_html() |> 

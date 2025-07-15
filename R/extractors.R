@@ -10,7 +10,7 @@ extract_citations <- function(texto) {
 
   ## This is the most general pattern, it should capture most cases
   regex1 <- paste0(
-    "\\b(C|SU|T) ?(\\p{Pd}| ) ?(\\d{3,4}A?) ?del?( \\d{1,2} de ",
+    "\\b(C|SU|T) ?(\\p{Pd}| ) ?(\\d{3,4}[Aa]?) ?del?( \\d{1,2} de ",
     mes,
     " de)?( ",
     mes,
@@ -19,10 +19,10 @@ extract_citations <- function(texto) {
 
   # This pattern is common in the footnotes, but it also captures the name of the document
   # Thus, remember to remove self-citations
-  regex2 <- "\\b(C|SU|T) ?(\\p{Pd}| ) ?(\\d{3,4}A?)(?:\\/|\\p{Pd})(?:\\d{2})?(\\d{2})\\b"
+  regex2 <- "\\b(C|SU|T) ?(\\p{Pd}| ) ?(\\d{3,4}[Aa]?)(?:\\/|\\p{Pd})(?:\\d{2})?(\\d{2})\\b"
 
   ## This pattern tries to capture cases that are expressed in list-like fashion
-  regex3 <- "\\b((?:C|SU|T)(?:\\p{Pd}| ) ?\\d{3,4}A?(?:, | y ))+[CSUT\\p{Pd} \\d, ]*de \\d{4}"
+  regex3 <- "\\b((?:C|SU|T)(?:\\p{Pd}| ) ?\\d{3,4}[Aa]?(?:, | y ))+[CSUT\\p{Pd} \\d, ]*de \\d{4}"
 
   out1 <- texto |>
     stringr::str_extract_all(regex1) |>
@@ -51,7 +51,7 @@ extract_citations <- function(texto) {
     }) |>
     purrr::flatten_chr()
 
-  return(c(out1, out2, out3))
+  return(toupper(c(out1, out2, out3)))
 }
 
 

@@ -22,7 +22,7 @@ ccc_search <- function(text, date_start, date_end) {
 
   output <- httr::RETRY(
     verb = "POST",
-    url = "https://www1.corteconstitucional.gov.co/relatoria/buscador_new/views/search/result_export_excel.php",
+    url = "https://www.corteconstitucional.gov.co/relatoria/buscador_new/views/search/result_export_excel.php",
     body = list(
       "searchOption" = "texto",
       "fini" = as.character(date_start),
