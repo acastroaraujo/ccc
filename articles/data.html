@@ -86,7 +86,7 @@ and download article</a>.</em></p>
 Colombian Constitutional Court (CCC) which cover the period of 32 years
 immediately after the first ruling was published on April 3, 1992. All
 together, they form a complex citation network with approximately
-694,293 ties among them.</p>
+694,320 ties among them.</p>
 <p>Each ruling has a standardized name (e.g., <code>C-776-03</code>,
 <code>T-025-04</code>, <code>SU-1184-01</code>). The prefix refers to
 the type of ruling; the infix carries no meaning; and the suffix
@@ -134,7 +134,7 @@ format. Each citation has a <code>weight</code> that refers to the
 <em>number</em> of times a ruling cites a previous case.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">citations</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 694,293 × 5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 694,320 × 5</span></span></span>
 <span><span class="co">#&gt;   from     to       weight from_date  to_date   </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> C-001-18 C-004-93      1 2018-01-24 1993-01-14</span></span>
@@ -143,7 +143,7 @@ format. Each citation has a <code>weight</code> that refers to the
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C-001-18 C-030-03      1 2018-01-24 2003-01-28</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C-001-18 C-037-96      3 2018-01-24 1996-02-05</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C-001-18 C-041-93      1 2018-01-24 1993-02-11</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 694,287 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 694,314 more rows</span></span></span></code></pre></div>
 <p>There is also a convenient function that turns these two datasets
 into a squared adjacency matrix.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
