@@ -138,8 +138,6 @@ j <- sample(1:ncol(A), 5)
 A[i, j]
 ```
 
-*Note. I am still unsatisfied with the Spanish lemmatization provided by spaCy, so this will probably change in the future if I figure out a better way.*
-
 ### Centrality
 
 ```{r, message = FALSE, echo = FALSE}

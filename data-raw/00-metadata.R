@@ -81,9 +81,84 @@ metadata <- metadata |>
   # relocate("id", "type", "year", "date", "descriptors", "mp", "file", "url") # old code
   relocate("id", "type", "year", "date", "descriptors", "url")
 
-## manually fix wrong dates:
-metadata[metadata$id == "T-996-10", "date"] <- as.Date("2010-12-03")
-metadata[metadata$id == "C-658-96", "date"] <- as.Date("1996-11-28")
+
+# Wrong Dates -------------------------------------------------------------
+
+## There are a variety of small errors in the date assignment. I found them by
+## looking at the rulings that were published on a weekend or during the holiday
+## period. There are bound to be other mistakes in the rest of the dataset, but
+## I noticed that they are usually a misplaced digit in the day or month field. 
+## This means there is a margin of error within an interval of 10 days or 1 month,
+## depending on the transcription error.
+
+dates_fix <- c(
+  ## On vacation error fix
+  "T-996-10" = "2010-12-03",
+  "C-658-96" = "1996-11-28",
+  ## Sunday error fix
+  "C-230-96" = "1996-05-23",
+  "C-406-97" = "1997-08-28",
+  "T-390-99" = "1999-05-27",
+  "T-814-02" = "2002-09-13",
+  "T-246-08" = "2008-03-06",
+  "T-435-09" = "2009-07-02",
+  "T-528-09" = "2009-08-05",
+  "T-1046-10" = "2010-12-15",
+  "T-557-11" = "2011-07-12",
+  "T-715-11" = "2011-09-22",
+  "C-619-12" = "2012-08-08",
+  "C-1023-12" = "2012-11-28",
+  "T-242-13" = "2013-04-19",
+  "T-391-13" = "2013-07-02",
+  "T-491-13" = "2013-07-26",
+  "T-894-13" = "2013-12-03",
+  "C-090-14" = "2014-02-19",
+  "C-508-14" = "2014-07-16",
+  "T-636-14" = "2014-09-04",
+  "T-640-14" = "2014-09-04",
+  "T-281-15" = "2015-05-13",
+  "T-153-16" = "2016-04-01",
+  "SU-440-21" = "2021-12-09",
+  "C-207-23" = "2023-06-07",
+  ## Saturday error fix
+  "C-095-93" = "1993-02-26",
+  "C-424-94" = "1994-09-29",
+  "C-130-97" = "1997-03-19",
+  "C-156-97" = "1997-03-19",
+  "T-517-97" = "1997-10-14",
+  "T-220-98" = "1998-05-14",
+  "T-530-98" = "1998-09-29",
+  "T-1081-00" = "2000-08-18",
+  "C-1403-00" = "2000-10-19",
+  "T-1640-00" = "2000-11-18",
+  "T-438-01" = "2001-04-26",
+  "T-1102-08" = "2008-11-06",
+  "T-419-09" = "2009-06-26",
+  "T-309-10" = "2010-04-30",
+  "C-241-10" = "2010-04-07",
+  "T-268-10" = "2010-04-19",
+  "T-273-10" = "2010-04-16",
+  "T-498-10" = "2010-06-17",
+  "T-235-13" = "2013-04-13",
+  "T-183-13" = "2013-04-05",
+  "T-189-13" = "2013-04-08",
+  "C-400-13" = "2013-07-03",
+  "C-403-13" = "2013-07-03",
+  "T-372-13" = "2013-06-27",
+  "T-479-13" = "2013-07-24",
+  "T-648-13" = "2013-09-17",
+  "T-153-15" = "2015-04-14",
+  "T-438-15" = "2015-07-13",
+  "T-476-16" = "2016-09-01",
+  "T-364-17" = "2017-06-01",
+  "C-409-20" = "2020-09-17"
+)
+
+dfix <- enframe(dates_fix, "id", "date")
+
+for (i in 1:nrow(dfix)) {
+  metadata[metadata$id == dfix$id[[i]], "date"] <- as.Date(dfix$date[[i]])
+}
 
 metadata <- arrange(metadata, date, id)
 
