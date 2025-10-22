@@ -1,4 +1,5 @@
 
-pandas==2.2.3
-numpy==1.26.4
-stanza==1.6.1
+numpy==2.3.4
+pandas==2.3.3
+stanza==1.11.0
+torch==2.9.0

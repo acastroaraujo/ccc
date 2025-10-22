@@ -78,7 +78,7 @@ net <- igraph::graph_from_data_frame(
   vertices = metadata
 )
 
-## make sure it is degree and not strength!!)
+## make sure it is degree and not strength!!
 
 metadata <- metadata |>
   dplyr::left_join(

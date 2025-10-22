@@ -77,4 +77,3 @@ while len(cases_left) > 0:
         cases_left.remove(xl[i])
         cases_done.append(xl[i])
 
-

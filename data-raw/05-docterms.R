@@ -11,11 +11,11 @@ pos_list <- c("PROPN", "VERB", "NOUN", "ADJ")
 
 source("data-raw/stopwords.R")
 stop_words <- list(
-  stop_words, 
-  stopwords::stopwords("es", source = "snowball"), 
+  stop_words,
+  stopwords::stopwords("es", source = "snowball"),
   stopwords::stopwords("es", source = "stopwords-iso"),
   stopwords::stopwords("en", source = "snowball")
-) |> 
+) |>
   purrr::reduce(union)
 
 source("data-raw/stopwords_extra.R")
@@ -69,7 +69,7 @@ output <- furrr::future_map(
           lemma,
           pattern = c("−" = "", "<" = "", ">" = "", "´" = "", "`" = "")
         )
-      ) 
+      )
   },
   .progress = TRUE
 )
@@ -77,8 +77,8 @@ output <- furrr::future_map(
 # Organize ---------------------------------------------------------------
 
 # Note. Many of the fixes in the `case_when` function are due to patterns
-# in which the original text was all capitalized. I have done my best to 
-# find a lemmatization program that would work well for these documents, 
+# in which the original text was all capitalized. I have done my best to
+# find a lemmatization program that would work well for these documents,
 # but this is as far as it goes. This was a lot of work.
 
 df <- purrr::list_rbind(output) |>
@@ -91,7 +91,7 @@ df <- purrr::list_rbind(output) |>
       lemma == "amenacer" ~ "amenazar",
       lemma == "tranaitorio" ~ "transitorio",
       lemma == "poblico" ~ "publico",
-      lemma == "finalidar" ~ "finalidad", 
+      lemma == "finalidar" ~ "finalidad",
       lemma == "segur" ~ "seguro",
       lemma == "extranrdionio" ~ "extraordinario",
       lemma == "nivo" ~ "nino",
@@ -110,16 +110,16 @@ df <- purrr::list_rbind(output) |>
       .default = lemma
     )
   ) |>
-  dplyr::count(id, lemma) |> 
+  dplyr::count(id, lemma) |>
   ## remove final junk
-  dplyr::filter(stringr::str_detect(lemma, "^[a-zA-Z]+$")) 
+  dplyr::filter(stringr::str_detect(lemma, "^[a-zA-Z]+$"))
 
 # Removed Annulled Rulings ------------------------------------------------
 
 metadata <- readr::read_rds("data-raw/metadata.rds")
 
-df <- df |> 
-  dplyr::filter(id %in% metadata$id) 
+df <- df |>
+  dplyr::filter(id %in% metadata$id)
 
 # Remove rare and common words --------------------------------------------
 
@@ -142,13 +142,11 @@ df <- df |>
 
 docterms <- df |>
   dplyr::mutate(
-    id = factor(id, levels = docs),
+    id = factor(id, levels = metadata$id),
     lemma = factor(lemma, levels = ok_lemmas)
   )
 
 class(docterms) <- c("tbl_df", "tbl", "data.frame")
 
+docterms <- arrange(docterms, id)
 usethis::use_data(docterms, overwrite = TRUE, compress = "xz")
-
-
-

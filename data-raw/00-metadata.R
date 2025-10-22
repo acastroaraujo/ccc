@@ -81,6 +81,12 @@ metadata <- metadata |>
   # relocate("id", "type", "year", "date", "descriptors", "mp", "file", "url") # old code
   relocate("id", "type", "year", "date", "descriptors", "url")
 
+## manually fix wrong dates:
+metadata[metadata$id == "T-996-10", "date"] <- as.Date("2010-12-03")
+metadata[metadata$id == "C-658-96", "date"] <- as.Date("1996-11-28")
+
+metadata <- arrange(metadata, date, id)
+
 readr::write_rds(metadata, "data-raw/metadata_init.rds", compress = "gz")
 
 
