@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   articles/data: data.html
   articles/search: search.html
-last_built: 2025-07-15T19:39Z
+last_built: 2025-10-22T03:01Z
 urls:
   reference: https://acastroaraujo.github.io/ccc/reference
   article: https://acastroaraujo.github.io/ccc/articles
