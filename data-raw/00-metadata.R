@@ -81,7 +81,6 @@ metadata <- metadata |>
   # relocate("id", "type", "year", "date", "descriptors", "mp", "file", "url") # old code
   relocate("id", "type", "year", "date", "descriptors", "url")
 
-
 # Wrong Dates -------------------------------------------------------------
 
 ## There are a variety of small errors in the date assignment. I found them by
@@ -151,7 +150,9 @@ dates_fix <- c(
   "T-438-15" = "2015-07-13",
   "T-476-16" = "2016-09-01",
   "T-364-17" = "2017-06-01",
-  "C-409-20" = "2020-09-17"
+  "C-409-20" = "2020-09-17",
+  # Appointed judges outside appointed dates:
+  "T-750A-12" = "2012-09-25"
 )
 
 dfix <- enframe(dates_fix, "id", "date")

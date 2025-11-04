@@ -22,7 +22,7 @@ metadata <- readr::read_rds("data-raw/metadata_init.rds") |>
   ## remove annulled rulings
   dplyr::filter(word_count >= 200) 
 
-# citations ---------------------------------------------------------------
+# Citations ---------------------------------------------------------------
 
 citations <- furrr::future_map(output, ccc::extract_citations)
 names(citations) <- names(output)
@@ -40,7 +40,7 @@ edge_list <- input_el |>
 message("weighted network: ", scales::comma(nrow(edge_list)))
 message("unweighted network: ", scales::comma(nrow(dplyr::distinct(edge_list))))
 
-# add relevant metadata ---------------------------------------------------
+## Add Relevant Metadata 
 
 metadata <- metadata |>
   dplyr::select(id, date) 
@@ -54,9 +54,9 @@ edge_list <- edge_list |>
   ## allow for 100 days of time travel [!]
   dplyr::filter(to_date - from_date <= 100) 
 
-# export ------------------------------------------------------------------
+## Export
 
-## the following lines are for memory efficiency
+## The following lines are for memory efficiency:
 
 case_levels <- metadata$id
 
@@ -68,7 +68,7 @@ citations <- edge_list |>
 
 usethis::use_data(citations, overwrite = TRUE, compress = "xz")
 
-# modify metadata ---------------------------------------------------------
+# Metadata ----------------------------------------------------------------
 
 metadata <- readr::read_rds("data-raw/metadata_init.rds")
 
@@ -77,8 +77,6 @@ net <- igraph::graph_from_data_frame(
   directed = TRUE,
   vertices = metadata
 )
-
-## make sure it is degree and not strength!!
 
 metadata <- metadata |>
   dplyr::left_join(
@@ -108,5 +106,8 @@ metadata <- metadata |>
 
 readr::write_rds(metadata, "data-raw/metadata.rds", compress = "gz")
 usethis::use_data(metadata, overwrite = TRUE, compress = "xz")
+
+
+
 
 
