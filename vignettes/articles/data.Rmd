@@ -13,6 +13,8 @@ knitr::opts_chunk$set(
 )
 
 library(tibble)
+library(ggplot2)
+library(dplyr)
 options(tibble.print_min = 6L, tibble.print_max = 6L)
 ```
 
@@ -54,6 +56,41 @@ metadata
 citations
 ```
 
+The following figure is my best attempt at visualizing the whole thing:
+
+```{r, fig.height=7, fig.width=9, echo=FALSE}
+citations |>
+  mutate(across(c(from, to), \(x) stringr::str_extract(x, "^[TCSU]+"))) |>
+  mutate(type = paste(from, "→", to)) |>
+  mutate(from = paste(from, "→"), to = paste("→", to)) |>
+  ggplot(aes(
+    from_date,
+    to_date,
+  )) +
+  geom_point(shape = ".", alpha = 1 / 10) +
+  coord_fixed(expand = FALSE) +
+  scale_color_gradient2() +
+  theme_sub_panel(
+    background = element_rect(fill = "#E6F4FF"),
+    grid.major = element_line(color = "white", linewidth = rel(2)),
+    grid.minor = element_line(color = "white", linewidth = rel(2))
+  ) +
+  scale_x_date(
+    name = "From Date",
+    date_labels = "'%y",
+    date_breaks = "2 years",
+    sec.axis = dup_axis(name = NULL)
+  ) +
+  scale_y_date(
+    name = "To Date",
+    date_labels = "'%y",
+    date_breaks = "2 years",
+    sec.axis = dup_axis(name = NULL)
+  ) +
+  labs(title = "Citation Activity", subtitle = "April 1992-2024")
+```
+*Note. The lines separating the citations into small squares correspond to the End of Year vacation period. Also, if you squint at the column for 2020, you'll be able to see the effects of COVID on the court activity.*
+
 There is also a convenient function that turns these two datasets into a squared adjacency matrix.
 
 ```{r}
@@ -62,12 +99,6 @@ dim(M)
 ```
 
 The resulting matrix $M$ is very sparse. It has `r scales::comma(prod(dim(M)))` cells and only `r scales::percent(mean(M > 0), accuracy = .001)` are non-zero.
-
-The following figure is my best attempt at visualizing the whole thing:
-
-![](figures/adj_mat_viz.png){width="75%"}
-
-*Note. If we were to observe an empty column, it would mean that none of the rulings created during that particular time period where cited in future rulings (i.e., rulings that failed to become precedent). If we were to observe an empty row, it would mean that none of the rulings created during that particular time period cited previous rulings. Both of these scenarios are entirely hypothetical.*
 
 ### Time Traveling
 
